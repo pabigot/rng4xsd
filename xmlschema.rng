@@ -126,6 +126,25 @@
   </list>
 </define>
 
+<define name="typeDerivationControl">
+  <doc:p>
+    This gives the values that can be taken in the lists used to
+    control derivation for simple types.  This RELAX NG schema, like
+    the XML Schema Recommendation here, allows the keywords to be
+    repeated any number of times.
+  </doc:p>
+  <list>
+    <zeroOrMore>
+      <choice>
+        <value>extension</value>
+        <value>restriction</value>
+        <value>list</value>
+        <value>union</value>
+      </choice>
+    </zeroOrMore>
+  </list>
+</define>
+
 <define name="derivationSet">
   <doc:p>
     This specifies the possible values for attributes that control derivation.
@@ -133,6 +152,16 @@
   <choice>
     <value>#all</value>
     <ref name="reducedDerivationControl" />
+  </choice>
+</define>
+
+<define name="fullDerivationSet">
+  <doc:p>
+    This specifies the possible values for attributes that control derivation.
+  </doc:p>
+  <choice>
+    <value>#all</value>
+    <ref name="typeDerivationControl" />
   </choice>
 </define>
 
@@ -150,7 +179,7 @@
           <data type="token" />
         </attribute>
         <attribute name="finalDefault">
-          <ref name="derivationSet" />
+          <ref name="fullDerivationSet" />
         </attribute>
         <attribute name="blockDefault">
           <ref name="blockSet" />
