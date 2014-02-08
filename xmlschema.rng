@@ -550,10 +550,9 @@
 
 <define name="simpleRestriction">
   <doc:p>
-    This describes a restriction element that appears within a simpleContent 
-    or simpleType element (i.e. one that restricts a simple type).  Its 
-    content follows the simple restriction model that is detailed below, and 
-    may include attribute declarations.
+    This describes a restriction element that appears within a
+    simpleType element.  Its content follows the simple restriction
+    model that disallows both a base type and a local type definition.
   </doc:p>
   <element name="restriction"
         doc:href="http://www.w3.org/TR/xmlschema-1/#element-simpleContent::restriction">
@@ -563,7 +562,29 @@
   </element>
 </define>
 
-<define name="simpleExtension">
+<define name="simpleContentRestriction">
+  <doc:p>
+    This describes a restriction element that appears within a
+    simpleContent element (i.e. one that may restrict a simple type or
+    emptiable complex type identified by a required base attribute).
+  </doc:p>
+  <element name="restriction"
+        doc:href="http://www.w3.org/TR/xmlschema-1/#element-simpleContent::restriction">
+    <ref name="annotated" />
+    <group>
+      <attribute name="base">
+        <data type="QName" />
+      </attribute>
+      <optional>
+        <ref name="localSimpleType" />
+      </optional>
+      <ref name="simpleRestrictionFacets" />
+    </group>
+    <ref name="attrDecls" />
+  </element>
+</define>
+
+<define name="simpleContentExtension">
   <doc:p>
     This describes an extension element that appears within a simpleContent 
     element (i.e. one that extends a simple type).  Like other extensions, it 
@@ -585,8 +606,8 @@
         doc:href="http://www.w3.org/TR/xmlschema-1/#element-simpleContent">
     <ref name="annotated" />
     <choice>
-      <ref name="simpleRestriction" />
-      <ref name="simpleExtension" />
+      <ref name="simpleContentRestriction" />
+      <ref name="simpleContentExtension" />
     </choice>
   </element>
 </define>
@@ -1401,6 +1422,20 @@
   </zeroOrMore>
 </define>
 
+<define name="simpleRestrictionFacets">
+  <doc:p>
+    The set of facets that can appear within a restriction element in
+    a simpleType or simpleContent element.  Corresponds to xs:facets
+    with unbounded occurrence.
+  </doc:p>
+  <interleave>
+    <ref name="rangeFacets" />
+    <ref name="digitFacets" />
+    <ref name="lengthFacets" />
+    <ref name="commonFacets" />
+  </interleave>
+</define>
+
 <define name="simpleRestrictionModel">
   <doc:p>
     This specifies the types of facets that are valid in restrictions on the 
@@ -1562,20 +1597,7 @@
         </attribute>
         <ref name="localSimpleType" />
       </choice>
-      <interleave>
-        <ref name="rangeFacets" />
-        <ref name="digitFacets" />
-        <ref name="lengthFacets" />
-        <optional>
-          <ref name="whiteSpace" />
-        </optional>
-        <zeroOrMore>
-          <ref name="enumeration" />
-        </zeroOrMore>
-        <zeroOrMore>
-          <ref name="pattern" />
-        </zeroOrMore>
-      </interleave>
+      <ref name="simpleRestrictionFacets" />
     </group>
   </choice>
 </define>
