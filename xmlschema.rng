@@ -711,9 +711,14 @@
         doc:href="http://www.w3.org/TR/xmlschema-1/#element-element">
     <ref name="occurs" />
     <choice>
-      <attribute name="ref">
-        <data type="QName" />
-      </attribute>
+      <group>
+        <attribute name="ref">
+          <data type="QName" />
+        </attribute>
+        <optional>
+          <ref name="annotation" />
+        </optional>
+      </group>
       <group>
         <ref name="element" />
         <attribute name="name">
@@ -822,9 +827,14 @@
         </choice>
       </zeroOrMore>
       <choice>
-        <attribute name="ref">
-          <data type="QName" />
-        </attribute>
+        <group>
+          <attribute name="ref">
+            <data type="QName" />
+          </attribute>
+          <optional>
+            <ref name="annotation" />
+          </optional>
+        </group>
         <group>
           <ref name="element" />
           <attribute name="name">
