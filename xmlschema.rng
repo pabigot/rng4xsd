@@ -406,40 +406,27 @@
   </element>
 </define>
 
-<define name="complexTypeModel">
-  <doc:p>
-    This specifies the content of a complexType element.  As children, it can 
-    have a simpleContent, a complexContent or a model group.  Only if it has 
-    one of the latter two, may it have a mixed attribute.  This latter 
-    constraint is something that cannot be specified in XML Schema.
-  </doc:p>
-  <choice>
-    <ref name="simpleContent" />
-    <group>
-      <optional>
-        <attribute name="mixed">
-          <data type="boolean" />
-        </attribute>
-      </optional>
-      <choice>
-        <ref name="complexContent" />
-        <group>
-          <optional>
-            <ref name="typeDefParticle" />
-          </optional>
-          <ref name="attrDecls" />
-        </group>
-      </choice>
-    </group>
-  </choice>
-</define>
-
 <define name="complexType">
   <doc:p>
-    This specifies the basic content of a complexType element.
+    This specifies the content of a complexType element.  As children, it can 
+    have a simpleContent, a complexContent or a model group.
   </doc:p>
   <ref name="annotated" />
-  <ref name="complexTypeModel" />
+  <optional>
+    <attribute name="mixed">
+      <data type="boolean" />
+    </attribute>
+  </optional>
+  <choice>
+    <ref name="simpleContent" />
+    <ref name="complexContent" />
+    <group>
+      <optional>
+        <ref name="typeDefParticle" />
+      </optional>
+      <ref name="attrDecls" />
+    </group>
+  </choice>
 </define>
 
 <define name="topLevelComplexType">
