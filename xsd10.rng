@@ -1198,7 +1198,11 @@
         <anyName/>
         <zeroOrMore>
           <attribute>
-            <anyName />
+            <anyName>
+              <except>
+                <nsName ns="http://www.w3.org/2001/XMLSchema" />
+              </except>
+            </anyName>
           </attribute>
         </zeroOrMore>
         <ref name="anyContent" />

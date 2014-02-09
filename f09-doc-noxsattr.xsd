@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:annotation>
+    <xs:documentation>
+      <!-- Unrecognized attributes in XSD namespace are not permitted -->
+      <xs:description xs:unknown="false"/>
+    </xs:documentation>
+  </xs:annotation>
+</xs:schema>
