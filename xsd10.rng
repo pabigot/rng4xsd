@@ -1216,21 +1216,12 @@
   </doc:p>
   <element name="xs:appinfo"
         doc:href="http://www.w3.org/TR/xmlschema-1/#element-appinfo">
+    <ref name="openAttrs"/>
     <optional>
       <attribute name="source">
         <data type="anyURI" />
       </attribute>
     </optional>
-    <zeroOrMore>
-      <attribute>
-        <anyName>
-          <except>
-            <nsName ns="http://www.w3.org/2001/XMLSchema" />
-            <name>source</name>
-          </except>
-        </anyName>
-      </attribute>
-    </zeroOrMore>
     <ref name="anyContent" />
   </element>
 </define>
