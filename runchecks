@@ -12,3 +12,25 @@ if [ -f jing.jar ] ; then
   java -jar jing.jar xsd10.rng fail10/*.xsd
 fi
 
+genpyxb () {
+  # Exclude files that load local DTDs or have DTD syntax errors
+  find /opt/pyxb/pyxb/bundles -name '*.xsd' \
+  | sed \
+    -e '\!wssplat/schemas/policy.xsd!d' \
+    -e '\!common/schemas/xhtml.xsd!d' \
+    -e '\!common/schemas/XMLSchema!d' \
+    -e '\!common/schemas/xsd_hfp.xsd!d' \
+    -e '\!common/schemas/datatypes.xsd!d'
+}
+
+if [ -d /opt/pyxb ] ; then
+  echo "Running xmllint on PyXB source schemas..."
+  genpyxb \
+  | xargs xmllint --noout --relaxng xsd10.rng \
+  2>&1 | grep validity
+  if [ -f jing.jar ] ; then
+    echo "Running xmllint on PyXB source schemas..."
+    genpyxb \
+    | xargs java -jar jing.jar xsd10.rng
+  fi
+fi
