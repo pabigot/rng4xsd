@@ -25,15 +25,29 @@
   <doc:p>
     This allows any number of attributes that are not in the XML Schema 
     namespace or are in no namespace.  This is somewhat more complicated than 
-    the XML Schema anyAttribute equivalent. 
+    the XML Schema anyAttribute equivalent.
+
+    We want to emulate: <xs:anyAttribute namespace="##other" process="lax"/>
+
+    The "##other" means we need to exclude the XSD namespace.
+
+    The rules in 3.10.4 for wildcard validation say that, in that
+    case, we also need to exclude absent namespaces.
+
+    The tricky bit is xml:lang which should not be excluded, but which
+    is also explicitly enabled with type="language" in the SfS for
+    xs:schema and xs:documentation.  Those elements also normally
+    reference openAttrs, which results in an attribute conflict
+    because xml:lang is accepted from two paths.  In those cases, do
+    not reference openAttrs, and instead replicate the wildcard below
+    also excluding xml:lang.
   </doc:p>
   <zeroOrMore>
     <attribute>
       <anyName>
         <except>
-          <nsName />
           <nsName ns="" />
-          <name>xml:lang</name>
+          <nsName ns="http://www.w3.org/2001/XMLSchema" />
         </except>
       </anyName>
       <text />
@@ -160,7 +174,6 @@
   </doc:p>
   <element name="xs:schema" 
         doc:href="http://www.w3.org/TR/xmlschema-1/#element-schema">
-    <ref name="openAttrs" />
     <zeroOrMore>
       <choice>
         <attribute name="version">
@@ -183,6 +196,16 @@
         </attribute>
         <attribute name="xml:lang">
           <data type="language" />
+        </attribute>
+        <attribute> <!-- simulate openAttrs but excluding xml:lang -->
+          <anyName>
+            <except>
+              <nsName ns="" />
+              <nsName ns="http://www.w3.org/2001/XMLSchema" />
+              <name>xml:lang</name>
+            </except>
+          </anyName>
+          <text />
         </attribute>
       </choice>
     </zeroOrMore>
@@ -1219,26 +1242,24 @@
   </doc:p>
   <element name="xs:documentation"
         doc:href="http://www.w3.org/TR/xmlschema-1/#element-documentation">
-    <optional>
-      <attribute name="source">
-        <data type="anyURI" />
-      </attribute>
-    </optional>
-    <optional>
-      <attribute name="xml:lang">
-        <data type="language" />
-      </attribute>
-    </optional>
     <zeroOrMore>
-      <attribute>
-        <anyName>
-          <except>
-            <nsName ns="http://www.w3.org/2001/XMLSchema" />
-            <name>source</name>
-            <name>xml:lang</name>
+      <choice>
+        <attribute name="source">
+          <data type="anyURI" />
+        </attribute>
+        <attribute name="xml:lang">
+          <data type="language" />
+        </attribute>
+        <attribute> <!-- simulate openAttrs but excluding xml:lang -->
+          <anyName>
+            <except>
+              <nsName ns="" />
+              <nsName ns="http://www.w3.org/2001/XMLSchema" />
+              <name>xml:lang</name>
           </except>
-        </anyName>
-      </attribute>
+          </anyName>
+        </attribute>
+      </choice>
     </zeroOrMore>
     <ref name="anyContent" />
   </element>
