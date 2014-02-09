@@ -1213,16 +1213,16 @@
   </doc:p>
   <element name="documentation"
         doc:href="http://www.w3.org/TR/xmlschema-1/#element-documentation">
-    <zeroOrMore>
-      <choice>
-        <attribute name="source">
-          <data type="anyURI" />
-        </attribute>
-        <attribute name="xml:lang">
-          <data type="language" />
-        </attribute>
-      </choice>
-    </zeroOrMore>
+    <optional>
+      <attribute name="source">
+        <data type="anyURI" />
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="xml:lang">
+        <data type="language" />
+      </attribute>
+    </optional>
     <ref name="anyContent" />
   </element>
 </define>
