@@ -1,7 +1,6 @@
 <?xml version="1.0"?>
 <grammar xmlns="http://relaxng.org/ns/structure/1.0"
       datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes"
-      ns="http://www.w3.org/2001/XMLSchema"
       xmlns:xs="http://www.w3.org/2001/XMLSchema"
       xmlns:doc="http://www.jenitennison.com/doc">
 
@@ -186,7 +185,7 @@
     This is the beginning point for the schema, and defines the schema 
     element.
   </doc:p>
-  <element name="schema" 
+  <element name="xs:schema" 
         doc:href="http://www.w3.org/TR/xmlschema-1/#element-schema">
     <ref name="openAttrs" />
     <zeroOrMore>
@@ -345,7 +344,7 @@
     attribute) or a name attribute with an optional form attribute and 
     specifying an attribute type.
   </doc:p>
-  <element name="attribute" 
+  <element name="xs:attribute" 
         doc:href="http://www.w3.org/TR/xmlschema-1/#element-attribute">
     <ref name="annotated" />
     <optional>
@@ -385,7 +384,7 @@
     element.  The name attribute of each attribute element that appears at 
     the top level of the schema is unique.
   </doc:p>
-  <element name="attribute"
+  <element name="xs:attribute"
         doc:href="http://www.w3.org/TR/xmlschema-1/#element-attribute">
     <ref name="annotated" />
     <attribute name="name">
@@ -416,7 +415,7 @@
   <doc:p>
     This specifies the anyAttribute wildcard.
   </doc:p>
-  <element name="anyAttribute"
+  <element name="xs:anyAttribute"
         doc:href="http://www.w3.org/TR/xmlschema-1/#element-anyAttribute">
     <ref name="wildcard" />
   </element>
@@ -452,7 +451,7 @@
     within the type symbol space.  It may have abstract, block and/or final 
     attributes.  Otherwise it is the same as other complexTypes.
   </doc:p>
-  <element name="complexType"
+  <element name="xs:complexType"
         doc:href="http://www.w3.org/TR/xmlschema-1/#element-complexType">
     <ref name="complexType" />
     <attribute name="name">
@@ -478,7 +477,7 @@
   <doc:p>
     This specifies the model for a local complexType element.
   </doc:p>
-  <element name="complexType"
+  <element name="xs:complexType"
         doc:href="http://www.w3.org/TR/xmlschema-1/#element-complexType">
     <ref name="complexType" />
   </element>
@@ -491,7 +490,7 @@
     contain a model group and may contain attribute declarations of various 
     sorts.
   </doc:p>
-  <element name="restriction"
+  <element name="xs:restriction"
         doc:href="http://www.w3.org/TR/xmlschema-1/#element-complexContent::restriction">
     <ref name="annotated" />
     <attribute name="base">
@@ -521,7 +520,7 @@
     (i.e. one that restricts a complex type).  It may contain a model group 
     and may contain attribute declarations of various sorts.
   </doc:p>
-  <element name="extension"
+  <element name="xs:extension"
         doc:href="http://www.w3.org/TR/xmlschema-1/#element-complexContent::extension">
     <ref name="extensionType" />
     <optional>
@@ -536,7 +535,7 @@
     This describes a complexContent element.  It may have a mixed attribute, 
     and either a restriction or extension element as content.
   </doc:p>
-  <element name="complexContent"
+  <element name="xs:complexContent"
         doc:href="http://www.w3.org/TR/xmlschema-1/#element-complexContent">
     <ref name="annotated" />
     <optional>
@@ -557,7 +556,7 @@
     simpleType element.  Its content follows the simple restriction
     model that disallows both a base type and a local type definition.
   </doc:p>
-  <element name="restriction"
+  <element name="xs:restriction"
         doc:href="http://www.w3.org/TR/xmlschema-1/#element-simpleContent::restriction">
     <ref name="annotated" />
     <ref name="simpleRestrictionModel" />
@@ -571,7 +570,7 @@
     simpleContent element (i.e. one that may restrict a simple type or
     emptiable complex type identified by a required base attribute).
   </doc:p>
-  <element name="restriction"
+  <element name="xs:restriction"
         doc:href="http://www.w3.org/TR/xmlschema-1/#element-simpleContent::restriction">
     <ref name="annotated" />
     <group>
@@ -593,7 +592,7 @@
     element (i.e. one that extends a simple type).  Like other extensions, it 
     has a base type, but it can only be used to add attributes.
   </doc:p>
-  <element name="extension"
+  <element name="xs:extension"
         doc:href="http://www.w3.org/TR/xmlschema-1/#element-simpleContent::extension">
     <ref name="extensionType" />
     <ref name="attrDecls" />
@@ -605,7 +604,7 @@
     This describes a simpleContent element, whose content can either hold a 
     restriction or extension element.
   </doc:p>
-  <element name="simpleContent"
+  <element name="xs:simpleContent"
         doc:href="http://www.w3.org/TR/xmlschema-1/#element-simpleContent">
     <ref name="annotated" />
     <choice>
@@ -678,7 +677,7 @@
     have a name, which is a unique identifier in the element symbol space.  It 
     may have substitutionGroup, abstract and/or final attributes.
   </doc:p>
-  <element name="element"
+  <element name="xs:element"
         doc:href="http://www.w3.org/TR/xmlschema-1/#element-element">
     <ref name="element" />
     <attribute name="name">
@@ -710,7 +709,7 @@
     case also have a form element.  These constraints on local elements 
     cannot be described within XML Schema.
   </doc:p>
-  <element name="element"
+  <element name="xs:element"
         doc:href="http://www.w3.org/TR/xmlschema-1/#element-element">
     <ref name="occurs" />
     <choice>
@@ -744,20 +743,20 @@
     schema.  It must have a name attribute, and must have one of an all, 
     choice or sequence element child.
   </doc:p>
-  <element name="group"
+  <element name="xs:group"
         doc:href="http://www.w3.org/TR/xmlschema-1/#element-group">
     <ref name="annotated" />
     <attribute name="name">
       <data type="NCName" />
     </attribute>
     <choice>
-      <element name="all">
+      <element name="xs:all">
         <ref name="allModel" />
       </element>
-      <element name="choice">
+      <element name="xs:choice">
         <ref name="simpleExplicitGroup" />
       </element>
-      <element name="sequence">
+      <element name="xs:sequence">
         <ref name="simpleExplicitGroup" />
       </element>
     </choice>
@@ -770,7 +769,7 @@
     top-level named group.  It may have occurrence attributes, and must have 
     a ref attribute.
   </doc:p>
-  <element name="group"
+  <element name="xs:group"
         doc:href="http://www.w3.org/TR/xmlschema-1/#element-group">
     <ref name="annotated" />
     <ref name="occurs" />
@@ -813,7 +812,7 @@
   </doc:p>
   <ref name="annotated" />
   <zeroOrMore>
-    <element name="element">
+    <element name="xs:element">
       <zeroOrMore>
         <choice>
           <attribute name="minOccurs">
@@ -863,7 +862,7 @@
     all element, but adds minOccurs and maxOccurs attributes which can only 
     take certain values.
   </doc:p>
-  <element name="all"
+  <element name="xs:all"
         doc:href="http://www.w3.org/TR/xmlschema-1/#element-all">
     <ref name="allModel" />
     <zeroOrMore>
@@ -886,7 +885,7 @@
   <doc:p>
     This describes a choice element that appears outside a named group.
   </doc:p>
-  <element name="choice"
+  <element name="xs:choice"
         doc:href="http://www.w3.org/TR/xmlschema-1/#element-choice">
     <ref name="explicitGroup" />
   </element>
@@ -896,7 +895,7 @@
   <doc:p>
     This describes a sequence element that appears outside a named group.
   </doc:p>
-  <element name="sequence"
+  <element name="xs:sequence"
         doc:href="http://www.w3.org/TR/xmlschema-1/#element-sequence">
     <ref name="explicitGroup" />
   </element>
@@ -944,7 +943,7 @@
   <doc:p>
     This describes an any element as a wildcard.
   </doc:p>
-  <element name="any"
+  <element name="xs:any"
         doc:href="http://www.w3.org/TR/xmlschema-1/#element-any">
     <ref name="wildcard" />
     <ref name="occurs" />
@@ -957,7 +956,7 @@
     of the schema.  It must have a name attribute, and then contains 
     attribute declarations.
   </doc:p>
-  <element name="attributeGroup"
+  <element name="xs:attributeGroup"
         doc:href="http://www.w3.org/TR/xmlschema-1/#element-attributeGroup">
     <ref name="annotated" />
     <attribute name="name">
@@ -972,7 +971,7 @@
     This describes an attributeGroup element as it appears within a complex 
     type.  It must have a ref attribute.
   </doc:p>
-  <element name="attributeGroup"
+  <element name="xs:attributeGroup"
         doc:href="http://www.w3.org/TR/xmlschema-1/#element-attributeGroup">
     <ref name="annotated" />
     <attribute name="ref">
@@ -986,7 +985,7 @@
     This describes an include element, which must have a schemaLocation 
     attribute.
   </doc:p>
-  <element name="include"
+  <element name="xs:include"
         doc:href="http://www.w3.org/TR/xmlschema-1/#element-include">
     <ref name="annotated" />
     <attribute name="schemaLocation">
@@ -1001,7 +1000,7 @@
     attribute and can then contain any mix of annotations and redefinable 
     components.
   </doc:p>
-  <element name="redefine"
+  <element name="xs:redefine"
         doc:href="http://www.w3.org/TR/xmlschema-1/#element-redefine">
     <ref name="openAttrs" />
     <optional>
@@ -1040,7 +1039,7 @@
     element doesn&apos;t specify a targetNamespace.  In these cases, the 
     import element must give a namespace attribute.
   </doc:p>
-  <element name="import"
+  <element name="xs:import"
         doc:href="http://www.w3.org/TR/xmlschema-1/#element-import">
     <ref name="import" />
     <attribute name="namespace">
@@ -1055,7 +1054,7 @@
     element specifies a targetNamespace.  In these cases, the namespace 
     attribute on the import element is optional.
   </doc:p>
-  <element name="import"
+  <element name="xs:import"
         doc:href="http://www.w3.org/TR/xmlschema-1/#element-import">
     <ref name="import" />
     <optional>
@@ -1072,7 +1071,7 @@
     XPath - the regular expression given here is the one from the XML Schema 
     for XML Schema.
   </doc:p>
-  <element name="selector"
+  <element name="xs:selector"
         doc:href="http://www.w3.org/TR/xmlschema-1/#element-selector">
     <ref name="annotated" />
     <attribute name="xpath">
@@ -1089,7 +1088,7 @@
     XPath - the regular expression given here is the one from the XML Schema 
     for XML Schema.
   </doc:p>
-  <element name="field"
+  <element name="xs:field"
         doc:href="http://www.w3.org/TR/xmlschema-1/#element-field">
     <ref name="annotated" />
     <attribute name="xpath">
@@ -1132,7 +1131,7 @@
   <doc:p>
     This describes a unique element.
   </doc:p>
-  <element name="unique"
+  <element name="xs:unique"
         doc:href="http://www.w3.org/TR/xmlschema-1/#element-unique">
     <ref name="keybase" />
   </element>  
@@ -1142,7 +1141,7 @@
   <doc:p>
     This describes a key element.
   </doc:p>
-  <element name="key"
+  <element name="xs:key"
         doc:href="http://www.w3.org/TR/xmlschema-1/#element-key">
     <ref name="keybase" />
   </element>
@@ -1152,7 +1151,7 @@
   <doc:p>
     This describes a keyref element.
   </doc:p>
-  <element name="keyref"
+  <element name="xs:keyref"
         doc:href="http://www.w3.org/TR/xmlschema-1/#element-keyref">
     <ref name="keybase" />
     <attribute name="refer">
@@ -1167,7 +1166,7 @@
     unique in the notation symbol space.  The public attribute is required, 
     and the system attribute is optional.
   </doc:p>
-  <element name="notation"
+  <element name="xs:notation"
         doc:href="http://www.w3.org/TR/xmlschema-1/#element-notation">
     <ref name="annotated" />
     <attribute name="name">
@@ -1219,11 +1218,10 @@
     a source attribute in no namespace with anyURI data type.  The
     element can contain anything.
   </doc:p>
-  <element name="appinfo"
+  <element name="xs:appinfo"
         doc:href="http://www.w3.org/TR/xmlschema-1/#element-appinfo">
     <optional>
-      <attribute>
-        <name ns="">source</name>
+      <attribute name="source">
         <data type="anyURI" />
       </attribute>
     </optional>
@@ -1232,7 +1230,7 @@
         <anyName>
           <except>
             <nsName ns="http://www.w3.org/2001/XMLSchema" />
-            <name ns="">source</name>
+            <name>source</name>
           </except>
         </anyName>
       </attribute>
@@ -1246,11 +1244,10 @@
     This describes a documentation element.  It has optional source 
     and xml:lang attributes and can currently contain anything at all.
   </doc:p>
-  <element name="documentation"
+  <element name="xs:documentation"
         doc:href="http://www.w3.org/TR/xmlschema-1/#element-documentation">
     <optional>
-      <attribute>
-        <name ns="">source</name>
+      <attribute name="source">
         <data type="anyURI" />
       </attribute>
     </optional>
@@ -1264,7 +1261,7 @@
         <anyName>
           <except>
             <nsName ns="http://www.w3.org/2001/XMLSchema" />
-            <name ns="">source</name>
+            <name>source</name>
             <name>xml:lang</name>
           </except>
         </anyName>
@@ -1280,7 +1277,7 @@
     have an id attribute, and contains any number of documentation or appinfo 
     elements.
   </doc:p>
-  <element name="annotation"
+  <element name="xs:annotation"
         doc:href="http://www.w3.org/TR/xmlschema-1/#element-annotation">
     <ref name="openAttrs" />
     <optional>
@@ -1342,7 +1339,7 @@
     This describes a simpleType element as it appears at the top level of the 
     schema.  It has to have a name attribute and may have a final attribute.
   </doc:p>
-  <element name="simpleType"
+  <element name="xs:simpleType"
         doc:href="http://www.w3.org/TR/xmlschema-1/#element-simpleType">
     <ref name="simpleType" />
     <attribute name="name">
@@ -1361,7 +1358,7 @@
     This describes a simpleType element as it appears within an attribute or
     element.
   </doc:p>
-  <element name="simpleType"
+  <element name="xs:simpleType"
         doc:href="http://www.w3.org/TR/xmlschema-1/#element-simpleType">
     <ref name="simpleType" />
   </element>
@@ -1635,7 +1632,7 @@
     or have a itemType attribute.  This constraint cannot be expressed in XML 
     Schema.
   </doc:p>
-  <element name="list"
+  <element name="xs:list"
         doc:href="http://www.w3.org/TR/xmlschema-1/#element-list">
     <ref name="annotated" />
     <choice>      
@@ -1655,7 +1652,7 @@
     types in the memberTypes attribute.  This constraint cannot be expressed 
     in XML Schema.
   </doc:p>
-  <element name="union"
+  <element name="xs:union"
         doc:href="http://www.w3.org/TR/xmlschema-1/#element-union">
     <ref name="annotated" />
     <choice>
@@ -1737,7 +1734,7 @@
   <doc:p>
     This describes a minExclusive element.
   </doc:p>
-  <element name="minExclusive"
+  <element name="xs:minExclusive"
         doc:href="http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/datatypes.html#element-minExclusive">
     <ref name="rangeFacet" />
   </element>
@@ -1747,7 +1744,7 @@
   <doc:p>
     This describes a minInclusive element.
   </doc:p>
-  <element name="minInclusive"
+  <element name="xs:minInclusive"
         doc:href="http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/datatypes.html#element-minInclusive">
     <ref name="rangeFacet" />
   </element>
@@ -1757,7 +1754,7 @@
   <doc:p>
     This describes a maxExclusive element.
   </doc:p>
-  <element name="maxExclusive"
+  <element name="xs:maxExclusive"
         doc:href="http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/datatypes.html#element-maxExclusive">
     <ref name="rangeFacet" />
   </element>
@@ -1767,7 +1764,7 @@
   <doc:p>
     This describes a maxInclusive element.
   </doc:p>
-  <element name="maxInclusive"
+  <element name="xs:maxInclusive"
         doc:href="http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/datatypes.html#element-maxInclusive">
     <ref name="rangeFacet" />
   </element>
@@ -1788,7 +1785,7 @@
     This describes a totalDigits element.  The value attribute must take a 
     positive integer.
   </doc:p>
-  <element name="totalDigits"
+  <element name="xs:totalDigits"
         doc:href="http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/datatypes.html#element-totalDigits">
     <ref name="facet" />
     <attribute name="value">
@@ -1801,7 +1798,7 @@
   <doc:p>
     This describes a fractionDigits element.
   </doc:p>
-  <element name="fractionDigits"
+  <element name="xs:fractionDigits"
         doc:href="http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/datatypes.html#element-fractionDigits">
     <ref name="numFacet" />
   </element>
@@ -1811,7 +1808,7 @@
   <doc:p>
     This describes a length element.
   </doc:p>
-  <element name="length"
+  <element name="xs:length"
         doc:href="http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/datatypes.html#element-length">
     <ref name="numFacet" />
   </element>
@@ -1821,7 +1818,7 @@
   <doc:p>
     This describes a minLength element.
   </doc:p>
-  <element name="minLength"
+  <element name="xs:minLength"
         doc:href="http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/datatypes.html#element-minLength">
     <ref name="numFacet" />
   </element>
@@ -1831,7 +1828,7 @@
   <doc:p>
     This describes a maxLength element.
   </doc:p>
-  <element name="maxLength"
+  <element name="xs:maxLength"
         doc:href="http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/datatypes.html#element-maxLength">
     <ref name="numFacet" />
   </element>
@@ -1841,7 +1838,7 @@
   <doc:p>
     This describes an enumeration element.
   </doc:p>
-  <element name="enumeration"
+  <element name="xs:enumeration"
         doc:href="http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/datatypes.html#element-enumeration">
     <ref name="noFixedFacet" />
   </element>
@@ -1852,7 +1849,7 @@
     This describes a whiteSpace element that can take any of the permitted 
     values.
   </doc:p>
-  <element name="whiteSpace"
+  <element name="xs:whiteSpace"
         doc:href="http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/datatypes.html#element-whiteSpace">
     <ref name="facet" />
     <attribute name="value">
@@ -1870,7 +1867,7 @@
     This describes a whiteSpace element that can only take the values 
     'replace' or 'collapse'.
   </doc:p>
-  <element name="whiteSpace"
+  <element name="xs:whiteSpace"
         doc:href="http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/datatypes.html#element-whiteSpace">
     <ref name="facet" />
     <attribute name="value">
@@ -1887,7 +1884,7 @@
     This describes a whiteSpace element that can only take the value 
     'collapse'.
   </doc:p>
-  <element name="whiteSpace"
+  <element name="xs:whiteSpace"
         doc:href="http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/datatypes.html#element-whiteSpace">
     <ref name="facet" />
     <attribute name="value">
@@ -1900,7 +1897,7 @@
   <doc:p>
     This describes a pattern element.
   </doc:p>
-  <element name="pattern"
+  <element name="xs:pattern"
         doc:href="http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/datatypes.html#element-pattern">
     <ref name="noFixedFacet" />
   </element>
