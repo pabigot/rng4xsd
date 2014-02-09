@@ -1,0 +1,14 @@
+#!/bin/sh
+
+echo "Running pass tests with xmllint..."
+xmllint --noout --relaxng xsd10.rng pass10/*.xsd
+echo "Running fail tests with xmllint..."
+xmllint --noout --relaxng xsd10.rng fail10/*.xsd
+
+if [ -f jing.jar ] ; then
+  echo "Running pass tests with (modified) jing"
+  java -jar jing.jar xsd10.rng pass10/*.xsd
+  echo "Running fail tests with (modified) jing"
+  java -jar jing.jar xsd10.rng fail10/*.xsd
+fi
+

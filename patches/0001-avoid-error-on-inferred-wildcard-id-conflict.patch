@@ -1,0 +1,49 @@
+From f602ce495ee5cb5324ff1c128704e168d8a692c9 Mon Sep 17 00:00:00 2001
+From: "Peter A. Bigot" <pab@pabigot.com>
+Date: Sun, 9 Feb 2014 10:11:48 -0600
+Subject: [PATCH] avoid error on inferred wildcard id conflict
+
+If an ID conflict is inferred because a potential conflict exists due to
+a wildcard attribute, emit a warning rather than an error.
+---
+ .../relaxng/pattern/IdTypeMapBuilder.java               | 17 ++++++++++++++++-
+ 1 file changed, 16 insertions(+), 1 deletion(-)
+
+diff --git a/mod/pattern/src/main/com/thaiopensource/relaxng/pattern/IdTypeMapBuilder.java b/mod/pattern/src/main/com/thaiopensource/relaxng/pattern/IdTypeMapBuilder.java
+index 393d120..3f13b5e 100644
+--- a/mod/pattern/src/main/com/thaiopensource/relaxng/pattern/IdTypeMapBuilder.java
++++ b/mod/pattern/src/main/com/thaiopensource/relaxng/pattern/IdTypeMapBuilder.java
+@@ -279,6 +279,17 @@ public class IdTypeMapBuilder {
+      }
+   }
+ 
++  private void warning(String key, Name arg1, Name arg2, Locator locator) {
++   if (eh != null)
++     try {
++       eh.warning(new SAXParseException(SchemaBuilderImpl.localizer.message(key, NameFormatter.format(arg1), NameFormatter.format(arg2)),
++                                      locator));
++     }
++     catch (SAXException e) {
++       throw new WrappedSAXException(e);
++     }
++  }
++
+   public IdTypeMapBuilder(ErrorHandler eh, Pattern pattern) throws SAXException {
+     this.eh = eh;
+     try {
+@@ -301,7 +312,11 @@ public class IdTypeMapBuilder {
+           for (ScopedName sn : idTypeMap.table.keySet()) {
+             if (pc.elementNameClass.contains(sn.elementName)
+                 && pc.attributeNameClass.contains(sn.attributeName)) {
+-              error("id_type_conflict", sn.elementName, sn.attributeName, pc.locator);
++              if (pc.attributeNameClass instanceof AnyNameClass
++                  || pc.attributeNameClass instanceof AnyNameExceptNameClass)
++                warning("id_type_conflict", sn.elementName, sn.attributeName, pc.locator);
++              else
++                error("id_type_conflict", sn.elementName, sn.attributeName, pc.locator);
+               break;
+             }
+           }
+-- 
+1.8.4
+

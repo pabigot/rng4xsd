@@ -10,8 +10,15 @@ for some background.
 
 Changes in this repository reflect modifications required to fix false
 diagnostics on a subset of the [Open Geospatial Consortium,
-Inc.](http://www.opengeospatial.org/) schemas, as well as other schemas
-supported by [PyXB](http://pyxb.sourceforge.net/).  XSD schema herein
-validate the changes.
+Inc.](http://www.opengeospatial.org/) schemas and other schemas
+supported by [PyXB](http://pyxb.sourceforge.net/).
+
+XSD schema that should pass validation are in `pass10`; schema that
+should fail validation are in `fail10`.  The script `runchecks` invokes
+xmllint and (optionally)
+[Jing](http://www.thaiopensource.com/relaxng/jing.html) on these tests.
+Due to [jing-trang issue
+178](https://code.google.com/p/jing-trang/issues/detail?id=178) a patch
+in `patches` may need to be applied to Jing.
 
 An XSD 1.1 variant is in the work queue.
