@@ -7,10 +7,11 @@
 
 <doc:p>
   RELAX NG schema for XML Schema by <doc:link
-  href="mailto:mail@jenitennison.com">Jeni Tennison</doc:link>.  <a
-  href="https://github.com/pabigot/rng4xsd">Additional
-  modifications</a> by <doc:link href="http://www.pabigot.com/">Peter
-  A. Bigot</doc:link>.  Based on <doc:link
+  href="mailto:mail@jenitennison.com">Jeni Tennison</doc:link>.
+  <doc:link href="https://github.com/pabigot/rng4xsd">Additional
+  modifications</doc:link> by <doc:link
+  href="http://www.pabigot.com/">Peter A. Bigot</doc:link>.  Based on
+  <doc:link
   href="http://www.w3.org/TR/2001/REC-xmlschema-1-20010502/">XML
   Schema Part I: Structures Recommendation</doc:link> and <doc:link
   href="http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/">XML
