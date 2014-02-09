@@ -1,4 +1,4 @@
-This repository contains [RelaxNG](http://relaxng.org/) schema for the
+This repository contains [RELAX NG](http://relaxng.org/) schema for the
 [W3C XML Schema Definition Language](http://www.w3.org/TR/xmlschema-1).
 
 The work is based on
