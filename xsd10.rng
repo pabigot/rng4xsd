@@ -1212,24 +1212,23 @@
   <doc:p>
     This describes an appinfo element.  It permits arbitrary
     attributes, except from the XSD namespace.  It explicitly permits
-    a source attribute in no namespace with anyURI data type, but
-    RelaxNG treats that as conflicting with the attribute wildcard so
-    it's commented out.  The element can contain anything.
+    a source attribute in no namespace with anyURI data type.  The
+    element can contain anything.
   </doc:p>
   <element name="appinfo"
         doc:href="http://www.w3.org/TR/xmlschema-1/#element-appinfo">
-    <!-- Cannot include with wildcard attribute in RelaxNG
     <optional>
-      <attribute name="source">
+      <attribute>
+        <name ns="">source</name>
         <data type="anyURI" />
       </attribute>
     </optional>
-    -->
     <zeroOrMore>
       <attribute>
         <anyName>
           <except>
             <nsName ns="http://www.w3.org/2001/XMLSchema" />
+            <name ns="">source</name>
           </except>
         </anyName>
       </attribute>
@@ -1245,13 +1244,12 @@
   </doc:p>
   <element name="documentation"
         doc:href="http://www.w3.org/TR/xmlschema-1/#element-documentation">
-    <!-- Cannot include with wildcard attribute in RelaxNG
     <optional>
-      <attribute name="source">
+      <attribute>
+        <name ns="">source</name>
         <data type="anyURI" />
       </attribute>
     </optional>
-    -->
     <optional>
       <attribute name="xml:lang">
         <data type="language" />
@@ -1262,6 +1260,7 @@
         <anyName>
           <except>
             <nsName ns="http://www.w3.org/2001/XMLSchema" />
+            <name ns="">source</name>
             <name>xml:lang</name>
           </except>
         </anyName>

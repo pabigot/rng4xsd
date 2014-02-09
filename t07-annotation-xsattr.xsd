@@ -2,8 +2,9 @@
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:o="urn:other">
   <xs:annotation>
     <xs:documentation source="urn:bogus"/>
+    <xs:documentation xml:lang="en"/>
     <!-- Unrecognized attributes in other namespaces are permitted -->
     <xs:documentation o:unknown="false"/>
-    <xs:documentation xml:lang="en"/>
+    <xs:documentation o:source="urn:bogus"/>
   </xs:annotation>
 </xs:schema>
