@@ -1192,16 +1192,30 @@
 
 <define name="appinfo">
   <doc:p>
-    This describes an appinfo element.  It has an optional source attribute 
-    and can currently contain anything at all.
+    This describes an appinfo element.  It permits arbitrary
+    attributes, except from the XSD namespace.  It explicitly permits
+    a source attribute in no namespace with anyURI data type, but
+    RelaxNG treats that as conflicting with the attribute wildcard so
+    it's commented out.  The element can contain anything.
   </doc:p>
   <element name="appinfo"
         doc:href="http://www.w3.org/TR/xmlschema-1/#element-appinfo">
+    <!-- Cannot include with wildcard attribute in RelaxNG
     <optional>
       <attribute name="source">
         <data type="anyURI" />
       </attribute>
     </optional>
+    -->
+    <zeroOrMore>
+      <attribute>
+        <anyName>
+          <except>
+            <nsName ns="http://www.w3.org/2001/XMLSchema" />
+          </except>
+        </anyName>
+      </attribute>
+    </zeroOrMore>
     <ref name="anyContent" />
   </element>
 </define>
@@ -1213,16 +1227,28 @@
   </doc:p>
   <element name="documentation"
         doc:href="http://www.w3.org/TR/xmlschema-1/#element-documentation">
+    <!-- Cannot include with wildcard attribute in RelaxNG
     <optional>
       <attribute name="source">
         <data type="anyURI" />
       </attribute>
     </optional>
+    -->
     <optional>
       <attribute name="xml:lang">
         <data type="language" />
       </attribute>
     </optional>
+    <zeroOrMore>
+      <attribute>
+        <anyName>
+          <except>
+            <nsName ns="http://www.w3.org/2001/XMLSchema" />
+            <name>xml:lang</name>
+          </except>
+        </anyName>
+      </attribute>
+    </zeroOrMore>
     <ref name="anyContent" />
   </element>
 </define>

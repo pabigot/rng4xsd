@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:o="urn:other">
+  <xs:annotation>
+    <xs:documentation source="urn:bogus"/>
+    <!-- Unrecognized attributes in other namespaces are permitted -->
+    <xs:documentation o:unknown="false"/>
+    <xs:documentation xml:lang="en"/>
+  </xs:annotation>
+</xs:schema>
