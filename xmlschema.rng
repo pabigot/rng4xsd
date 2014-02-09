@@ -1166,17 +1166,14 @@
   </element>
 </define>
 
-<define name="appinfoContent">
-  <doc:p>
-    This is designed to describe the content of the appinfo elements in the 
-    schema.  At the moment this allows any mixed content without validation.  
-    Note that this is fairly complex compared to the XML Schema equivalent, 
-    which would be a single any element.
-  </doc:p>
-  <ref name="anyContent" />
-</define>
-
 <define name="anyContent">
+  <doc:p>
+    This is designed to describe the content of the annotation
+    sub-elements in the schema.  At the moment this allows any mixed
+    content without validation.  Note that this is fairly complex
+    compared to the XML Schema equivalent, which would be a single any
+    element.
+  </doc:p>
   <mixed>
     <zeroOrMore>
       <element>
@@ -1205,18 +1202,8 @@
         <data type="anyURI" />
       </attribute>
     </optional>
-    <ref name="appinfoContent" />
+    <ref name="anyContent" />
   </element>
-</define>
-
-<define name="documentationContent">
-  <doc:p>
-    This is designed to describe the content of the documentation elements in 
-    the schema.  At the moment this allows any mixed content without 
-    validation.  Note that this is fairly complex compared to the XML Schema 
-    equivalent, which would be a single any element.
-  </doc:p>
-  <ref name="anyContent" />
 </define>
 
 <define name="documentation">
@@ -1236,7 +1223,7 @@
         </attribute>
       </choice>
     </zeroOrMore>
-    <ref name="documentationContent" />
+    <ref name="anyContent" />
   </element>
 </define>
 
