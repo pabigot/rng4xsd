@@ -6,12 +6,15 @@
       xmlns:doc="http://www.jenitennison.com/doc">
 
 <doc:p>
-  RELAX NG schema for XML Schema by <doc:link 
-  href="mailto:mail@jenitennison.com">Jeni Tennison</doc:link>. Based on 
-  <doc:link href="http://www.w3.org/TR/2001/REC-xmlschema-1-20010502/">XML 
-  Schema Part I: Structures Recommendation</doc:link> and <doc:link 
-  href="http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/">XML Schema Part 
-  II: Datatypes</doc:link>.
+  RELAX NG schema for XML Schema by <doc:link
+  href="mailto:mail@jenitennison.com">Jeni Tennison</doc:link>.  <a
+  href="https://github.com/pabigot/rng4xsd">Additional
+  modifications</a> by <doc:link href="http://www.pabigot.com/">Peter
+  A. Bigot</doc:link>.  Based on <doc:link
+  href="http://www.w3.org/TR/2001/REC-xmlschema-1-20010502/">XML
+  Schema Part I: Structures Recommendation</doc:link> and <doc:link
+  href="http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/">XML
+  Schema Part II: Datatypes</doc:link>.
 </doc:p>
 <doc:changes date="2001-11-24">
   <doc:p>
@@ -31,6 +34,18 @@
 <doc:changes date="2004-10-12">
   <doc:p>Amended to comply with final version of RNG.</doc:p>
   <doc:change>Changed to avoid conflicting ID types.</doc:change>
+</doc:changes>
+<doc:changes date="2014-02-08">
+  <doc:p>Amended by pabigot to fix assorted issues.</doc:p>
+  <doc:change>correct schema finalDefault value space</doc:change>
+  <doc:change>correct validation of simple content restriction of complex types</doc:change>
+  <doc:change>allow annotation of element reference</doc:change>
+  <doc:change>mixed permitted on complexType with simple content</doc:change>
+  <doc:change>annotation permits unrecognized content in xs namespace</doc:change>
+  <doc:change>refactor to remove unnecessary annotation subtypes</doc:change>
+  <doc:change>refactor documentation attribute description</doc:change>
+  <doc:change>correct annotation sub-element support for wildcard attributes</doc:change>
+  <doc:change>accept default values for element references</doc:change>
 </doc:changes>
 
 <define name="openAttrs">
