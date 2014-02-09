@@ -1,10 +1,14 @@
-From f602ce495ee5cb5324ff1c128704e168d8a692c9 Mon Sep 17 00:00:00 2001
+From cc336bbcc5d4ca236592aeea7293d703ef11e9fe Mon Sep 17 00:00:00 2001
 From: "Peter A. Bigot" <pab@pabigot.com>
 Date: Sun, 9 Feb 2014 10:11:48 -0600
 Subject: [PATCH] avoid error on inferred wildcard id conflict
 
 If an ID conflict is inferred because a potential conflict exists due to
 a wildcard attribute, emit a warning rather than an error.
+
+This fixes issue 178, at least to my satisfaction.
+
+Issue: https://code.google.com/p/jing-trang/issues/detail?id=178
 ---
  .../relaxng/pattern/IdTypeMapBuilder.java               | 17 ++++++++++++++++-
  1 file changed, 16 insertions(+), 1 deletion(-)
