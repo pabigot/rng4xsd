@@ -78,7 +78,8 @@
   </doc:p>
   <ref name="openAttrs" />
   <optional>
-    <attribute name="id">
+    <attribute>
+      <name ns="">id</name>
       <data type="ID" />
     </attribute>
   </optional>
@@ -191,22 +192,28 @@
     <ref name="openAttrs" />
     <zeroOrMore>
       <choice>
-        <attribute name="version">
+        <attribute>
+          <name ns="">version</name>
           <data type="token" />
         </attribute>
-        <attribute name="finalDefault">
+        <attribute>
+          <name ns="">finalDefault</name>
           <ref name="fullDerivationSet" />
         </attribute>
-        <attribute name="blockDefault">
+        <attribute>
+          <name ns="">blockDefault</name>
           <ref name="blockSet" />
         </attribute>
-        <attribute name="attributeFormDefault">
+        <attribute>
+          <name ns="">attributeFormDefault</name>
           <ref name="formChoice" />
         </attribute>
-        <attribute name="elementFormDefault">
+        <attribute>
+          <name ns="">elementFormDefault</name>
           <ref name="formChoice" />
         </attribute>
-        <attribute name="id">
+        <attribute>
+          <name ns="">id</name>
           <data type="ID" />
         </attribute>
         <attribute name="xml:lang">
@@ -221,7 +228,8 @@
           element, then the namespace attribute on the import elements 
           that it contains are optional.
         </doc:p>
-        <attribute name="targetNamespace">
+        <attribute>
+          <name ns="">targetNamespace</name>
           <data type="anyURI" />
         </attribute>
         <zeroOrMore>
@@ -274,10 +282,12 @@
   </doc:p>
   <zeroOrMore>
     <choice>
-      <attribute name="minOccurs">
+      <attribute>
+        <name ns="">minOccurs</name>
         <data type="nonNegativeInteger" />
       </attribute>
-      <attribute name="maxOccurs">
+      <attribute>
+        <name ns="">maxOccurs</name>
         <ref name="allNNI" />
       </attribute>
     </choice>
@@ -330,7 +340,8 @@
   </doc:p>
   <choice>
     <empty />
-    <attribute name="type">
+    <attribute>
+      <name ns="">type</name>
       <data type="QName" />
     </attribute>
     <ref name="localSimpleType" />
@@ -349,7 +360,8 @@
         doc:href="http://www.w3.org/TR/xmlschema-1/#element-attribute">
     <ref name="annotated" />
     <optional>
-      <attribute name="use">
+      <attribute>
+        <name ns="">use</name>
         <choice>
           <value type="token">optional</value>
           <value type="token">prohibited</value>
@@ -359,15 +371,18 @@
     </optional>
     <ref name="fixedOrDefault" />
     <choice>
-      <attribute name="ref">
+      <attribute>
+        <name ns="">ref</name>
         <data type="QName" />
       </attribute>
       <group>
-        <attribute name="name">
+        <attribute>
+          <name ns="">name</name>
           <data type="NCName" />
         </attribute>
         <optional>
-          <attribute name="form">
+          <attribute>
+            <name ns="">form</name>
             <ref name="formChoice" />
           </attribute>
         </optional>        
@@ -388,7 +403,8 @@
   <element name="attribute"
         doc:href="http://www.w3.org/TR/xmlschema-1/#element-attribute">
     <ref name="annotated" />
-    <attribute name="name">
+    <attribute>
+      <name ns="">name</name>
       <data type="NCName" />
     </attribute>
     <ref name="fixedOrDefault" />
@@ -429,7 +445,8 @@
   </doc:p>
   <ref name="annotated" />
   <optional>
-    <attribute name="mixed">
+    <attribute>
+      <name ns="">mixed</name>
       <data type="boolean" />
     </attribute>
   </optional>
@@ -455,18 +472,22 @@
   <element name="complexType"
         doc:href="http://www.w3.org/TR/xmlschema-1/#element-complexType">
     <ref name="complexType" />
-    <attribute name="name">
+    <attribute>
+      <name ns="">name</name>
       <data type="NCName" />
     </attribute>
     <zeroOrMore>
       <choice>
-        <attribute name="abstract">
+        <attribute>
+          <name ns="">abstract</name>
           <data type="boolean" />
         </attribute>
-        <attribute name="block">
+        <attribute>
+          <name ns="">block</name>
           <ref name="derivationSet" />
         </attribute>
-        <attribute name="final">
+        <attribute>
+          <name ns="">final</name>
           <ref name="derivationSet" />
         </attribute>
       </choice>
@@ -494,7 +515,8 @@
   <element name="restriction"
         doc:href="http://www.w3.org/TR/xmlschema-1/#element-complexContent::restriction">
     <ref name="annotated" />
-    <attribute name="base">
+    <attribute>
+      <name ns="">base</name>
       <data type="QName" />
     </attribute>
     <optional>
@@ -510,7 +532,8 @@
     required base attribute to the model used for most components.
   </doc:p>
   <ref name="annotated" />
-  <attribute name="base">
+  <attribute>
+    <name ns="">base</name>
     <data type="QName" />
   </attribute>
 </define>
@@ -540,7 +563,8 @@
         doc:href="http://www.w3.org/TR/xmlschema-1/#element-complexContent">
     <ref name="annotated" />
     <optional>
-      <attribute name="mixed">
+      <attribute>
+        <name ns="">mixed</name>
         <data type="boolean" />
       </attribute>
     </optional>
@@ -575,7 +599,8 @@
         doc:href="http://www.w3.org/TR/xmlschema-1/#element-simpleContent::restriction">
     <ref name="annotated" />
     <group>
-      <attribute name="base">
+      <attribute>
+        <name ns="">base</name>
         <data type="QName" />
       </attribute>
       <optional>
@@ -650,17 +675,20 @@
   <ref name="fixedOrDefault" />
   <zeroOrMore>
     <choice>
-      <attribute name="nillable">
+      <attribute>
+        <name ns="">nillable</name>
         <data type="boolean" />
       </attribute>
-      <attribute name="block">
+      <attribute>
+        <name ns="">block</name>
         <ref name="blockSet" />
       </attribute>
     </choice>
   </zeroOrMore>
   <choice>
     <empty />
-    <attribute name="type">
+    <attribute>
+      <name ns="">type</name>
       <data type="QName" />
     </attribute>
     <ref name="localSimpleType" />
@@ -681,18 +709,22 @@
   <element name="element"
         doc:href="http://www.w3.org/TR/xmlschema-1/#element-element">
     <ref name="element" />
-    <attribute name="name">
+    <attribute>
+      <name ns="">name</name>
       <data type="NCName" />
     </attribute>
     <zeroOrMore>
       <choice>
-        <attribute name="substitutionGroup">
+        <attribute>
+          <name ns="">substitutionGroup</name>
           <data type="QName" />
         </attribute>
-        <attribute name="abstract">
+        <attribute>
+          <name ns="">abstract</name>
           <data type="boolean" />
         </attribute>
-        <attribute name="final">
+        <attribute>
+          <name ns="">final</name>
           <ref name="derivationSet" />
         </attribute>
       </choice>
@@ -715,7 +747,8 @@
     <ref name="occurs" />
     <choice>
       <group>
-        <attribute name="ref">
+        <attribute>
+          <name ns="">ref</name>
           <data type="QName" />
         </attribute>
         <optional>
@@ -725,11 +758,13 @@
       </group>
       <group>
         <ref name="element" />
-        <attribute name="name">
+        <attribute>
+          <name ns="">name</name>
           <data type="NCName" />
         </attribute>
         <optional>
-          <attribute name="form">
+          <attribute>
+          <name ns="">form</name>
             <ref name="formChoice" />
           </attribute>
         </optional>
@@ -747,7 +782,8 @@
   <element name="group"
         doc:href="http://www.w3.org/TR/xmlschema-1/#element-group">
     <ref name="annotated" />
-    <attribute name="name">
+    <attribute>
+      <name ns="">name</name>
       <data type="NCName" />
     </attribute>
     <choice>
@@ -774,7 +810,8 @@
         doc:href="http://www.w3.org/TR/xmlschema-1/#element-group">
     <ref name="annotated" />
     <ref name="occurs" />
-    <attribute name="ref">
+    <attribute>
+      <name ns="">ref</name>
       <data type="QName" />
     </attribute>
   </element>
@@ -816,13 +853,15 @@
     <element name="element">
       <zeroOrMore>
         <choice>
-          <attribute name="minOccurs">
+          <attribute>
+            <name ns="">minOccurs</name>
             <choice>
               <value type="nonNegativeInteger">0</value>
               <value type="nonNegativeInteger">1</value>
             </choice>
           </attribute>
-          <attribute name="maxOccurs">
+          <attribute>
+            <name ns="">maxOccurs</name>
             <choice>
               <value type="nonNegativeInteger">0</value>
               <value type="nonNegativeInteger">1</value>
@@ -832,7 +871,8 @@
       </zeroOrMore>
       <choice>
         <group>
-          <attribute name="ref">
+          <attribute>
+            <name ns="">ref</name>
             <data type="QName" />
           </attribute>
           <optional>
@@ -842,11 +882,13 @@
         </group>
         <group>
           <ref name="element" />
-          <attribute name="name">
+          <attribute>
+            <name ns="">name</name>
             <data type="NCName" />
           </attribute>
           <optional>
-            <attribute name="form">
+            <attribute>
+              <name ns="">form</name>
               <ref name="formChoice" />
             </attribute>
           </optional>
@@ -868,13 +910,15 @@
     <ref name="allModel" />
     <zeroOrMore>
       <choice>
-        <attribute name="minOccurs">
+        <attribute>
+          <name ns="">minOccurs</name>
           <choice>
             <value type="nonNegativeInteger">0</value>
             <value type="nonNegativeInteger">1</value>
           </choice>
         </attribute>
-        <attribute name="maxOccurs">
+        <attribute>
+          <name ns="">maxOccurs</name>
           <value type="nonNegativeInteger">1</value>
         </attribute>
       </choice>
@@ -914,7 +958,8 @@
   <ref name="annotated" />
   <zeroOrMore>
     <choice>
-      <attribute name="namespace">
+      <attribute>
+        <name ns="">namespace</name>
         <choice>
           <value type="token">##any</value>
           <value type="token">##other</value>
@@ -929,7 +974,8 @@
           </list>
         </choice>
       </attribute>
-      <attribute name="processContents">
+      <attribute>
+        <name ns="">processContents</name>
         <choice>
           <value type="token">lax</value>
           <value type="token">skip</value>
@@ -960,7 +1006,8 @@
   <element name="attributeGroup"
         doc:href="http://www.w3.org/TR/xmlschema-1/#element-attributeGroup">
     <ref name="annotated" />
-    <attribute name="name">
+    <attribute>
+      <name ns="">name</name>
       <data type="NCName" />
     </attribute>
     <ref name="attrDecls" />
@@ -975,7 +1022,8 @@
   <element name="attributeGroup"
         doc:href="http://www.w3.org/TR/xmlschema-1/#element-attributeGroup">
     <ref name="annotated" />
-    <attribute name="ref">
+    <attribute>
+      <name ns="">ref</name>
       <data type="QName" />
     </attribute>
   </element>
@@ -989,7 +1037,8 @@
   <element name="include"
         doc:href="http://www.w3.org/TR/xmlschema-1/#element-include">
     <ref name="annotated" />
-    <attribute name="schemaLocation">
+    <attribute>
+      <name ns="">schemaLocation</name>
       <data type="anyURI" />
     </attribute>
   </element>
@@ -1005,11 +1054,13 @@
         doc:href="http://www.w3.org/TR/xmlschema-1/#element-redefine">
     <ref name="openAttrs" />
     <optional>
-      <attribute name="id">
+      <attribute>
+        <name ns="">id</name>
         <data type="ID" />
       </attribute>
     </optional>
-    <attribute name="schemaLocation">
+    <attribute>
+      <name ns="">schemaLocation</name>
       <data type="anyURI" />
     </attribute>
     <zeroOrMore>
@@ -1028,7 +1079,8 @@
   </doc:p>
   <ref name="annotated" />
   <optional>
-    <attribute name="schemaLocation">
+    <attribute>
+      <name ns="">schemaLocation</name>
       <data type="anyURI" />
     </attribute>
   </optional>
@@ -1043,7 +1095,8 @@
   <element name="import"
         doc:href="http://www.w3.org/TR/xmlschema-1/#element-import">
     <ref name="import" />
-    <attribute name="namespace">
+    <attribute>
+      <name ns="">namespace</name>
       <data type="anyURI" />
     </attribute>
   </element>
@@ -1059,7 +1112,8 @@
         doc:href="http://www.w3.org/TR/xmlschema-1/#element-import">
     <ref name="import" />
     <optional>
-      <attribute name="namespace">
+      <attribute>
+        <name ns="">namespace</name>
         <data type="anyURI" />
       </attribute>
     </optional>
@@ -1075,7 +1129,8 @@
   <element name="selector"
         doc:href="http://www.w3.org/TR/xmlschema-1/#element-selector">
     <ref name="annotated" />
-    <attribute name="xpath">
+    <attribute>
+      <name ns="">xpath</name>
       <data type="token">
         <param name="pattern">(\.//)?(((child::)?((\i\c*:)?(\i\c*|\*)))|\.)(/(((child::)?((\i\c*:)?(\i\c*|\*)))|\.))*(\|(\.//)?(((child::)?((\i\c*:)?(\i\c*|\*)))|\.)(/(((child::)?((\i\c*:)?(\i\c*|\*)))|\.))*)*</param>
       </data>
@@ -1092,7 +1147,8 @@
   <element name="field"
         doc:href="http://www.w3.org/TR/xmlschema-1/#element-field">
     <ref name="annotated" />
-    <attribute name="xpath">
+    <attribute>
+      <name ns="">xpath</name>
       <data type="token">
         <param name="pattern">(\.//)?((((child::)?((\i\c*:)?(\i\c*|\*)))|\.)/)*((((child::)?((\i\c*:)?(\i\c*|\*)))|\.)|((attribute::|@)((\i\c*:)?(\i\c*|\*))))(\|(\.//)?((((child::)?((\i\c*:)?(\i\c*|\*)))|\.)/)*((((child::)?((\i\c*:)?(\i\c*|\*)))|\.)|((attribute::|@)((\i\c*:)?(\i\c*|\*)))))*</param>
       </data>
@@ -1107,7 +1163,8 @@
     one or more field elements.
   </doc:p>
   <ref name="annotated" />
-  <attribute name="name">
+  <attribute>
+    <name ns="">name</name>
     <data type="NCName" />
   </attribute>
   <ref name="selector" />
@@ -1155,7 +1212,8 @@
   <element name="keyref"
         doc:href="http://www.w3.org/TR/xmlschema-1/#element-keyref">
     <ref name="keybase" />
-    <attribute name="refer">
+    <attribute>
+      <name ns="">refer</name>
       <data type="QName" />
     </attribute>
   </element>
@@ -1170,14 +1228,17 @@
   <element name="notation"
         doc:href="http://www.w3.org/TR/xmlschema-1/#element-notation">
     <ref name="annotated" />
-    <attribute name="name">
+    <attribute>
+      <name ns="">name</name>
       <data type="NCName" />
     </attribute>
-    <attribute name="public">
+    <attribute>
+      <name ns="">public</name>
       <data type="token" />
     </attribute>
     <optional>
-      <attribute name="system">
+      <attribute>
+        <name ns="">system</name>
         <data type="anyURI" />
       </attribute>
     </optional>
@@ -1284,7 +1345,8 @@
         doc:href="http://www.w3.org/TR/xmlschema-1/#element-annotation">
     <ref name="openAttrs" />
     <optional>
-      <attribute name="id">
+      <attribute>
+        <name ns="">id</name>
         <data type="ID" />
       </attribute>
     </optional>
@@ -1345,11 +1407,13 @@
   <element name="simpleType"
         doc:href="http://www.w3.org/TR/xmlschema-1/#element-simpleType">
     <ref name="simpleType" />
-    <attribute name="name">
+    <attribute>
+      <name ns="">name</name>
       <data type="NCName" />
     </attribute>
     <optional>
-      <attribute name="final">
+      <attribute>
+        <name ns="">final</name>
         <ref name="simpleDerivationSet" />
       </attribute>
     </optional>
@@ -1474,7 +1538,8 @@
   </doc:p>
   <choice>
     <group>
-      <attribute name="base">
+      <attribute>
+        <name ns="">base</name>
         <value type="QName">xs:anySimpleType</value>
       </attribute>
       <interleave>
@@ -1493,7 +1558,8 @@
       </interleave>
     </group>
     <group>
-      <attribute name="base">
+      <attribute>
+        <name ns="">base</name>
         <value type="QName">xs:string</value>
       </attribute>
       <interleave>
@@ -1510,7 +1576,8 @@
       </interleave>
     </group>
     <group>
-      <attribute name="base">
+      <attribute>
+        <name ns="">base</name>
         <choice>
           <value type="QName">xs:normalizedString</value>
         </choice>
@@ -1529,7 +1596,8 @@
       </interleave>
     </group>
     <group>
-      <attribute name="base">
+      <attribute>
+        <name ns="">base</name>
         <choice>
           <value type="QName">xs:token</value>
           <value type="QName">xs:language</value>
@@ -1555,7 +1623,8 @@
       </interleave>
     </group>
     <group>
-      <attribute name="base">
+      <attribute>
+        <name ns="">base</name>
         <value type="QName">xs:boolean</value>
       </attribute>
       <interleave>
@@ -1568,7 +1637,8 @@
       </interleave>
     </group>
     <group>
-      <attribute name="base">
+      <attribute>
+        <name ns="">base</name>
         <choice>
           <value type="QName">xs:decimal</value>
           <value type="QName">xs:integer</value>
@@ -1593,7 +1663,8 @@
       </interleave>
     </group>
     <group>
-      <attribute name="base">
+      <attribute>
+        <name ns="">base</name>
         <choice>
           <value type="QName">xs:float</value>
           <value type="QName">xs:double</value>
@@ -1619,7 +1690,8 @@
         always match the following -->
     <group>
       <choice>
-        <attribute name="base">
+        <attribute>
+          <name ns="">base</name>
           <data type="QName" />
         </attribute>
         <ref name="localSimpleType" />
@@ -1640,7 +1712,8 @@
     <ref name="annotated" />
     <choice>      
       <ref name="localSimpleType" />
-      <attribute name="itemType">
+      <attribute>
+        <name ns="">itemType</name>
         <data type="QName" />
       </attribute>
     </choice>
@@ -1660,7 +1733,8 @@
     <ref name="annotated" />
     <choice>
       <group>
-        <attribute name="memberTypes">
+        <attribute>
+          <name ns="">memberTypes</name>
           <list>
             <oneOrMore>
               <data type="QName" />
@@ -1673,7 +1747,8 @@
       </group>
       <group>
         <optional>
-          <attribute name="memberTypes">
+          <attribute>
+            <name ns="">memberTypes</name>
             <empty />
           </attribute>
         </optional>
@@ -1691,7 +1766,8 @@
   </doc:p>
   <ref name="annotated" />
   <optional>
-    <attribute name="fixed">
+    <attribute>
+      <name ns="">fixed</name>
       <data type="boolean" />
     </attribute>
   </optional>
@@ -1715,7 +1791,8 @@
     very complicated (although it would be possible in RELAX NG).
   </doc:p>
   <ref name="facet" />
-  <attribute name="value">
+  <attribute>
+    <name ns="">value</name>
     <choice>
       <data type="decimal" />
       <data type="float" />
@@ -1778,7 +1855,8 @@
     This is the content of a numerical facet.
   </doc:p>
   <ref name="facet" />
-  <attribute name="value">
+  <attribute>
+    <name ns="">value</name>
     <data type="nonNegativeInteger" />
   </attribute>
 </define>
@@ -1791,7 +1869,8 @@
   <element name="totalDigits"
         doc:href="http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/datatypes.html#element-totalDigits">
     <ref name="facet" />
-    <attribute name="value">
+    <attribute>
+      <name ns="">value</name>
       <data type="positiveInteger" />
     </attribute>
   </element>
@@ -1855,7 +1934,8 @@
   <element name="whiteSpace"
         doc:href="http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/datatypes.html#element-whiteSpace">
     <ref name="facet" />
-    <attribute name="value">
+    <attribute>
+      <name ns="">value</name>
       <choice>
         <value type="token">preserve</value>
         <value type="token">replace</value>
@@ -1873,7 +1953,8 @@
   <element name="whiteSpace"
         doc:href="http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/datatypes.html#element-whiteSpace">
     <ref name="facet" />
-    <attribute name="value">
+    <attribute>
+      <name ns="">value</name>
       <choice>
         <value type="token">replace</value>
         <value type="token">collapse</value>
@@ -1890,7 +1971,8 @@
   <element name="whiteSpace"
         doc:href="http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/datatypes.html#element-whiteSpace">
     <ref name="facet" />
-    <attribute name="value">
+    <attribute>
+      <name ns="">value</name>
       <value type="token">collapse</value>
     </attribute>
   </element>
