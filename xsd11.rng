@@ -360,11 +360,15 @@
       <attribute name="name">
         <data type="NCName"/>
       </attribute>
-      <optional>
+      <choice>
+        <empty/>
         <attribute name="form">
           <ref name="formChoice"/>
         </attribute>
-      </optional>
+        <attribute name="targetNamespace">
+          <data type="anyURI"/>
+        </attribute>
+      </choice>
       <ref name="attributeType_ext"/>
     </group>
   </choice>
@@ -372,8 +376,8 @@
 
 <define name="topLevelAttribute" cm:restricts="xs:attribute" cm:refines="attribute">
   <cm:doc>
-    This XSD type restricts xs:attribute.  The ref, form, and use
-    attributes are prohibited, and name is required.
+    This XSD type restricts xs:attribute.  The ref, form, use, and
+    targetNamespace attributes are prohibited, and name is required.
   </cm:doc>
   <ref name="annotated"/>
   <optional>
@@ -660,9 +664,9 @@
     This is an abstract class in XSD, restricted by xs:topLevelElement
     and xs:localElement (which is restricted by xs:narrowMaxMin).
 
-    Attributes ref, form, minOccurs, and maxOccurs are prohibited for
-    topLevelElement.  These are added only in the localElement
-    pattern.
+    Attributes ref, form, targetNamespace, minOccurs, and maxOccurs
+    are prohibited for topLevelElement.  These are added only in the
+    localElement pattern.
 
     Attributes substitutionGroup, final, and abstract are prohibited
     in localElement.  These are added only in the topLevelElement
@@ -729,11 +733,15 @@
       <attribute name="name">
         <data type="NCName"/>
       </attribute>
-      <optional>
+      <choice>
+        <empty/>
         <attribute name="form">
           <ref name="formChoice"/>
         </attribute>
-      </optional>
+        <attribute name="targetNamespace">
+          <data type="anyURI"/>
+        </attribute>
+      </choice>
     </group>
   </choice>
 </define>
