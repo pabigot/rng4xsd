@@ -209,44 +209,40 @@
         </attribute>
       </choice>
     </zeroOrMore>
-    <choice>
-      <group>
-        <doc:p>
-          If a targetNamespace attribute is specified on the schema
-          element, then the namespace attribute on the import elements
-          that it contains are optional.
-        </doc:p>
-        <attribute name="targetNamespace">
-          <data type="anyURI" />
-        </attribute>
-        <zeroOrMore>
-          <choice>
-            <ref name="include" />
-            <ref name="importOptionalNamespace" />
-            <ref name="redefine" />
-            <ref name="annotation" />
-          </choice>
-        </zeroOrMore>
-      </group>
+    <interleave>
       <zeroOrMore>
-        <doc:p>
-          If a targetNamespace attribute is not specified on the schema
-          element, then the import elements that it contains must specify
-          a namespace.
-        </doc:p>
         <choice>
           <ref name="include" />
-          <ref name="importRequiredNamespace" />
           <ref name="redefine" />
           <ref name="annotation" />
         </choice>
       </zeroOrMore>
-    </choice>
+      <choice>
+        <doc:p>
+          If a targetNamespace attribute is specified on the schema
+          element, then the namespace attribute on the import elements
+          that it contains are optional.  If a targetNamespace
+          attribute is not specified on the schema element, then the
+          import elements that it contains must specify a namespace.
+        </doc:p>
+        <group>
+          <attribute name="targetNamespace">
+            <data type="anyURI" />
+          </attribute>
+          <zeroOrMore>
+            <ref name="importOptionalNamespace" />
+          </zeroOrMore>
+        </group>
+        <zeroOrMore>
+          <ref name="importRequiredNamespace" />
+        </zeroOrMore>
+      </choice>
+    </interleave>
     <zeroOrMore>
-      <ref name="schemaTop" />
-      <zeroOrMore>
+      <choice>
+        <ref name="schemaTop" />
         <ref name="annotation" />
-      </zeroOrMore>
+      </choice>
     </zeroOrMore>
   </element>
 </start>
