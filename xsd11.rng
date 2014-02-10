@@ -337,15 +337,20 @@
 
 <define name="attribute" cm:type="xs:complexType" cm:extends="xs:annotated">
   <ref name="annotated"/>
-  <optional>
-    <attribute name="use">
-      <choice>
-        <value type="NMTOKEN">prohibited</value>
-        <value type="NMTOKEN">optional</value>
-        <value type="NMTOKEN">required</value>
-      </choice>
-    </attribute>
-  </optional>
+  <zeroOrMore>
+    <choice>
+      <attribute name="use">
+        <choice>
+          <value type="NMTOKEN">prohibited</value>
+          <value type="NMTOKEN">optional</value>
+          <value type="NMTOKEN">required</value>
+        </choice>
+      </attribute>
+      <attribute name="inheritable">
+        <data type="boolean"/>
+      </attribute>
+    </choice>
+  </zeroOrMore>
   <ref name="fixedOrDefault_ext"/>
   <choice cm:refines="defRef">
     <attribute name="ref">
@@ -371,6 +376,11 @@
     attributes are prohibited, and name is required.
   </cm:doc>
   <ref name="annotated"/>
+  <optional>
+    <attribute name="inheritable">
+      <data type="boolean"/>
+    </attribute>
+  </optional>
   <ref name="fixedOrDefault_ext"/>
   <attribute name="name" cm:refines="defRef">
     <data type="NCName"/>
