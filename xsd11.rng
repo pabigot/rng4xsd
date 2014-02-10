@@ -197,6 +197,12 @@
         <attribute name="elementFormDefault">
           <ref name="formChoice"/>
         </attribute>
+        <attribute name="defaultAttributes">
+          <data type="QName"/>
+        </attribute>
+        <attribute name="xpathDefaultNamespace">
+          <ref name="xpathDefaultNamespace"/>
+        </attribute>
         <attribute name="id">
           <data type="ID"/>
         </attribute>
@@ -424,11 +430,16 @@
   </cm:doc>
   <ref name="annotated"/>
   <ref name="complexTypeModel"/>
-  <optional>
-    <attribute name="mixed">
-      <data type="boolean"/>
-    </attribute>
-  </optional>
+  <zeroOrMore>
+    <choice>
+      <attribute name="mixed">
+        <data type="boolean"/>
+      </attribute>
+      <attribute name="defaultAttributesApply">
+        <data type="boolean"/>
+      </attribute>
+    </choice>
+  </zeroOrMore>
 </define>
 
 <define name="topLevelComplexType" cm:type="xs:complexType" cm:restricts="xs:complexType">
@@ -959,6 +970,15 @@
     <ref name="wildcard"/>
     <ref name="occurs"/>
   </element>
+</define>
+
+<define name="xpathDefaultNamespace" cm:type="xs:simpleType">
+  <choice>
+    <data type="anyURI"/>
+    <value type="token">##defaultNamespace</value>
+    <value type="token">##targetNamespace</value>
+    <value type="token">##local</value>
+  </choice>
 </define>
 
 <define name="attribute.elt" cm:type="xs:element">
