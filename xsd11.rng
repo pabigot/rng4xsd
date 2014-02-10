@@ -245,6 +245,9 @@
         </zeroOrMore>
       </choice>
     </interleave>
+    <optional>
+      <ref name="defaultOpenContent.elt"/>
+    </optional>
     <zeroOrMore>
       <choice>
         <ref name="schemaTop"/>
@@ -397,6 +400,9 @@
     <ref name="complexContent.elt"/>
     <group>
       <optional>
+        <ref name="openContent.elt"/>
+      </optional>
+      <optional>
         <ref name="typeDefParticle"/>
       </optional>
       <ref name="attrDecls"/>
@@ -461,6 +467,9 @@
     restrictions and xs:extensionType extensions.
   </cm:doc>
   <ref name="annotated"/>
+  <optional>
+    <ref name="openContent.elt"/>
+  </optional>
   <attribute name="base">
     <data type="QName"/>
   </attribute>
@@ -530,6 +539,50 @@
     </choice>
   </element>
 </define>
+
+<define name="openContent.elt" cm:type="xs:element">
+  <element name="xs:openContent">
+    <ref name="annotated"/>
+    <optional>
+      <attribute name="mode">
+        <choice>
+          <value type="NMTOKEN">none</value>
+          <value type="NMTOKEN">interleave</value>
+          <value type="NMTOKEN">suffix</value>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <element name="xs:any">
+        <ref name="wildcard"/>
+      </element>
+    </optional>
+  </element>
+</define>
+
+<define name="defaultOpenContent.elt" cm:type="xs:element">
+  <element name="xs:defaultOpenContent">
+    <ref name="annotated"/>
+    <zeroOrMore>
+      <choice>
+        <attribute name="mode">
+          <choice>
+            <value type="NMTOKEN">interleave</value>
+            <value type="NMTOKEN">suffix</value>
+          </choice>
+        </attribute>
+        <attribute name="appliesToEmpty">
+          <data type="boolean"/>
+        </attribute>
+      </choice>
+    </zeroOrMore>
+    <element name="xs:any">
+      <ref name="wildcard"/>
+    </element>
+  </element>
+</define>
+
+
 
 <define name="simpleRestrictionType" cm:type="xs:complexType" cm:restricts="xs:restrictionType" cm:refines="restrictionType">
   <ref name="reducedDerivation_prolog"/>

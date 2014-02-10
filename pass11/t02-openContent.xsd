@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <!-- Examples derived from http://www.ibm.com/developerworks/xml/library/x-xml11pt3/ -->
+  <xs:complexType name="CatalogEntry">
+    <xs:openContent mode="suffix">
+      <xs:any namespace="##any" processContents="skip"/>
+    </xs:openContent>
+    <xs:sequence>
+      <xs:element name="artist" type="xs:string"/>
+      <xs:element name="album" type="xs:string"/>
+    </xs:sequence>
+    <xs:attribute name="id" type="xs:string"/>
+  </xs:complexType>
+  <xs:complexType name="CatalogEntryE">
+    <xs:complexContent>
+      <xs:extension base="CatalogEntry">
+        <xs:openContent mode="suffix">
+          <xs:any namespace="##any" processContents="skip"/>
+        </xs:openContent>
+        <xs:sequence>
+          <xs:element name="price" type="xs:decimal"/>
+          <xs:element name="release_date" type="xs:dateTime"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="CatalogEntryR">
+    <xs:complexContent>
+      <xs:extension base="CatalogEntry">
+        <xs:openContent mode="suffix">
+          <xs:any namespace="##any" processContents="skip"/>
+        </xs:openContent>
+        <xs:sequence>
+          <xs:element name="artist" type="xs:string"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+</xs:schema>
