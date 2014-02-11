@@ -46,11 +46,11 @@
     <attribute>
       <anyName>
         <except>
-          <nsName ns="" />
-          <nsName ns="http://www.w3.org/2001/XMLSchema" />
+          <nsName ns=""/>
+          <nsName ns="http://www.w3.org/2001/XMLSchema"/>
         </except>
       </anyName>
-      <text />
+      <text/>
     </attribute>
   </zeroOrMore>
 </define>
@@ -62,14 +62,14 @@
     and an optional annotation element.  This is used as the basis for many
     element content models.
   </doc:p>
-  <ref name="openAttrs" />
+  <ref name="openAttrs"/>
   <optional>
     <attribute name="id">
-      <data type="ID" />
+      <data type="ID"/>
     </attribute>
   </optional>
   <optional>
-    <ref name="annotation" />
+    <ref name="annotation"/>
   </optional>
 </define>
 
@@ -78,10 +78,10 @@
     This gives the content model of the top level of the schema.
   </doc:p>
   <choice>
-    <ref name="redefinable" />
-    <ref name="topLevelElement" />
-    <ref name="topLevelAttribute" />
-    <ref name="notation" />
+    <ref name="redefinable"/>
+    <ref name="topLevelElement"/>
+    <ref name="topLevelAttribute"/>
+    <ref name="notation"/>
   </choice>
 </define>
 
@@ -91,10 +91,10 @@
     element.  They also occur at the top level of the schema.
   </doc:p>
   <choice>
-    <ref name="topLevelSimpleType" />
-    <ref name="topLevelComplexType" />
-    <ref name="namedGroup" />
-    <ref name="namedAttributeGroup" />
+    <ref name="topLevelSimpleType"/>
+    <ref name="topLevelComplexType"/>
+    <ref name="namedGroup"/>
+    <ref name="namedAttributeGroup"/>
   </choice>
 </define>
 
@@ -153,7 +153,7 @@
   </doc:p>
   <choice>
     <value>#all</value>
-    <ref name="reducedDerivationControl" />
+    <ref name="reducedDerivationControl"/>
   </choice>
 </define>
 
@@ -163,7 +163,7 @@
   </doc:p>
   <choice>
     <value>#all</value>
-    <ref name="typeDerivationControl" />
+    <ref name="typeDerivationControl"/>
   </choice>
 </define>
 
@@ -177,44 +177,44 @@
     <zeroOrMore>
       <choice>
         <attribute name="version">
-          <data type="token" />
+          <data type="token"/>
         </attribute>
         <attribute name="finalDefault">
-          <ref name="fullDerivationSet" />
+          <ref name="fullDerivationSet"/>
         </attribute>
         <attribute name="blockDefault">
-          <ref name="blockSet" />
+          <ref name="blockSet"/>
         </attribute>
         <attribute name="attributeFormDefault">
-          <ref name="formChoice" />
+          <ref name="formChoice"/>
         </attribute>
         <attribute name="elementFormDefault">
-          <ref name="formChoice" />
+          <ref name="formChoice"/>
         </attribute>
         <attribute name="id">
-          <data type="ID" />
+          <data type="ID"/>
         </attribute>
         <attribute name="xml:lang">
-          <data type="language" />
+          <data type="language"/>
         </attribute>
         <attribute> <!-- simulate openAttrs but excluding xml:lang -->
           <anyName>
             <except>
-              <nsName ns="" />
-              <nsName ns="http://www.w3.org/2001/XMLSchema" />
+              <nsName ns=""/>
+              <nsName ns="http://www.w3.org/2001/XMLSchema"/>
               <name>xml:lang</name>
             </except>
           </anyName>
-          <text />
+          <text/>
         </attribute>
       </choice>
     </zeroOrMore>
     <interleave>
       <zeroOrMore>
         <choice>
-          <ref name="include" />
-          <ref name="redefine" />
-          <ref name="annotation" />
+          <ref name="include"/>
+          <ref name="redefine"/>
+          <ref name="annotation"/>
         </choice>
       </zeroOrMore>
       <choice>
@@ -227,21 +227,21 @@
         </doc:p>
         <group>
           <attribute name="targetNamespace">
-            <data type="anyURI" />
+            <data type="anyURI"/>
           </attribute>
           <zeroOrMore>
-            <ref name="importOptionalNamespace" />
+            <ref name="importOptionalNamespace"/>
           </zeroOrMore>
         </group>
         <zeroOrMore>
-          <ref name="importRequiredNamespace" />
+          <ref name="importRequiredNamespace"/>
         </zeroOrMore>
       </choice>
     </interleave>
     <zeroOrMore>
       <choice>
-        <ref name="schemaTop" />
-        <ref name="annotation" />
+        <ref name="schemaTop"/>
+        <ref name="annotation"/>
       </choice>
     </zeroOrMore>
   </element>
@@ -253,7 +253,7 @@
     non-negative number or the keyword 'unbounded'.
   </doc:p>
   <choice>
-    <data type="nonNegativeInteger" />
+    <data type="nonNegativeInteger"/>
     <value type="token">unbounded</value>
   </choice>
 </define>
@@ -266,10 +266,10 @@
   <zeroOrMore>
     <choice>
       <attribute name="minOccurs">
-        <data type="nonNegativeInteger" />
+        <data type="nonNegativeInteger"/>
       </attribute>
       <attribute name="maxOccurs">
-        <ref name="allNNI" />
+        <ref name="allNNI"/>
       </attribute>
     </choice>
   </zeroOrMore>
@@ -280,10 +280,10 @@
     This gives the possible content of complex types.
   </doc:p>
   <choice>
-    <ref name="groupRef" />
-    <ref name="all" />
-    <ref name="choice" />
-    <ref name="sequence" />
+    <ref name="groupRef"/>
+    <ref name="all"/>
+    <ref name="choice"/>
+    <ref name="sequence"/>
   </choice>
 </define>
 
@@ -292,11 +292,11 @@
     This gives the particles that can make up a model group.
   </doc:p>
   <choice>
-    <ref name="localElement" />
-    <ref name="groupRef" />
-    <ref name="choice" />
-    <ref name="sequence" />
-    <ref name="any" />
+    <ref name="localElement"/>
+    <ref name="groupRef"/>
+    <ref name="choice"/>
+    <ref name="sequence"/>
+    <ref name="any"/>
   </choice>
 </define>
 
@@ -307,9 +307,9 @@
     be.  This is a constraint that cannot be specified using XML Schema.
   </doc:p>
   <choice>
-    <empty />
-    <attribute name="fixed" />
-    <attribute name="default" />
+    <empty/>
+    <attribute name="fixed"/>
+    <attribute name="default"/>
   </choice>
 </define>
 
@@ -320,11 +320,11 @@
     the other cannot be, although it is possible for neither to be allowed.
   </doc:p>
   <choice>
-    <empty />
+    <empty/>
     <attribute name="type">
-      <data type="QName" />
+      <data type="QName"/>
     </attribute>
-    <ref name="localSimpleType" />
+    <ref name="localSimpleType"/>
   </choice>
 </define>
 
@@ -338,7 +338,7 @@
   </doc:p>
   <element name="xs:attribute"
         doc:href="http://www.w3.org/TR/xmlschema-1/#element-attribute">
-    <ref name="annotated" />
+    <ref name="annotated"/>
     <optional>
       <attribute name="use">
         <choice>
@@ -348,21 +348,21 @@
         </choice>
       </attribute>
     </optional>
-    <ref name="fixedOrDefault" />
+    <ref name="fixedOrDefault"/>
     <choice>
       <attribute name="ref">
-        <data type="QName" />
+        <data type="QName"/>
       </attribute>
       <group>
         <attribute name="name">
-          <data type="NCName" />
+          <data type="NCName"/>
         </attribute>
         <optional>
           <attribute name="form">
-            <ref name="formChoice" />
+            <ref name="formChoice"/>
           </attribute>
         </optional>
-        <ref name="attributeType" />
+        <ref name="attributeType"/>
       </group>
     </choice>
   </element>
@@ -378,12 +378,12 @@
   </doc:p>
   <element name="xs:attribute"
         doc:href="http://www.w3.org/TR/xmlschema-1/#element-attribute">
-    <ref name="annotated" />
+    <ref name="annotated"/>
     <attribute name="name">
-      <data type="NCName" />
+      <data type="NCName"/>
     </attribute>
-    <ref name="fixedOrDefault" />
-    <ref name="attributeType" />
+    <ref name="fixedOrDefault"/>
+    <ref name="attributeType"/>
   </element>
 </define>
 
@@ -394,12 +394,12 @@
   </doc:p>
   <zeroOrMore>
     <choice>
-      <ref name="localAttribute" />
-      <ref name="attributeGroupRef" />
+      <ref name="localAttribute"/>
+      <ref name="attributeGroupRef"/>
     </choice>
   </zeroOrMore>
   <optional>
-    <ref name="anyAttribute" />
+    <ref name="anyAttribute"/>
   </optional>
 </define>
 
@@ -409,7 +409,7 @@
   </doc:p>
   <element name="xs:anyAttribute"
         doc:href="http://www.w3.org/TR/xmlschema-1/#element-anyAttribute">
-    <ref name="wildcard" />
+    <ref name="wildcard"/>
   </element>
 </define>
 
@@ -418,20 +418,20 @@
     This specifies the content of a complexType element.  As children, it can
     have a simpleContent, a complexContent or a model group.
   </doc:p>
-  <ref name="annotated" />
+  <ref name="annotated"/>
   <optional>
     <attribute name="mixed">
-      <data type="boolean" />
+      <data type="boolean"/>
     </attribute>
   </optional>
   <choice>
-    <ref name="simpleContent" />
-    <ref name="complexContent" />
+    <ref name="simpleContent"/>
+    <ref name="complexContent"/>
     <group>
       <optional>
-        <ref name="typeDefParticle" />
+        <ref name="typeDefParticle"/>
       </optional>
-      <ref name="attrDecls" />
+      <ref name="attrDecls"/>
     </group>
   </choice>
 </define>
@@ -445,20 +445,20 @@
   </doc:p>
   <element name="xs:complexType"
         doc:href="http://www.w3.org/TR/xmlschema-1/#element-complexType">
-    <ref name="complexType" />
+    <ref name="complexType"/>
     <attribute name="name">
-      <data type="NCName" />
+      <data type="NCName"/>
     </attribute>
     <zeroOrMore>
       <choice>
         <attribute name="abstract">
-          <data type="boolean" />
+          <data type="boolean"/>
         </attribute>
         <attribute name="block">
-          <ref name="derivationSet" />
+          <ref name="derivationSet"/>
         </attribute>
         <attribute name="final">
-          <ref name="derivationSet" />
+          <ref name="derivationSet"/>
         </attribute>
       </choice>
     </zeroOrMore>
@@ -471,7 +471,7 @@
   </doc:p>
   <element name="xs:complexType"
         doc:href="http://www.w3.org/TR/xmlschema-1/#element-complexType">
-    <ref name="complexType" />
+    <ref name="complexType"/>
   </element>
 </define>
 
@@ -484,14 +484,14 @@
   </doc:p>
   <element name="xs:restriction"
         doc:href="http://www.w3.org/TR/xmlschema-1/#element-complexContent::restriction">
-    <ref name="annotated" />
+    <ref name="annotated"/>
     <attribute name="base">
-      <data type="QName" />
+      <data type="QName"/>
     </attribute>
     <optional>
-      <ref name="typeDefParticle" />
+      <ref name="typeDefParticle"/>
     </optional>
-    <ref name="attrDecls" />
+    <ref name="attrDecls"/>
   </element>
 </define>
 
@@ -500,9 +500,9 @@
     This specifies the basic model for an extension element: adding a
     required base attribute to the model used for most components.
   </doc:p>
-  <ref name="annotated" />
+  <ref name="annotated"/>
   <attribute name="base">
-    <data type="QName" />
+    <data type="QName"/>
   </attribute>
 </define>
 
@@ -514,11 +514,11 @@
   </doc:p>
   <element name="xs:extension"
         doc:href="http://www.w3.org/TR/xmlschema-1/#element-complexContent::extension">
-    <ref name="extensionType" />
+    <ref name="extensionType"/>
     <optional>
-      <ref name="typeDefParticle" />
+      <ref name="typeDefParticle"/>
     </optional>
-    <ref name="attrDecls" />
+    <ref name="attrDecls"/>
   </element>
 </define>
 
@@ -529,15 +529,15 @@
   </doc:p>
   <element name="xs:complexContent"
         doc:href="http://www.w3.org/TR/xmlschema-1/#element-complexContent">
-    <ref name="annotated" />
+    <ref name="annotated"/>
     <optional>
       <attribute name="mixed">
-        <data type="boolean" />
+        <data type="boolean"/>
       </attribute>
     </optional>
     <choice>
-      <ref name="complexRestriction" />
-      <ref name="complexExtension" />
+      <ref name="complexRestriction"/>
+      <ref name="complexExtension"/>
     </choice>
   </element>
 </define>
@@ -550,9 +550,9 @@
   </doc:p>
   <element name="xs:restriction"
         doc:href="http://www.w3.org/TR/xmlschema-1/#element-simpleContent::restriction">
-    <ref name="annotated" />
-    <ref name="simpleRestrictionModel" />
-    <ref name="attrDecls" />
+    <ref name="annotated"/>
+    <ref name="simpleRestrictionModel"/>
+    <ref name="attrDecls"/>
   </element>
 </define>
 
@@ -564,17 +564,17 @@
   </doc:p>
   <element name="xs:restriction"
         doc:href="http://www.w3.org/TR/xmlschema-1/#element-simpleContent::restriction">
-    <ref name="annotated" />
+    <ref name="annotated"/>
     <group>
       <attribute name="base">
-        <data type="QName" />
+        <data type="QName"/>
       </attribute>
       <optional>
-        <ref name="localSimpleType" />
+        <ref name="localSimpleType"/>
       </optional>
-      <ref name="simpleRestrictionFacets" />
+      <ref name="simpleRestrictionFacets"/>
     </group>
-    <ref name="attrDecls" />
+    <ref name="attrDecls"/>
   </element>
 </define>
 
@@ -586,8 +586,8 @@
   </doc:p>
   <element name="xs:extension"
         doc:href="http://www.w3.org/TR/xmlschema-1/#element-simpleContent::extension">
-    <ref name="extensionType" />
-    <ref name="attrDecls" />
+    <ref name="extensionType"/>
+    <ref name="attrDecls"/>
   </element>
 </define>
 
@@ -598,10 +598,10 @@
   </doc:p>
   <element name="xs:simpleContent"
         doc:href="http://www.w3.org/TR/xmlschema-1/#element-simpleContent">
-    <ref name="annotated" />
+    <ref name="annotated"/>
     <choice>
-      <ref name="simpleContentRestriction" />
-      <ref name="simpleContentExtension" />
+      <ref name="simpleContentRestriction"/>
+      <ref name="simpleContentExtension"/>
     </choice>
   </element>
 </define>
@@ -637,28 +637,28 @@
     between these methods is something that cannot be indicated with XML
     Schema.  This content is optionally followed by some identify constraints.
   </doc:p>
-  <ref name="annotated" />
-  <ref name="fixedOrDefault" />
+  <ref name="annotated"/>
+  <ref name="fixedOrDefault"/>
   <zeroOrMore>
     <choice>
       <attribute name="nillable">
-        <data type="boolean" />
+        <data type="boolean"/>
       </attribute>
       <attribute name="block">
-        <ref name="blockSet" />
+        <ref name="blockSet"/>
       </attribute>
     </choice>
   </zeroOrMore>
   <choice>
-    <empty />
+    <empty/>
     <attribute name="type">
-      <data type="QName" />
+      <data type="QName"/>
     </attribute>
-    <ref name="localSimpleType" />
-    <ref name="localComplexType" />
+    <ref name="localSimpleType"/>
+    <ref name="localComplexType"/>
   </choice>
   <zeroOrMore>
-    <ref name="identityConstraint" />
+    <ref name="identityConstraint"/>
   </zeroOrMore>
 </define>
 
@@ -671,20 +671,20 @@
   </doc:p>
   <element name="xs:element"
         doc:href="http://www.w3.org/TR/xmlschema-1/#element-element">
-    <ref name="element" />
+    <ref name="element"/>
     <attribute name="name">
-      <data type="NCName" />
+      <data type="NCName"/>
     </attribute>
     <zeroOrMore>
       <choice>
         <attribute name="substitutionGroup">
-          <data type="QName" />
+          <data type="QName"/>
         </attribute>
         <attribute name="abstract">
-          <data type="boolean" />
+          <data type="boolean"/>
         </attribute>
         <attribute name="final">
-          <ref name="derivationSet" />
+          <ref name="derivationSet"/>
         </attribute>
       </choice>
     </zeroOrMore>
@@ -703,25 +703,25 @@
   </doc:p>
   <element name="xs:element"
         doc:href="http://www.w3.org/TR/xmlschema-1/#element-element">
-    <ref name="occurs" />
+    <ref name="occurs"/>
     <choice>
       <group>
         <attribute name="ref">
-          <data type="QName" />
+          <data type="QName"/>
         </attribute>
         <optional>
-          <ref name="annotation" />
+          <ref name="annotation"/>
         </optional>
-        <ref name="fixedOrDefault" />
+        <ref name="fixedOrDefault"/>
       </group>
       <group>
-        <ref name="element" />
+        <ref name="element"/>
         <attribute name="name">
-          <data type="NCName" />
+          <data type="NCName"/>
         </attribute>
         <optional>
           <attribute name="form">
-            <ref name="formChoice" />
+            <ref name="formChoice"/>
           </attribute>
         </optional>
       </group>
@@ -737,19 +737,19 @@
   </doc:p>
   <element name="xs:group"
         doc:href="http://www.w3.org/TR/xmlschema-1/#element-group">
-    <ref name="annotated" />
+    <ref name="annotated"/>
     <attribute name="name">
-      <data type="NCName" />
+      <data type="NCName"/>
     </attribute>
     <choice>
       <element name="xs:all">
-        <ref name="allModel" />
+        <ref name="allModel"/>
       </element>
       <element name="xs:choice">
-        <ref name="simpleExplicitGroup" />
+        <ref name="simpleExplicitGroup"/>
       </element>
       <element name="xs:sequence">
-        <ref name="simpleExplicitGroup" />
+        <ref name="simpleExplicitGroup"/>
       </element>
     </choice>
   </element>
@@ -763,10 +763,10 @@
   </doc:p>
   <element name="xs:group"
         doc:href="http://www.w3.org/TR/xmlschema-1/#element-group">
-    <ref name="annotated" />
-    <ref name="occurs" />
+    <ref name="annotated"/>
+    <ref name="occurs"/>
     <attribute name="ref">
-      <data type="QName" />
+      <data type="QName"/>
     </attribute>
   </element>
 </define>
@@ -777,10 +777,10 @@
     normal run of things.  It has occurrence attributes and any number of
     particles within it.
   </doc:p>
-  <ref name="annotated" />
-  <ref name="occurs" />
+  <ref name="annotated"/>
+  <ref name="occurs"/>
   <zeroOrMore>
-    <ref name="nestedParticle" />
+    <ref name="nestedParticle"/>
   </zeroOrMore>
 </define>
 
@@ -790,9 +790,9 @@
     named group - it differs from the above in that it doesn&apos;t have any
     occurrence attributes.
   </doc:p>
-  <ref name="annotated" />
+  <ref name="annotated"/>
   <zeroOrMore>
-    <ref name="nestedParticle" />
+    <ref name="nestedParticle"/>
   </zeroOrMore>
 </define>
 
@@ -802,7 +802,7 @@
     that are similar to local element elements, but the minOccurs and
     maxOccurs attributes can only take values of 0 or 1.
   </doc:p>
-  <ref name="annotated" />
+  <ref name="annotated"/>
   <zeroOrMore>
     <element name="xs:element">
       <zeroOrMore>
@@ -824,21 +824,21 @@
       <choice>
         <group>
           <attribute name="ref">
-            <data type="QName" />
+            <data type="QName"/>
           </attribute>
           <optional>
-            <ref name="annotation" />
+            <ref name="annotation"/>
           </optional>
-          <ref name="fixedOrDefault" />
+          <ref name="fixedOrDefault"/>
         </group>
         <group>
-          <ref name="element" />
+          <ref name="element"/>
           <attribute name="name">
-            <data type="NCName" />
+            <data type="NCName"/>
           </attribute>
           <optional>
             <attribute name="form">
-              <ref name="formChoice" />
+              <ref name="formChoice"/>
             </attribute>
           </optional>
         </group>
@@ -856,7 +856,7 @@
   </doc:p>
   <element name="xs:all"
         doc:href="http://www.w3.org/TR/xmlschema-1/#element-all">
-    <ref name="allModel" />
+    <ref name="allModel"/>
     <zeroOrMore>
       <choice>
         <attribute name="minOccurs">
@@ -879,7 +879,7 @@
   </doc:p>
   <element name="xs:choice"
         doc:href="http://www.w3.org/TR/xmlschema-1/#element-choice">
-    <ref name="explicitGroup" />
+    <ref name="explicitGroup"/>
   </element>
 </define>
 
@@ -889,7 +889,7 @@
   </doc:p>
   <element name="xs:sequence"
         doc:href="http://www.w3.org/TR/xmlschema-1/#element-sequence">
-    <ref name="explicitGroup" />
+    <ref name="explicitGroup"/>
   </element>
 </define>
 
@@ -903,7 +903,7 @@
           <list>
             <zeroOrMore>
               <choice>
-                <data type="anyURI" />
+                <data type="anyURI"/>
                 <value type="token">##targetNamespace</value>
                 <value type="token">##local</value>
               </choice>
@@ -931,7 +931,7 @@
     each within the list, if they&apos;re given.  This model also specifies the
     processContents attribute.
   </doc:p>
-  <ref name="annotated" />
+  <ref name="annotated"/>
   <ref name="anyAttrGroup"/>
 </define>
 
@@ -941,8 +941,8 @@
   </doc:p>
   <element name="xs:any"
         doc:href="http://www.w3.org/TR/xmlschema-1/#element-any">
-    <ref name="wildcard" />
-    <ref name="occurs" />
+    <ref name="wildcard"/>
+    <ref name="occurs"/>
   </element>
 </define>
 
@@ -954,11 +954,11 @@
   </doc:p>
   <element name="xs:attributeGroup"
         doc:href="http://www.w3.org/TR/xmlschema-1/#element-attributeGroup">
-    <ref name="annotated" />
+    <ref name="annotated"/>
     <attribute name="name">
-      <data type="NCName" />
+      <data type="NCName"/>
     </attribute>
-    <ref name="attrDecls" />
+    <ref name="attrDecls"/>
   </element>
 </define>
 
@@ -969,9 +969,9 @@
   </doc:p>
   <element name="xs:attributeGroup"
         doc:href="http://www.w3.org/TR/xmlschema-1/#element-attributeGroup">
-    <ref name="annotated" />
+    <ref name="annotated"/>
     <attribute name="ref">
-      <data type="QName" />
+      <data type="QName"/>
     </attribute>
   </element>
 </define>
@@ -983,9 +983,9 @@
   </doc:p>
   <element name="xs:include"
         doc:href="http://www.w3.org/TR/xmlschema-1/#element-include">
-    <ref name="annotated" />
+    <ref name="annotated"/>
     <attribute name="schemaLocation">
-      <data type="anyURI" />
+      <data type="anyURI"/>
     </attribute>
   </element>
 </define>
@@ -998,19 +998,19 @@
   </doc:p>
   <element name="xs:redefine"
         doc:href="http://www.w3.org/TR/xmlschema-1/#element-redefine">
-    <ref name="openAttrs" />
+    <ref name="openAttrs"/>
     <optional>
       <attribute name="id">
-        <data type="ID" />
+        <data type="ID"/>
       </attribute>
     </optional>
     <attribute name="schemaLocation">
-      <data type="anyURI" />
+      <data type="anyURI"/>
     </attribute>
     <zeroOrMore>
       <choice>
-        <ref name="annotation" />
-        <ref name="redefinable" />
+        <ref name="annotation"/>
+        <ref name="redefinable"/>
       </choice>
     </zeroOrMore>
   </element>
@@ -1021,10 +1021,10 @@
     This gives the basic model for an import element - an optional
     schemaLocation attribute.
   </doc:p>
-  <ref name="annotated" />
+  <ref name="annotated"/>
   <optional>
     <attribute name="schemaLocation">
-      <data type="anyURI" />
+      <data type="anyURI"/>
     </attribute>
   </optional>
 </define>
@@ -1037,9 +1037,9 @@
   </doc:p>
   <element name="xs:import"
         doc:href="http://www.w3.org/TR/xmlschema-1/#element-import">
-    <ref name="import" />
+    <ref name="import"/>
     <attribute name="namespace">
-      <data type="anyURI" />
+      <data type="anyURI"/>
     </attribute>
   </element>
 </define>
@@ -1052,10 +1052,10 @@
   </doc:p>
   <element name="xs:import"
         doc:href="http://www.w3.org/TR/xmlschema-1/#element-import">
-    <ref name="import" />
+    <ref name="import"/>
     <optional>
       <attribute name="namespace">
-        <data type="anyURI" />
+        <data type="anyURI"/>
       </attribute>
     </optional>
   </element>
@@ -1069,7 +1069,7 @@
   </doc:p>
   <element name="xs:selector"
         doc:href="http://www.w3.org/TR/xmlschema-1/#element-selector">
-    <ref name="annotated" />
+    <ref name="annotated"/>
     <attribute name="xpath">
       <data type="token">
         <param name="pattern">(\.//)?(((child::)?((\i\c*:)?(\i\c*|\*)))|\.)(/(((child::)?((\i\c*:)?(\i\c*|\*)))|\.))*(\|(\.//)?(((child::)?((\i\c*:)?(\i\c*|\*)))|\.)(/(((child::)?((\i\c*:)?(\i\c*|\*)))|\.))*)*</param>
@@ -1086,7 +1086,7 @@
   </doc:p>
   <element name="xs:field"
         doc:href="http://www.w3.org/TR/xmlschema-1/#element-field">
-    <ref name="annotated" />
+    <ref name="annotated"/>
     <attribute name="xpath">
       <data type="token">
         <param name="pattern">(\.//)?((((child::)?((\i\c*:)?(\i\c*|\*)))|\.)/)*((((child::)?((\i\c*:)?(\i\c*|\*)))|\.)|((attribute::|@)((\i\c*:)?(\i\c*|\*))))(\|(\.//)?((((child::)?((\i\c*:)?(\i\c*|\*)))|\.)/)*((((child::)?((\i\c*:)?(\i\c*|\*)))|\.)|((attribute::|@)((\i\c*:)?(\i\c*|\*)))))*</param>
@@ -1101,13 +1101,13 @@
     that uniquely identifies the identity constraint, a selector element and
     one or more field elements.
   </doc:p>
-  <ref name="annotated" />
+  <ref name="annotated"/>
   <attribute name="name">
-    <data type="NCName" />
+    <data type="NCName"/>
   </attribute>
-  <ref name="selector" />
+  <ref name="selector"/>
   <oneOrMore>
-    <ref name="field" />
+    <ref name="field"/>
   </oneOrMore>
 </define>
 
@@ -1117,9 +1117,9 @@
     within the content of element elements.
   </doc:p>
   <choice>
-    <ref name="unique" />
-    <ref name="key" />
-    <ref name="keyref" />
+    <ref name="unique"/>
+    <ref name="key"/>
+    <ref name="keyref"/>
   </choice>
 </define>
 
@@ -1129,7 +1129,7 @@
   </doc:p>
   <element name="xs:unique"
         doc:href="http://www.w3.org/TR/xmlschema-1/#element-unique">
-    <ref name="keybase" />
+    <ref name="keybase"/>
   </element>
 </define>
 
@@ -1139,7 +1139,7 @@
   </doc:p>
   <element name="xs:key"
         doc:href="http://www.w3.org/TR/xmlschema-1/#element-key">
-    <ref name="keybase" />
+    <ref name="keybase"/>
   </element>
 </define>
 
@@ -1149,9 +1149,9 @@
   </doc:p>
   <element name="xs:keyref"
         doc:href="http://www.w3.org/TR/xmlschema-1/#element-keyref">
-    <ref name="keybase" />
+    <ref name="keybase"/>
     <attribute name="refer">
-      <data type="QName" />
+      <data type="QName"/>
     </attribute>
   </element>
 </define>
@@ -1164,16 +1164,16 @@
   </doc:p>
   <element name="xs:notation"
         doc:href="http://www.w3.org/TR/xmlschema-1/#element-notation">
-    <ref name="annotated" />
+    <ref name="annotated"/>
     <attribute name="name">
-      <data type="NCName" />
+      <data type="NCName"/>
     </attribute>
     <attribute name="public">
-      <data type="token" />
+      <data type="token"/>
     </attribute>
     <optional>
       <attribute name="system">
-        <data type="anyURI" />
+        <data type="anyURI"/>
       </attribute>
     </optional>
   </element>
@@ -1193,11 +1193,11 @@
         <anyName/>
         <zeroOrMore>
           <attribute>
-            <anyName />
+            <anyName/>
           </attribute>
         </zeroOrMore>
-        <ref name="anyContent" />
-        <empty />
+        <ref name="anyContent"/>
+        <empty/>
       </element>
     </zeroOrMore>
   </mixed>
@@ -1215,10 +1215,10 @@
     <ref name="openAttrs"/>
     <optional>
       <attribute name="source">
-        <data type="anyURI" />
+        <data type="anyURI"/>
       </attribute>
     </optional>
-    <ref name="anyContent" />
+    <ref name="anyContent"/>
   </element>
 </define>
 
@@ -1232,23 +1232,23 @@
     <zeroOrMore>
       <choice>
         <attribute name="source">
-          <data type="anyURI" />
+          <data type="anyURI"/>
         </attribute>
         <attribute name="xml:lang">
-          <data type="language" />
+          <data type="language"/>
         </attribute>
         <attribute> <!-- simulate openAttrs but excluding xml:lang -->
           <anyName>
             <except>
-              <nsName ns="" />
-              <nsName ns="http://www.w3.org/2001/XMLSchema" />
+              <nsName ns=""/>
+              <nsName ns="http://www.w3.org/2001/XMLSchema"/>
               <name>xml:lang</name>
           </except>
           </anyName>
         </attribute>
       </choice>
     </zeroOrMore>
-    <ref name="anyContent" />
+    <ref name="anyContent"/>
   </element>
 </define>
 
@@ -1260,16 +1260,16 @@
   </doc:p>
   <element name="xs:annotation"
         doc:href="http://www.w3.org/TR/xmlschema-1/#element-annotation">
-    <ref name="openAttrs" />
+    <ref name="openAttrs"/>
     <optional>
       <attribute name="id">
-        <data type="ID" />
+        <data type="ID"/>
       </attribute>
     </optional>
     <zeroOrMore>
       <choice>
-        <ref name="documentation" />
-        <ref name="appinfo" />
+        <ref name="documentation"/>
+        <ref name="appinfo"/>
       </choice>
     </zeroOrMore>
   </element>
@@ -1280,9 +1280,9 @@
     This gives the various types of derivation of simple types.
   </doc:p>
   <choice>
-    <ref name="simpleRestriction" />
-    <ref name="list" />
-    <ref name="union" />
+    <ref name="simpleRestriction"/>
+    <ref name="list"/>
+    <ref name="union"/>
   </choice>
 </define>
 
@@ -1311,8 +1311,8 @@
   <doc:p>
     This gives the basic content of a simple type.
   </doc:p>
-  <ref name="annotated" />
-  <ref name="simpleDerivation" />
+  <ref name="annotated"/>
+  <ref name="simpleDerivation"/>
 </define>
 
 <define name="topLevelSimpleType">
@@ -1322,13 +1322,13 @@
   </doc:p>
   <element name="xs:simpleType"
         doc:href="http://www.w3.org/TR/xmlschema-1/#element-simpleType">
-    <ref name="simpleType" />
+    <ref name="simpleType"/>
     <attribute name="name">
-      <data type="NCName" />
+      <data type="NCName"/>
     </attribute>
     <optional>
       <attribute name="final">
-        <ref name="simpleDerivationSet" />
+        <ref name="simpleDerivationSet"/>
       </attribute>
     </optional>
   </element>
@@ -1341,7 +1341,7 @@
   </doc:p>
   <element name="xs:simpleType"
         doc:href="http://www.w3.org/TR/xmlschema-1/#element-simpleType">
-    <ref name="simpleType" />
+    <ref name="simpleType"/>
   </element>
 </define>
 
@@ -1358,14 +1358,14 @@
   <interleave>
     <optional>
       <choice>
-        <ref name="minExclusive" />
-        <ref name="minInclusive" />
+        <ref name="minExclusive"/>
+        <ref name="minInclusive"/>
       </choice>
     </optional>
     <optional>
       <choice>
-        <ref name="maxExclusive" />
-        <ref name="maxInclusive" />
+        <ref name="maxExclusive"/>
+        <ref name="maxInclusive"/>
       </choice>
     </optional>
   </interleave>
@@ -1379,10 +1379,10 @@
     of each of these types of facets.
   </doc:p>
   <optional>
-    <ref name="totalDigits" />
+    <ref name="totalDigits"/>
   </optional>
   <optional>
-    <ref name="fractionDigits" />
+    <ref name="fractionDigits"/>
   </optional>
 </define>
 
@@ -1395,13 +1395,13 @@
     given, then neither minLength nor maxLength should be present.
   </doc:p>
   <choice>
-    <ref name="length" />
+    <ref name="length"/>
     <interleave>
       <optional>
-        <ref name="minLength" />
+        <ref name="minLength"/>
       </optional>
       <optional>
-        <ref name="maxLength" />
+        <ref name="maxLength"/>
       </optional>
     </interleave>
   </choice>
@@ -1417,13 +1417,13 @@
     'collapse'.
   </doc:p>
   <zeroOrMore>
-    <ref name="enumeration" />
+    <ref name="enumeration"/>
   </zeroOrMore>
   <optional>
-    <ref name="whiteSpaceCollapse" />
+    <ref name="whiteSpaceCollapse"/>
   </optional>
   <zeroOrMore>
-    <ref name="pattern" />
+    <ref name="pattern"/>
   </zeroOrMore>
 </define>
 
@@ -1434,10 +1434,10 @@
     with unbounded occurrence.
   </doc:p>
   <interleave>
-    <ref name="rangeFacets" />
-    <ref name="digitFacets" />
-    <ref name="lengthFacets" />
-    <ref name="commonFacets" />
+    <ref name="rangeFacets"/>
+    <ref name="digitFacets"/>
+    <ref name="lengthFacets"/>
+    <ref name="commonFacets"/>
   </interleave>
 </define>
 
@@ -1456,17 +1456,17 @@
         <value type="QName">xs:anySimpleType</value>
       </attribute>
       <interleave>
-        <ref name="rangeFacets" />
-        <ref name="digitFacets" />
-        <ref name="lengthFacets" />
+        <ref name="rangeFacets"/>
+        <ref name="digitFacets"/>
+        <ref name="lengthFacets"/>
         <optional>
-          <ref name="whiteSpace" />
+          <ref name="whiteSpace"/>
         </optional>
         <zeroOrMore>
-          <ref name="enumeration" />
+          <ref name="enumeration"/>
         </zeroOrMore>
         <zeroOrMore>
-          <ref name="pattern" />
+          <ref name="pattern"/>
         </zeroOrMore>
       </interleave>
     </group>
@@ -1475,15 +1475,15 @@
         <value type="QName">xs:string</value>
       </attribute>
       <interleave>
-        <ref name="lengthFacets" />
+        <ref name="lengthFacets"/>
         <optional>
-          <ref name="whiteSpace" />
+          <ref name="whiteSpace"/>
         </optional>
         <zeroOrMore>
-          <ref name="enumeration" />
+          <ref name="enumeration"/>
         </zeroOrMore>
         <zeroOrMore>
-          <ref name="pattern" />
+          <ref name="pattern"/>
         </zeroOrMore>
       </interleave>
     </group>
@@ -1494,15 +1494,15 @@
         </choice>
       </attribute>
       <interleave>
-        <ref name="lengthFacets" />
+        <ref name="lengthFacets"/>
         <optional>
-          <ref name="whiteSpaceReplaceOrCollapse" />
+          <ref name="whiteSpaceReplaceOrCollapse"/>
         </optional>
         <zeroOrMore>
-          <ref name="enumeration" />
+          <ref name="enumeration"/>
         </zeroOrMore>
         <zeroOrMore>
-          <ref name="pattern" />
+          <ref name="pattern"/>
         </zeroOrMore>
       </interleave>
     </group>
@@ -1528,8 +1528,8 @@
         </choice>
       </attribute>
       <interleave>
-        <ref name="lengthFacets" />
-        <ref name="commonFacets" />
+        <ref name="lengthFacets"/>
+        <ref name="commonFacets"/>
       </interleave>
     </group>
     <group>
@@ -1538,10 +1538,10 @@
       </attribute>
       <interleave>
         <optional>
-          <ref name="whiteSpaceCollapse" />
+          <ref name="whiteSpaceCollapse"/>
         </optional>
         <zeroOrMore>
-          <ref name="pattern" />
+          <ref name="pattern"/>
         </zeroOrMore>
       </interleave>
     </group>
@@ -1565,9 +1565,9 @@
         </choice>
       </attribute>
       <interleave>
-        <ref name="digitFacets" />
-        <ref name="rangeFacets" />
-        <ref name="commonFacets" />
+        <ref name="digitFacets"/>
+        <ref name="rangeFacets"/>
+        <ref name="commonFacets"/>
       </interleave>
     </group>
     <group>
@@ -1587,8 +1587,8 @@
         </choice>
       </attribute>
       <interleave>
-        <ref name="rangeFacets" />
-        <ref name="commonFacets" />
+        <ref name="rangeFacets"/>
+        <ref name="commonFacets"/>
       </interleave>
     </group>
     <!-- the detailed checking above is superfluous
@@ -1598,11 +1598,11 @@
     <group>
       <choice>
         <attribute name="base">
-          <data type="QName" />
+          <data type="QName"/>
         </attribute>
-        <ref name="localSimpleType" />
+        <ref name="localSimpleType"/>
       </choice>
-      <ref name="simpleRestrictionFacets" />
+      <ref name="simpleRestrictionFacets"/>
     </group>
   </choice>
 </define>
@@ -1615,11 +1615,11 @@
   </doc:p>
   <element name="xs:list"
         doc:href="http://www.w3.org/TR/xmlschema-1/#element-list">
-    <ref name="annotated" />
+    <ref name="annotated"/>
     <choice>
-      <ref name="localSimpleType" />
+      <ref name="localSimpleType"/>
       <attribute name="itemType">
-        <data type="QName" />
+        <data type="QName"/>
       </attribute>
     </choice>
   </element>
@@ -1635,28 +1635,28 @@
   </doc:p>
   <element name="xs:union"
         doc:href="http://www.w3.org/TR/xmlschema-1/#element-union">
-    <ref name="annotated" />
+    <ref name="annotated"/>
     <choice>
       <group>
         <attribute name="memberTypes">
           <list>
             <oneOrMore>
-              <data type="QName" />
+              <data type="QName"/>
             </oneOrMore>
           </list>
         </attribute>
         <zeroOrMore>
-          <ref name="localSimpleType" />
+          <ref name="localSimpleType"/>
         </zeroOrMore>
       </group>
       <group>
         <optional>
           <attribute name="memberTypes">
-            <empty />
+            <empty/>
           </attribute>
         </optional>
         <oneOrMore>
-          <ref name="localSimpleType" />
+          <ref name="localSimpleType"/>
         </oneOrMore>
       </group>
     </choice>
@@ -1667,10 +1667,10 @@
   <doc:p>
     This is the basic content of a facet.  It has an optional fixed attribute.
   </doc:p>
-  <ref name="annotated" />
+  <ref name="annotated"/>
   <optional>
     <attribute name="fixed">
-      <data type="boolean" />
+      <data type="boolean"/>
     </attribute>
   </optional>
 </define>
@@ -1680,8 +1680,8 @@
     This is the content of a facet that cannot be fixed (enumeration or
     pattern).  It has a value attribute that can take any kind of value.
   </doc:p>
-  <ref name="annotated" />
-  <attribute name="value" />
+  <ref name="annotated"/>
+  <attribute name="value"/>
 </define>
 
 <define name="rangeFacet">
@@ -1692,21 +1692,21 @@
     attribute of a range facet according to the base type as this would be
     very complicated (although it would be possible in RELAX NG).
   </doc:p>
-  <ref name="facet" />
+  <ref name="facet"/>
   <attribute name="value">
     <choice>
-      <data type="decimal" />
-      <data type="float" />
-      <data type="double" />
-      <data type="duration" />
-      <data type="dateTime" />
-      <data type="time" />
-      <data type="date" />
-      <data type="gYearMonth" />
-      <data type="gYear" />
-      <data type="gMonthDay" />
-      <data type="gMonth" />
-      <data type="gDay" />
+      <data type="decimal"/>
+      <data type="float"/>
+      <data type="double"/>
+      <data type="duration"/>
+      <data type="dateTime"/>
+      <data type="time"/>
+      <data type="date"/>
+      <data type="gYearMonth"/>
+      <data type="gYear"/>
+      <data type="gMonthDay"/>
+      <data type="gMonth"/>
+      <data type="gDay"/>
     </choice>
   </attribute>
 </define>
@@ -1717,7 +1717,7 @@
   </doc:p>
   <element name="xs:minExclusive"
         doc:href="http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/datatypes.html#element-minExclusive">
-    <ref name="rangeFacet" />
+    <ref name="rangeFacet"/>
   </element>
 </define>
 
@@ -1727,7 +1727,7 @@
   </doc:p>
   <element name="xs:minInclusive"
         doc:href="http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/datatypes.html#element-minInclusive">
-    <ref name="rangeFacet" />
+    <ref name="rangeFacet"/>
   </element>
 </define>
 
@@ -1737,7 +1737,7 @@
   </doc:p>
   <element name="xs:maxExclusive"
         doc:href="http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/datatypes.html#element-maxExclusive">
-    <ref name="rangeFacet" />
+    <ref name="rangeFacet"/>
   </element>
 </define>
 
@@ -1747,7 +1747,7 @@
   </doc:p>
   <element name="xs:maxInclusive"
         doc:href="http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/datatypes.html#element-maxInclusive">
-    <ref name="rangeFacet" />
+    <ref name="rangeFacet"/>
   </element>
 </define>
 
@@ -1755,9 +1755,9 @@
   <doc:p>
     This is the content of a numerical facet.
   </doc:p>
-  <ref name="facet" />
+  <ref name="facet"/>
   <attribute name="value">
-    <data type="nonNegativeInteger" />
+    <data type="nonNegativeInteger"/>
   </attribute>
 </define>
 
@@ -1768,9 +1768,9 @@
   </doc:p>
   <element name="xs:totalDigits"
         doc:href="http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/datatypes.html#element-totalDigits">
-    <ref name="facet" />
+    <ref name="facet"/>
     <attribute name="value">
-      <data type="positiveInteger" />
+      <data type="positiveInteger"/>
     </attribute>
   </element>
 </define>
@@ -1781,7 +1781,7 @@
   </doc:p>
   <element name="xs:fractionDigits"
         doc:href="http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/datatypes.html#element-fractionDigits">
-    <ref name="numFacet" />
+    <ref name="numFacet"/>
   </element>
 </define>
 
@@ -1791,7 +1791,7 @@
   </doc:p>
   <element name="xs:length"
         doc:href="http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/datatypes.html#element-length">
-    <ref name="numFacet" />
+    <ref name="numFacet"/>
   </element>
 </define>
 
@@ -1801,7 +1801,7 @@
   </doc:p>
   <element name="xs:minLength"
         doc:href="http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/datatypes.html#element-minLength">
-    <ref name="numFacet" />
+    <ref name="numFacet"/>
   </element>
 </define>
 
@@ -1811,7 +1811,7 @@
   </doc:p>
   <element name="xs:maxLength"
         doc:href="http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/datatypes.html#element-maxLength">
-    <ref name="numFacet" />
+    <ref name="numFacet"/>
   </element>
 </define>
 
@@ -1821,7 +1821,7 @@
   </doc:p>
   <element name="xs:enumeration"
         doc:href="http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/datatypes.html#element-enumeration">
-    <ref name="noFixedFacet" />
+    <ref name="noFixedFacet"/>
   </element>
 </define>
 
@@ -1832,7 +1832,7 @@
   </doc:p>
   <element name="xs:whiteSpace"
         doc:href="http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/datatypes.html#element-whiteSpace">
-    <ref name="facet" />
+    <ref name="facet"/>
     <attribute name="value">
       <choice>
         <value type="token">preserve</value>
@@ -1850,7 +1850,7 @@
   </doc:p>
   <element name="xs:whiteSpace"
         doc:href="http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/datatypes.html#element-whiteSpace">
-    <ref name="facet" />
+    <ref name="facet"/>
     <attribute name="value">
       <choice>
         <value type="token">replace</value>
@@ -1867,7 +1867,7 @@
   </doc:p>
   <element name="xs:whiteSpace"
         doc:href="http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/datatypes.html#element-whiteSpace">
-    <ref name="facet" />
+    <ref name="facet"/>
     <attribute name="value">
       <value type="token">collapse</value>
     </attribute>
@@ -1880,7 +1880,7 @@
   </doc:p>
   <element name="xs:pattern"
         doc:href="http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/datatypes.html#element-pattern">
-    <ref name="noFixedFacet" />
+    <ref name="noFixedFacet"/>
   </element>
 </define>
 
