@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <!-- examples from http://www.ibm.com/developerworks/xml/library/x-xml11pt2/ -->
+  <xs:element name="dimension">
+    <xs:complexType>
+      <xs:attribute name="height" type="xs:int"/>
+      <xs:attribute name="width" type="xs:int"/>
+      <xs:assert test="@height > @width"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:complexType name="baseType">
+    <xs:sequence>
+      <xs:element name="body" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+    <xs:attribute name="mustUnderstand" type="xs:string"/>
+    <xs:assert test="@mustUnderstand"/>
+  </xs:complexType>
+
+  <xs:complexType name="derivedType">
+    <xs:complexContent>
+      <xs:restriction base="baseType">
+        <xs:sequence>
+          <xs:element name="body" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+        <xs:attribute name="mustUnderstand" type="xs:string"/>
+        <xs:assert test="( @mustUnderstand eq 'YES' and fn:count(./body) > 0 )
+                         or ( @mustUnderstand eq 'NO' )"/>
+      </xs:restriction>
+    </xs:complexContent>
+  </xs:complexType>
+</xs:schema>

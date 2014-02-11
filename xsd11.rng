@@ -200,9 +200,7 @@
         <attribute name="defaultAttributes">
           <data type="QName"/>
         </attribute>
-        <attribute name="xpathDefaultNamespace">
-          <ref name="xpathDefaultNamespace"/>
-        </attribute>
+        <ref name="xpathDefaultNamespace_attr"/>
         <attribute name="id">
           <data type="ID"/>
         </attribute>
@@ -419,6 +417,26 @@
   </element>
 </define>
 
+<define name="assertions" cm:type="xs:group">
+  <zeroOrMore>
+    <element name="xs:assert">
+      <ref name="assertion"/>
+    </element>
+  </zeroOrMore>
+</define>
+
+<define name="assertion" cm:type="xs:complexType">
+  <ref name="annotated"/>
+  <zeroOrMore>
+    <choice>
+      <attribute name="test">
+        <data type="string"/>
+      </attribute>
+      <ref name="xpathDefaultNamespace_attr"/>
+    </choice>
+  </zeroOrMore>
+</define>
+
 <define name="complexTypeModel" cm:type="xs:group">
   <choice>
     <ref name="simpleContent"/>
@@ -431,6 +449,7 @@
         <ref name="typeDefParticle"/>
       </optional>
       <ref name="attrDecls"/>
+      <ref name="assertions"/>
     </group>
   </choice>
 </define>
@@ -511,6 +530,7 @@
     restrictions and xs:extensionType extensions.
   </cm:doc>
   <ref name="attrDecls"/>
+  <ref name="assertions"/>
 </define>
 
 <define name="restrictionType" cm:type="xs:complexType">
@@ -1761,6 +1781,12 @@
            cm:href="http://www.w3.org/TR/xmlschema11-1/#element-attribute">
     <ref name="attribute"/>
   </element>
+</define>
+
+<define name="xpathDefaultNamespace_attr">
+  <attribute name="xpathDefaultNamespace">
+    <ref name="xpathDefaultNamespace"/>
+  </attribute>
 </define>
 
 <define name="localComplexType_elt">
