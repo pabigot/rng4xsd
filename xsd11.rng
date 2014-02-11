@@ -721,7 +721,10 @@
     <ref name="localComplexType_elt"/>
   </choice>
   <zeroOrMore>
-    <ref name="identityConstraint"/>
+    <choice>
+      <ref name="identityConstraint"/>
+      <ref name="alternative_elt"/>
+    </choice>
   </zeroOrMore>
 </define>
 
@@ -780,6 +783,27 @@
            cm:href="http://www.w3.org/TR/xmlschema11-1/#element-element">
     <ref name="topLevelElement"/>
   </element>
+</define>
+
+<define name="altType" cm:type="xs:complexType" cm:extends="xs:annotated">
+  <ref name="annotated"/>
+  <zeroOrMore>
+    <choice>
+      <attribute name="test">
+        <data type="string"/>
+      </attribute>
+      <attribute name="type">
+        <data type="QName"/>
+      </attribute>
+      <ref name="xpathDefaultNamespace_attr"/>
+    </choice>
+  </zeroOrMore>
+  <optional>
+    <choice>
+      <ref name="localSimpleType_elt"/>
+      <ref name="localComplexType_elt"/>
+    </choice>
+  </optional>
 </define>
 
 <define name="group" cm:type="xs:complexType">
@@ -1804,6 +1828,13 @@
   <element name="xs:simpleType"
            cm:href="http://www.w3.org/TR/xmlschema11-1/#element-simpleType">
     <ref name="localSimpleType"/>
+  </element>
+</define>
+
+<define name="alternative_elt">
+  <element name="xs:alternative"
+           cm:href="http://www.w3.org/TR/xmlschema11-1/#tac">
+    <ref name="altType"/>
   </element>
 </define>
 

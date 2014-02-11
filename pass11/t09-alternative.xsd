@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <!-- From http://www.ibm.com/developerworks/xml/library/x-xml11pt2/ -->
+  <xs:element name="title" type="xs:anyType">
+    <xs:alternative test="@type='text'" type="xs:string"/>
+    <xs:alternative test="@type='html'" type="htmlContentType"/>
+    <xs:alternative test="@type='xhtml'" type="xhtmlContentType"/>
+    <xs:alternative test="@type" type="xs:error"/>
+    <xs:alternative type="xs:string"/>
+  </xs:element>
+</xs:schema>
