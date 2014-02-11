@@ -893,16 +893,7 @@
   </element>
 </define>
 
-<define name="wildcard">
-  <doc:p>
-    This describes a wildcard element (i.e. any or anyAttribute).  The
-    namespace attribute can take a list URIs interspersed with the keywords
-    '##targetNamespace' and/or '##local'.  This RELAX NG schema, like the XML
-    Schema Recommendation, allows the keywords to be specified more than once
-    each within the list, if they&apos;re given.  This model also specifies the
-    processContents attribute.
-  </doc:p>
-  <ref name="annotated" />
+<define name="anyAttrGroup">
   <zeroOrMore>
     <choice>
       <attribute name="namespace">
@@ -913,8 +904,8 @@
             <zeroOrMore>
               <choice>
                 <data type="anyURI" />
-                <value>##targetNamespace</value>
-                <value>##local</value>
+                <value type="token">##targetNamespace</value>
+                <value type="token">##local</value>
               </choice>
             </zeroOrMore>
           </list>
@@ -922,13 +913,26 @@
       </attribute>
       <attribute name="processContents">
         <choice>
-          <value type="token">lax</value>
-          <value type="token">skip</value>
-          <value type="token">strict</value>
+          <value type="NMTOKEN">lax</value>
+          <value type="NMTOKEN">skip</value>
+          <value type="NMTOKEN">strict</value>
         </choice>
       </attribute>
     </choice>
   </zeroOrMore>
+</define>
+
+<define name="wildcard">
+  <doc:p>
+    This describes a wildcard element (i.e. any or anyAttribute).  The
+    namespace attribute can take a list URIs interspersed with the keywords
+    '##targetNamespace' and/or '##local'.  This RELAX NG schema, like the XML
+    Schema Recommendation, allows the keywords to be specified more than once
+    each within the list, if they&apos;re given.  This model also specifies the
+    processContents attribute.
+  </doc:p>
+  <ref name="annotated" />
+  <ref name="anyAttrGroup"/>
 </define>
 
 <define name="any">
