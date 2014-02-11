@@ -1,0 +1,18 @@
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:group name="gScalarNumericData">
+    <xs:choice>
+      <xs:element name="int" type="xs:integer"/>
+      <xs:element name="long" type="xs:long"/>
+    </xs:choice>
+  </xs:group>
+  <xs:element name="instance">
+    <xs:complexType>
+      <xs:all>
+        <xs:element name="text" type="xs:string" maxOccurs="4"/>
+        <xs:element name="number" type="xs:integer"/>
+        <xs:any namespace="##other" processContents="skip"/>
+        <xs:group ref="gScalarNumericData"/>
+      </xs:all>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

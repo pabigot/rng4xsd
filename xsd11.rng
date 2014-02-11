@@ -687,7 +687,7 @@
 <define name="element" cm:type="xs:complexType">
   <cm:doc>
     This is an abstract class in XSD, restricted by xs:topLevelElement
-    and xs:localElement (which is restricted by xs:narrowMaxMin).
+    and xs:localElement.
 
     Attributes ref, form, targetNamespace, minOccurs, and maxOccurs
     are prohibited for topLevelElement.  These are added only in the
@@ -894,51 +894,27 @@
     <ref name="annotation"/>
   </optional>
   <zeroOrMore>
-    <element name="xs:element">
-      <ref name="narrowMaxMin"/>
-    </element>
-  </zeroOrMore>
-</define>
-
-<define name="narrowMaxMin" cm:type="complexType" cm:restricts="xs:localElement" cm:refines="localElement">
-  <cm:doc>
-    Same as the localElement pattern except for a restriction on the
-    occurs pattern.
-  </cm:doc>
-  <ref name="element"/>
-  <zeroOrMore cm:refines="occurs">
     <choice>
-      <attribute name="minOccurs">
-        <choice>
-          <value type="nonNegativeInteger">0</value>
-          <value type="nonNegativeInteger">1</value>
-        </choice>
-      </attribute>
-      <attribute name="maxOccurs" cm:refines="allNNI">
-        <choice>
-          <value type="nonNegativeInteger">0</value>
-          <value type="nonNegativeInteger">1</value>
-        </choice>
-      </attribute>
+      <ref name="localElement_elt"/>
+      <ref name="any.elt"/>
+      <element name="xs:group">
+        <ref name="annotated"/>
+        <attribute name="ref">
+          <data type="QName"/>
+        </attribute>
+        <zeroOrMore>
+          <choice>
+            <attribute name="minOccurs">
+              <value type="nonNegativeInteger">1</value>
+            </attribute>
+            <attribute name="maxOccurs">
+              <value type="nonNegativeInteger">1</value>
+            </attribute>
+          </choice>
+        </zeroOrMore>
+      </element>
     </choice>
   </zeroOrMore>
-  <choice cm:refines="defRef">
-    <group>
-      <attribute name="ref">
-        <data type="QName"/>
-      </attribute>
-    </group>
-    <group>
-      <attribute name="name">
-        <data type="NCName"/>
-      </attribute>
-      <optional>
-        <attribute name="form">
-          <ref name="formChoice"/>
-        </attribute>
-      </optional>
-    </group>
-  </choice>
 </define>
 
 <define name="all" cm:type="xs:complexType" cm:restricts="xs:explicitGroup" cm:refines="explicitGroup">
