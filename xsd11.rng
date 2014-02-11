@@ -1015,8 +1015,25 @@
   <element name="xs:any"
            cm:href="http://www.w3.org/TR/xmlschema11-1/#element-any">
     <ref name="wildcard"/>
+    <optional>
+      <attribute name="notQName">
+        <ref name="qnameList"/>
+      </attribute>
+    </optional>
     <ref name="occurs"/>
   </element>
+</define>
+
+<define name="qnameList" cm:type="xs:simpleType">
+  <list>
+    <zeroOrMore>
+      <choice>
+        <data type="QName"/>
+        <value type="token">##defined</value>
+        <value type="token">##definedSibling</value>
+      </choice>
+    </zeroOrMore>
+  </list>
 </define>
 
 <define name="qnameListA" cm:type="xs:simpleType">
