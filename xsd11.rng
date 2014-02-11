@@ -410,6 +410,11 @@
 <define name="anyAttribute.elt" cm:type="xs:element">
   <element name="xs:anyAttribute"
            cm:href="http://www.w3.org/TR/xmlschema11-1/#element-anyAttribute">
+    <optional>
+      <attribute name="notQName">
+        <ref name="qnameListA"/>
+      </attribute>
+    </optional>
     <ref name="wildcard"/>
   </element>
 </define>
@@ -988,6 +993,17 @@
     <ref name="wildcard"/>
     <ref name="occurs"/>
   </element>
+</define>
+
+<define name="qnameListA" cm:type="xs:simpleType">
+  <list>
+    <zeroOrMore>
+      <choice>
+        <data type="QName"/>
+        <value type="token">##defined</value>
+      </choice>
+    </zeroOrMore>
+  </list>
 </define>
 
 <define name="xpathDefaultNamespace" cm:type="xs:simpleType">
