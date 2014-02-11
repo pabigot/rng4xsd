@@ -1,35 +1,52 @@
 <?xml version="1.0"?>
 <grammar xmlns="http://relaxng.org/ns/structure/1.0"
-      datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes"
-      xmlns:xs="http://www.w3.org/2001/XMLSchema"
-      xmlns:doc="http://www.jenitennison.com/doc">
+         xmlns:xs="http://www.w3.org/2001/XMLSchema"
+         xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"
+         xmlns:cm="http://github.com/pabigot/rng4xsd"
+         datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes">
 
-<doc:p>
-  Original RELAX NG schema for XML Schema by <doc:link
-  href="mailto:mail@jenitennison.com">Jeni Tennison</doc:link>.
-  Based on
-  <doc:link
+<cm:doc xmlns="http://www.w3.org/1999/xhtml">
+  Original RELAX NG schema for XML Schema by <a
+  href="mailto:mail@jenitennison.com">Jeni Tennison</a>.  Based on <a
   href="http://www.w3.org/TR/2001/REC-xmlschema-1-20010502/">XML
-  Schema Part I: Structures Recommendation</doc:link> and <doc:link
+  Schema Part I: Structures Recommendation</a> and <a
   href="http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/">XML
-  Schema Part II: Datatypes</doc:link>.
+  Schema Part II: Datatypes</a>.
 
-  Additional modifications post 2004-10-12 by <doc:link
-  href="http://www.pabigot.com/">Peter A. Bigot</doc:link> are
-  recorded at the <doc:link
-  href="https://github.com/pabigot/rng4xsd">rng4xsd project
-  page</doc:link>.
+  Additional modifications post 2004-10-12 by <a
+  href="http://www.pabigot.com/">Peter A. Bigot</a> are recorded at
+  the <a href="https://github.com/pabigot/rng4xsd">rng4xsd project
+  page</a>.
 
   Pattern names correspond to definitions in
   http://www.w3.org/2001/XMLSchema.xsd and should be in the same
-  order.  For the purpose and semantics of each pattern, refer to the
-  XSD schema and documentation.  Documentation in this schema is
-  limited to notes specific to the RELAX NG implementation.
-</doc:p>
+  order.
 
-<define name="openAttrs">
-  <doc:p>
-    We want to emulate: <xs:anyAttribute namespace="##other" process="lax"/>
+  Where XSD uses a name T for an element, the corresponding pattern
+  appends ".elt" to the name.  This is done both to make clear that
+  the pattern provides an element, and to distinguish it from the
+  pattern corresponding to an XSD type of the same name.
+
+  Where RELAX NG introduces a supporting pattern that does not
+  correspond to an XML component, the pattern name uses a suffix
+  "_elt" for an element helper, and "_ext" for a pattern that enforces
+  co-occurrence constraints that are not expressed in the XSD syntax.
+
+  Where XSD defines a base type T that is restricted to eliminate
+  internal content, a pattern T_prolog describes the material before
+  the variation point and a pattern T_epilog describes the material
+  after the variation point.  The restrictions then reference these
+  patterns around the desired selection. See, for example,
+  the restrictionType pattern.
+
+  For the purpose and semantics of each pattern, refer to the XSD
+  schema and documentation.  Documentation in this schema is limited
+  to notes specific to the RELAX NG implementation.
+</cm:doc>
+
+<define name="openAttrs" cm:type="xs:complexType" cm:restricts="xs:anyType" cm:refines="anyType">
+  <cm:doc>
+    We want to emulate: &lt;xs:anyAttribute namespace="##other" process="lax"/&gt;
 
     The "##other" means we need to exclude the XSD namespace.
 
@@ -42,8 +59,15 @@
     reference openAttrs, which results in an attribute conflict
     because xml:lang is accepted from two paths.  In those cases, do
     not reference openAttrs, and instead replicate the wildcard below
-    also excluding xml:lang.
-  </doc:p>
+    also excluding xml:lang.  Such replications add a cm:refines
+    attribute referencing this pattern.
+
+    Note that various XSD components explicitly provide an
+    anyAttribute wildcard while also supporting an xs:annotation
+    element.  Since the annotated pattern extends openAttrs the
+    explicit anyAttribute wildcard is elided from the corresponding
+    RELAX NG patterns.
+  </cm:doc>
   <zeroOrMore>
     <attribute>
       <anyName>
@@ -57,7 +81,7 @@
   </zeroOrMore>
 </define>
 
-<define name="annotated">
+<define name="annotated" cm:type="xs:complexType" cm:extends="xs:openAttrs">
   <ref name="openAttrs"/>
   <optional>
     <attribute name="id">
@@ -69,72 +93,79 @@
   </optional>
 </define>
 
-<define name="schemaTop">
+<define name="schemaTop" cm:type="xs:group">
   <choice>
     <ref name="redefinable"/>
-    <ref name="topLevelElement"/>
-    <ref name="topLevelAttribute"/>
-    <ref name="notation"/>
+    <ref name="element.elt"/>
+    <ref name="attribute.elt"/>
+    <ref name="notation.elt"/>
   </choice>
 </define>
 
-<define name="redefinable">
+<define name="redefinable" cm:type="xs:group">
   <choice>
-    <ref name="topLevelSimpleType"/>
-    <ref name="topLevelComplexType"/>
-    <ref name="namedGroup"/>
-    <ref name="namedAttributeGroup"/>
+    <ref name="simpleType.elt"/>
+    <ref name="complexType.elt"/>
+    <ref name="group.elt"/>
+    <ref name="attributeGroup.elt"/>
   </choice>
 </define>
 
-<define name="formChoice">
+<define name="formChoice" cm:type="xs:simpleType">
   <choice>
-    <value>qualified</value>
-    <value>unqualified</value>
+    <value type="NMTOKEN">qualified</value>
+    <value type="NMTOKEN">unqualified</value>
   </choice>
 </define>
 
-<define name="reducedDerivationControl">
-  <list>
-    <zeroOrMore>
-      <choice>
-        <value>extension</value>
-        <value>restriction</value>
-      </choice>
-    </zeroOrMore>
-  </list>
-</define>
-
-<define name="typeDerivationControl">
-  <list>
-    <zeroOrMore>
-      <choice>
-        <value>extension</value>
-        <value>restriction</value>
-        <value>list</value>
-        <value>union</value>
-      </choice>
-    </zeroOrMore>
-  </list>
-</define>
-
-<define name="derivationSet">
+<define name="reducedDerivationControl" cm:type="xs:simpleType" cm:restricts="xs:derivationControl">
   <choice>
-    <value>#all</value>
-    <ref name="reducedDerivationControl"/>
+    <value type="NMTOKEN">extension</value>
+    <value type="NMTOKEN">restriction</value>
   </choice>
 </define>
 
-<define name="fullDerivationSet">
+<define name="derivationSet" cm:type="xs:simpleType">
   <choice>
-    <value>#all</value>
-    <ref name="typeDerivationControl"/>
+    <value type="token">#all</value>
+    <list>
+      <zeroOrMore>
+        <ref name="reducedDerivationControl"/>
+      </zeroOrMore>
+    </list>
+  </choice>
+</define>
+
+<define name="typeDerivationControl" cm:type="xs:simpleType" cm:restricts="xs:derivationControl">
+  <choice>
+    <value type="NMTOKEN">extension</value>
+    <value type="NMTOKEN">restriction</value>
+    <value type="NMTOKEN">list</value>
+    <value type="NMTOKEN">union</value>
+  </choice>
+</define>
+
+<define name="fullDerivationSet" cm:type="xs:simpleType">
+  <choice>
+    <value type="token">#all</value>
+    <list>
+      <zeroOrMore>
+        <ref name="typeDerivationControl"/>
+      </zeroOrMore>
+    </list>
   </choice>
 </define>
 
 <start>
-  <element name="xs:schema"
-        doc:href="http://www.w3.org/TR/xmlschema-1/#element-schema">
+  <element name="xs:schema" cm:type="xs:simpleType" cm:extends="xs:openAttrs"
+           cm:href="http://www.w3.org/TR/xmlschema-1/#element-schema">
+    <cm:doc>
+      The presence of xml:lang as a specified attribute requires a
+      variant openAttrs be used.
+
+      The targetNamespace attribute is delegated to a choice as it
+      impacts the selection of pattern for the import element.
+    </cm:doc>
     <zeroOrMore>
       <choice>
         <attribute name="version">
@@ -158,7 +189,7 @@
         <attribute name="xml:lang">
           <data type="language"/>
         </attribute>
-        <attribute> <!-- simulate openAttrs but excluding xml:lang -->
+        <attribute cm:refines="openAttrs">
           <anyName>
             <except>
               <nsName ns=""/>
@@ -173,29 +204,34 @@
     <interleave>
       <zeroOrMore>
         <choice>
-          <ref name="include"/>
-          <ref name="redefine"/>
+          <ref name="include.elt"/>
+          <ref name="redefine.elt"/>
           <ref name="annotation"/>
         </choice>
       </zeroOrMore>
       <choice>
-        <doc:p>
-          If a targetNamespace attribute is specified on the schema
-          element, then the namespace attribute on the import elements
-          that it contains are optional.  If a targetNamespace
-          attribute is not specified on the schema element, then the
-          import elements that it contains must specify a namespace.
-        </doc:p>
+        <cm:doc>
+          Partially enforce Schema Representation Constraint: Import
+          Constraints and Semantics clauses 1.2 and 3.2 at
+          http://www.w3.org/TR/xmlschema-1/#composition-schemaImport
+
+          Specifically, import elements may elide the namespace
+          attribute if and only if the containing schema has a
+          targetNamespace attribute.  This is represented by the
+          import_ons_elt (for "optional namespace") pattern.  Without
+          a targetNamespace the import_rns_elt (for "required
+          namespace") pattern is used.
+        </cm:doc>
         <group>
           <attribute name="targetNamespace">
             <data type="anyURI"/>
           </attribute>
           <zeroOrMore>
-            <ref name="importOptionalNamespace"/>
+            <ref name="import_ons_elt"/>
           </zeroOrMore>
         </group>
         <zeroOrMore>
-          <ref name="importRequiredNamespace"/>
+          <ref name="import_rns_elt"/>
         </zeroOrMore>
       </choice>
     </interleave>
@@ -208,14 +244,14 @@
   </element>
 </start>
 
-<define name="allNNI">
+<define name="allNNI" cm:type="xs:simpleType">
   <choice>
     <data type="nonNegativeInteger"/>
-    <value type="token">unbounded</value>
+    <value type="NMTOKEN">unbounded</value>
   </choice>
 </define>
 
-<define name="occurs">
+<define name="occurs" cm:type="xs:attributeGroup">
   <zeroOrMore>
     <choice>
       <attribute name="minOccurs">
@@ -228,117 +264,127 @@
   </zeroOrMore>
 </define>
 
-<define name="typeDefParticle">
-  <choice>
-    <ref name="groupRef"/>
-    <ref name="all"/>
-    <ref name="choice"/>
-    <ref name="sequence"/>
-  </choice>
-</define>
+<define name="defRef" cm:type="xs:attributeGroup">
+  <cm:doc>
+    The defRef XSD group serves only as the basis for restrictions
+    that select name or ref, often combining the restriction with
+    additional requirements.  Such references have a cm:refines
+    attribute referencing this pattern.
 
-<define name="nestedParticle">
-  <choice>
-    <ref name="localElement"/>
-    <ref name="groupRef"/>
-    <ref name="choice"/>
-    <ref name="sequence"/>
-    <ref name="any"/>
-  </choice>
-</define>
-
-<define name="fixedOrDefault">
-  <choice>
-    <empty/>
-    <attribute name="fixed"/>
-    <attribute name="default"/>
-  </choice>
-</define>
-
-<define name="attributeType">
-  <choice>
-    <empty/>
-    <attribute name="type">
-      <data type="QName"/>
-    </attribute>
-    <ref name="localSimpleType"/>
-  </choice>
-</define>
-
-<define name="localAttribute">
-  <element name="xs:attribute"
-        doc:href="http://www.w3.org/TR/xmlschema-1/#element-attribute">
-    <ref name="annotated"/>
-    <optional>
-      <attribute name="use">
-        <choice>
-          <value type="token">optional</value>
-          <value type="token">prohibited</value>
-          <value type="token">required</value>
-        </choice>
-      </attribute>
-    </optional>
-    <ref name="fixedOrDefault"/>
+    This pattern exists for documentation purposes and should never be
+    referenced.
+  </cm:doc>
+  <zeroOrMore>
     <choice>
+      <attribute name="name">
+        <data type="NCName"/>
+      </attribute>
       <attribute name="ref">
         <data type="QName"/>
       </attribute>
-      <group>
-        <attribute name="name">
-          <data type="NCName"/>
-        </attribute>
-        <optional>
-          <attribute name="form">
-            <ref name="formChoice"/>
-          </attribute>
-        </optional>
-        <ref name="attributeType"/>
-      </group>
     </choice>
-  </element>
+  </zeroOrMore>
 </define>
 
-<define name="topLevelAttribute">
-  <element name="xs:attribute"
-        doc:href="http://www.w3.org/TR/xmlschema-1/#element-attribute">
-    <ref name="annotated"/>
-    <attribute name="name">
-      <data type="NCName"/>
+<define name="typeDefParticle" cm:type="xs:group">
+  <choice>
+    <ref name="groupRef_elt"/>
+    <ref name="all.elt"/>
+    <ref name="choice.elt"/>
+    <ref name="sequence.elt"/>
+  </choice>
+</define>
+
+<define name="nestedParticle" cm:type="xs:group">
+  <choice>
+    <ref name="localElement_elt"/>
+    <ref name="groupRef_elt"/>
+    <ref name="choice.elt"/>
+    <ref name="sequence.elt"/>
+    <ref name="any.elt"/>
+  </choice>
+</define>
+
+<define name="particle" cm:type="xs:group">
+  <choice>
+    <ref name="localElement_elt"/>
+    <ref name="groupRef_elt"/>
+    <ref name="all.elt"/>
+    <ref name="choice.elt"/>
+    <ref name="sequence.elt"/>
+    <ref name="any.elt"/>
+  </choice>
+</define>
+
+<define name="attribute" cm:type="xs:complexType" cm:extends="xs:annotated">
+  <ref name="annotated"/>
+  <optional>
+    <attribute name="use">
+      <choice>
+        <value type="NMTOKEN">prohibited</value>
+        <value type="NMTOKEN">optional</value>
+        <value type="NMTOKEN">required</value>
+      </choice>
     </attribute>
-    <ref name="fixedOrDefault"/>
-    <ref name="attributeType"/>
-  </element>
+  </optional>
+  <ref name="fixedOrDefault_ext"/>
+  <choice cm:refines="defRef">
+    <attribute name="ref">
+      <data type="QName"/>
+    </attribute>
+    <group>
+      <attribute name="name">
+        <data type="NCName"/>
+      </attribute>
+      <optional>
+        <attribute name="form">
+          <ref name="formChoice"/>
+        </attribute>
+      </optional>
+      <ref name="attributeType_ext"/>
+    </group>
+  </choice>
 </define>
 
-<define name="attrDecls">
+<define name="topLevelAttribute" cm:restricts="xs:attribute" cm:refines="attribute">
+  <cm:doc>
+    This XSD type restricts xs:attribute.  The ref, form, and use
+    attributes are prohibited, and name is required.
+  </cm:doc>
+  <ref name="annotated"/>
+  <ref name="fixedOrDefault_ext"/>
+  <attribute name="name" cm:refines="defRef">
+    <data type="NCName"/>
+  </attribute>
+  <ref name="attributeType_ext"/>
+</define>
+
+<define name="attrDecls" cm:type="xs:group">
   <zeroOrMore>
     <choice>
-      <ref name="localAttribute"/>
-      <ref name="attributeGroupRef"/>
+      <ref name="attribute_elt"/>
+      <element name="xs:attributeGroup"
+               cm:href="http://www.w3.org/TR/xmlschema-1/#element-attributeGroup">
+        <ref name="attributeGroupRef"/>
+      </element>
     </choice>
   </zeroOrMore>
   <optional>
-    <ref name="anyAttribute"/>
+    <ref name="anyAttribute.elt"/>
   </optional>
 </define>
 
-<define name="anyAttribute">
+<define name="anyAttribute.elt" cm:type="xs:element">
   <element name="xs:anyAttribute"
-        doc:href="http://www.w3.org/TR/xmlschema-1/#element-anyAttribute">
+           cm:href="http://www.w3.org/TR/xmlschema-1/#element-anyAttribute">
     <ref name="wildcard"/>
   </element>
 </define>
 
-<define name="complexType">
-  <ref name="annotated"/>
-  <optional>
-    <attribute name="mixed">
-      <data type="boolean"/>
-    </attribute>
-  </optional>
+<define name="complexTypeModel" cm:type="xs:group">
   <choice>
     <ref name="simpleContent"/>
-    <ref name="complexContent"/>
+    <ref name="complexContent.elt"/>
     <group>
       <optional>
         <ref name="typeDefParticle"/>
@@ -348,71 +394,116 @@
   </choice>
 </define>
 
-<define name="topLevelComplexType">
-  <element name="xs:complexType"
-        doc:href="http://www.w3.org/TR/xmlschema-1/#element-complexType">
-    <ref name="complexType"/>
-    <attribute name="name">
-      <data type="NCName"/>
+<define name="complexType" cm:type="xs:complexType" cm:extends="xs:annotated">
+  <cm:doc>
+    This is an abstract class in XSD, restricted by
+    xs:topLevelComplexType and xs:localComplexType.
+
+    Attributes name, abstract, final, and block are permitted only for
+    xs:topLevelComplexType and are added only in that restriction.
+
+    Though the SfS documentation says attribute mixed is disallowed on
+    simpleContent, this is untrue and led to an earlier bug in this
+    schema: the attribute mixed="false" is permitted on simpleContent.
+  </cm:doc>
+  <ref name="annotated"/>
+  <ref name="complexTypeModel"/>
+  <optional>
+    <attribute name="mixed">
+      <data type="boolean"/>
     </attribute>
-    <zeroOrMore>
-      <choice>
-        <attribute name="abstract">
-          <data type="boolean"/>
-        </attribute>
-        <attribute name="block">
-          <ref name="derivationSet"/>
-        </attribute>
-        <attribute name="final">
-          <ref name="derivationSet"/>
-        </attribute>
-      </choice>
-    </zeroOrMore>
-  </element>
+  </optional>
 </define>
 
-<define name="localComplexType">
-  <element name="xs:complexType"
-        doc:href="http://www.w3.org/TR/xmlschema-1/#element-complexType">
-    <ref name="complexType"/>
-  </element>
+<define name="topLevelComplexType" cm:type="xs:complexType" cm:restricts="xs:complexType">
+  <cm:doc>
+    "Restriction" in this case simply means adding the stuff we left out of the base.
+  </cm:doc>
+  <ref name="complexType"/>
+  <attribute name="name">
+    <data type="NCName"/>
+  </attribute>
+  <zeroOrMore>
+    <choice>
+      <attribute name="abstract">
+        <data type="boolean"/>
+      </attribute>
+      <attribute name="block">
+        <ref name="derivationSet"/>
+      </attribute>
+      <attribute name="final">
+        <ref name="derivationSet"/>
+      </attribute>
+    </choice>
+  </zeroOrMore>
 </define>
 
-<define name="complexRestriction">
-  <element name="xs:restriction"
-        doc:href="http://www.w3.org/TR/xmlschema-1/#element-complexContent::restriction">
-    <ref name="annotated"/>
-    <attribute name="base">
-      <data type="QName"/>
-    </attribute>
-    <optional>
-      <ref name="typeDefParticle"/>
-    </optional>
-    <ref name="attrDecls"/>
-  </element>
+<define name="localComplexType" cm:type="xs:complexType" cm:restricts="xs:complexType">
+  <cm:doc>
+    "Restriction" in this case simply means keeping the stuff we put in the base.
+  </cm:doc>
+  <ref name="complexType"/>
 </define>
 
-<define name="extensionType">
+<define name="reducedDerivation_prolog">
+  <cm:doc>
+    This pattern encapsulates the common prolog for xs:restrictionType
+    restrictions and xs:extensionType extensions.
+  </cm:doc>
   <ref name="annotated"/>
   <attribute name="base">
     <data type="QName"/>
   </attribute>
 </define>
 
-<define name="complexExtension">
-  <element name="xs:extension"
-        doc:href="http://www.w3.org/TR/xmlschema-1/#element-complexContent::extension">
-    <ref name="extensionType"/>
-    <optional>
-      <ref name="typeDefParticle"/>
-    </optional>
-    <ref name="attrDecls"/>
-  </element>
+<define name="reducedDerivation_epilog">
+  <cm:doc>
+    This pattern encapsulates the common prolog for xs:restrictionType
+    restrictions and xs:extensionType extensions.
+  </cm:doc>
+  <ref name="attrDecls"/>
 </define>
 
-<define name="complexContent">
+<define name="restrictionType" cm:type="xs:complexType">
+  <cm:doc>
+    The restrictionType XSD type serves only as the basis for two
+    restriction types that select either typeDefParticle or
+    simpleRestrictionModel.  The RELAX NG base delegates the selection
+    to the restricting pattern, which replicates this pattern
+    inserting the desired content prior to the attrDecls pattern.
+
+    This pattern exists for documentation purposes and should never be
+    referenced.
+  </cm:doc>
+  <ref name="reducedDerivation_prolog"/>
+  <ref name="reducedDerivation_epilog"/>
+</define>
+
+<define name="complexRestrictionType" cm:type="xs:complexType" cm:restricts="xs:restrictionType" cm:refines="restrictionType">
+  <ref name="reducedDerivation_prolog"/>
+  <optional>
+    <ref name="typeDefParticle"/>
+  </optional>
+  <ref name="reducedDerivation_epilog"/>
+</define>
+
+<define name="extensionType" cm:type="xs:complexType">
+  <cm:doc>
+    The extensionType XSD type is used unchanged within the
+    complexContent element's type, and in a restricted form in
+    xs:simpleExtensionType that refines this by removing the
+    typeDefParticle.
+  </cm:doc>
+  <ref name="reducedDerivation_prolog"/>
+  <optional>
+    <ref name="typeDefParticle"/>
+  </optional>
+  <ref name="reducedDerivation_epilog"/>
+</define>
+
+<define name="complexContent.elt" cm:type="xs:element">
   <element name="xs:complexContent"
-        doc:href="http://www.w3.org/TR/xmlschema-1/#element-complexContent">
+           cm:href="http://www.w3.org/TR/xmlschema-1/#element-complexContent">
     <ref name="annotated"/>
     <optional>
       <attribute name="mixed">
@@ -420,75 +511,84 @@
       </attribute>
     </optional>
     <choice>
-      <ref name="complexRestriction"/>
-      <ref name="complexExtension"/>
+      <element name="xs:restriction">
+        <ref name="complexRestrictionType"/>
+      </element>
+      <element name="xs:extension">
+        <ref name="extensionType"/>
+      </element>
     </choice>
   </element>
 </define>
 
-<define name="simpleRestriction">
-  <element name="xs:restriction"
-        doc:href="http://www.w3.org/TR/xmlschema-1/#element-simpleContent::restriction">
-    <ref name="annotated"/>
+<define name="simpleRestrictionType" cm:type="xs:complexType" cm:restricts="xs:restrictionType" cm:refines="restrictionType">
+  <ref name="reducedDerivation_prolog"/>
+  <optional>
     <ref name="simpleRestrictionModel"/>
-    <ref name="attrDecls"/>
-  </element>
+  </optional>
+  <ref name="reducedDerivation_epilog"/>
 </define>
 
-<define name="simpleContentRestriction">
-  <element name="xs:restriction"
-        doc:href="http://www.w3.org/TR/xmlschema-1/#element-simpleContent::restriction">
-    <ref name="annotated"/>
-    <group>
-      <attribute name="base">
-        <data type="QName"/>
-      </attribute>
-      <optional>
-        <ref name="localSimpleType"/>
-      </optional>
-      <ref name="simpleRestrictionFacets"/>
-    </group>
-    <ref name="attrDecls"/>
-  </element>
+<define name="simpleExtensionType" cm:type="xs:complexType" cm:extends="xs:extensionType" cm:refines="extensionType">
+  <ref name="reducedDerivation_prolog"/>
+  <ref name="reducedDerivation_epilog"/>
 </define>
 
-<define name="simpleContentExtension">
-  <element name="xs:extension"
-        doc:href="http://www.w3.org/TR/xmlschema-1/#element-simpleContent::extension">
-    <ref name="extensionType"/>
-    <ref name="attrDecls"/>
-  </element>
-</define>
-
-<define name="simpleContent">
+<define name="simpleContent" cm:type="xs:element">
   <element name="xs:simpleContent"
-        doc:href="http://www.w3.org/TR/xmlschema-1/#element-simpleContent">
+           cm:href="http://www.w3.org/TR/xmlschema-1/#element-simpleContent">
     <ref name="annotated"/>
     <choice>
-      <ref name="simpleContentRestriction"/>
-      <ref name="simpleContentExtension"/>
+      <element name="xs:restriction">
+        <ref name="simpleRestrictionType"/>
+      </element>
+      <element name="xs:extension">
+        <ref name="simpleExtensionType"/>
+      </element>
     </choice>
   </element>
 </define>
 
-<define name="blockSet">
+<define name="complexType.elt" cm:type="xs:element">
+  <element name="xs:complexType"
+           cm:href="http://www.w3.org/TR/xmlschema-1/#element-complexType">
+    <ref name="topLevelComplexType"/>
+  </element>
+</define>
+
+<define name="blockSet" cm:type="xs:simpleType">
   <choice>
     <value type="token">#all</value>
     <list>
       <zeroOrMore>
-        <choice>
-          <value>extension</value>
-          <value>restriction</value>
-          <value>substitution</value>
+        <choice cm:refines="derivationControl">
+          <value type="NMTOKEN">extension</value>
+          <value type="NMTOKEN">restriction</value>
+          <value type="NMTOKEN">substitution</value>
         </choice>
       </zeroOrMore>
     </list>
   </choice>
 </define>
 
-<define name="element">
+<define name="element" cm:type="xs:complexType">
+  <cm:doc>
+    This is an abstract class in XSD, restricted by xs:topLevelElement
+    and xs:localElement (which is restricted by xs:narrowMaxMin).
+
+    Attributes ref, form, minOccurs, and maxOccurs are prohibited for
+    topLevelElement.  These are added only in the localElement
+    pattern.
+
+    Attributes substitutionGroup, final, and abstract are prohibited
+    in localElement.  These are added only in the topLevelElement
+    pattern.
+
+    defRef is restricted in topLevelElement (attribute name is
+    required there) so is provided separately in each restriction.
+  </cm:doc>
   <ref name="annotated"/>
-  <ref name="fixedOrDefault"/>
+  <ref name="fixedOrDefault_ext"/>
   <zeroOrMore>
     <choice>
       <attribute name="nillable">
@@ -504,210 +604,274 @@
     <attribute name="type">
       <data type="QName"/>
     </attribute>
-    <ref name="localSimpleType"/>
-    <ref name="localComplexType"/>
+    <ref name="localSimpleType_elt"/>
+    <ref name="localComplexType_elt"/>
   </choice>
   <zeroOrMore>
     <ref name="identityConstraint"/>
   </zeroOrMore>
 </define>
 
-<define name="topLevelElement">
-  <element name="xs:element"
-        doc:href="http://www.w3.org/TR/xmlschema-1/#element-element">
-    <ref name="element"/>
-    <attribute name="name">
-      <data type="NCName"/>
-    </attribute>
-    <zeroOrMore>
-      <choice>
-        <attribute name="substitutionGroup">
-          <data type="QName"/>
-        </attribute>
-        <attribute name="abstract">
-          <data type="boolean"/>
-        </attribute>
-        <attribute name="final">
-          <ref name="derivationSet"/>
-        </attribute>
-      </choice>
-    </zeroOrMore>
-  </element>
-</define>
-
-<define name="localElement">
-  <element name="xs:element"
-        doc:href="http://www.w3.org/TR/xmlschema-1/#element-element">
-    <ref name="occurs"/>
+<define name="topLevelElement" cm:type="xs:complexType" cm:restricts="xs:element">
+  <ref name="element"/>
+  <attribute name="name" cm:refines="defRef">
+    <data type="NCName"/>
+  </attribute>
+  <zeroOrMore>
     <choice>
-      <group>
-        <attribute name="ref">
-          <data type="QName"/>
-        </attribute>
-        <optional>
-          <ref name="annotation"/>
-        </optional>
-        <ref name="fixedOrDefault"/>
-      </group>
-      <group>
-        <ref name="element"/>
-        <attribute name="name">
-          <data type="NCName"/>
-        </attribute>
-        <optional>
-          <attribute name="form">
-            <ref name="formChoice"/>
-          </attribute>
-        </optional>
-      </group>
+      <attribute name="substitutionGroup">
+        <data type="QName"/>
+      </attribute>
+      <attribute name="abstract">
+        <data type="boolean"/>
+      </attribute>
+      <attribute name="final">
+        <ref name="derivationSet"/>
+      </attribute>
     </choice>
+  </zeroOrMore>
+</define>
+
+<define name="localElement" cm:type="xs:complexType" cm:restricts="xs:element">
+  <ref name="element"/>
+  <ref name="occurs"/>
+  <choice cm:refines="defRef">
+    <group>
+      <attribute name="ref">
+        <data type="QName"/>
+      </attribute>
+    </group>
+    <group>
+      <attribute name="name">
+        <data type="NCName"/>
+      </attribute>
+      <optional>
+        <attribute name="form">
+          <ref name="formChoice"/>
+        </attribute>
+      </optional>
+    </group>
+  </choice>
+</define>
+
+<define name="element.elt" cm:type="xs:element">
+  <element name="xs:element"
+           cm:href="http://www.w3.org/TR/xmlschema-1/#element-element">
+    <ref name="topLevelElement"/>
   </element>
 </define>
 
-<define name="namedGroup">
-  <element name="xs:group"
-        doc:href="http://www.w3.org/TR/xmlschema-1/#element-group">
-    <ref name="annotated"/>
-    <attribute name="name">
-      <data type="NCName"/>
-    </attribute>
-    <choice>
-      <element name="xs:all">
-        <ref name="allModel"/>
-      </element>
-      <element name="xs:choice">
-        <ref name="simpleExplicitGroup"/>
-      </element>
-      <element name="xs:sequence">
-        <ref name="simpleExplicitGroup"/>
-      </element>
-    </choice>
-  </element>
-</define>
+<define name="group" cm:type="xs:complexType">
+  <cm:doc>
+    This is an abstract type in XSD, restricted by xs:realGroup and
+    xs:explicitGroup which vary in the subsets of xs:particle that
+    they recognize.
 
-<define name="groupRef">
-  <element name="xs:group"
-        doc:href="http://www.w3.org/TR/xmlschema-1/#element-group">
-    <ref name="annotated"/>
-    <ref name="occurs"/>
-    <attribute name="ref">
-      <data type="QName"/>
-    </attribute>
-  </element>
-</define>
+    xs:realGroup is never used directly, but is restricted by
+    xs:namedGroup and xs:groupRef, which together partition defRef in
+    this branch.
 
-<define name="explicitGroup">
+    xs:explicitGroup is used directly for xs:choice and xs:sequence,
+    and is also restricted by xs:simpleExplicitGroup and xs:all.
+    xs:explicitGroup elides defRef.
+
+    occurs is prohibited in namedGroup and simpleExplicitGroup so is
+    added only to restrictions that permit it.
+  </cm:doc>
   <ref name="annotated"/>
+</define>
+
+<define name="realGroup" cm:type="xs:complexType" cm:restricts="xs:group">
+  <cm:doc>
+    xs:realGroup restricts the particles to all, choice, and sequence
+    but makes them optional.  In xs:namedGroup the choice is required,
+    but all is restricted; in xs:groupRef the choice is elided.
+    Consequently we don't include them in this pattern.
+  </cm:doc>
+  <ref name="group"/>
+</define>
+
+<define name="namedGroup" cm:type="xs:complexType" cm:restricts="xs:realGroup">
+  <ref name="realGroup"/>
+  <attribute name="name" cm:refines="defRef">
+    <data type="NCName"/>
+  </attribute>
+  <choice>
+    <element name="xs:all" cm:refines="all">
+      <ref name="allModel"/>
+    </element>
+    <group>
+      <ref name="occurs"/>
+      <choice>
+        <element name="xs:choice">
+          <ref name="simpleExplicitGroup"/>
+        </element>
+        <element name="xs:sequence">
+          <ref name="simpleExplicitGroup"/>
+        </element>
+      </choice>
+    </group>
+  </choice>
+</define>
+
+<define name="groupRef" cm:type="xs:complexType" cm:restricts="xs:realGroup">
+  <ref name="realGroup"/>
+  <ref name="occurs"/>
+  <attribute name="ref" cm:refines="defRef">
+    <data type="QName"/>
+  </attribute>
+</define>
+
+<define name="explicitGroup" cm:type="xs:complexType" cm:restricts="xs:group">
+  <ref name="group"/>
   <ref name="occurs"/>
   <zeroOrMore>
     <ref name="nestedParticle"/>
   </zeroOrMore>
+  <empty cm:refines="defRef"/>
 </define>
 
-<define name="simpleExplicitGroup">
-  <ref name="annotated"/>
+<define name="simpleExplicitGroup" cm:type="xs:complexType" cm:restricts="xs:explicitGroup" cm:refines="explicitGroup">
+  <cm:doc>
+    Since RELAX NG cannot remove the occurs instances permitted by
+    explicitGroup which this restricts, we refine explicitGroup by
+    replicating its content except for the occurs attributes.
+  </cm:doc>
+  <ref name="group"/>
   <zeroOrMore>
     <ref name="nestedParticle"/>
   </zeroOrMore>
+  <empty cm:refines="defRef"/>
 </define>
 
-<define name="allModel">
-  <ref name="annotated"/>
+<define name="allModel" cm:type="xs:group">
+  <optional>
+    <ref name="annotation"/>
+  </optional>
   <zeroOrMore>
     <element name="xs:element">
-      <zeroOrMore>
-        <choice>
-          <attribute name="minOccurs">
-            <choice>
-              <value type="nonNegativeInteger">0</value>
-              <value type="nonNegativeInteger">1</value>
-            </choice>
-          </attribute>
-          <attribute name="maxOccurs">
-            <choice>
-              <value type="nonNegativeInteger">0</value>
-              <value type="nonNegativeInteger">1</value>
-            </choice>
-          </attribute>
-        </choice>
-      </zeroOrMore>
-      <choice>
-        <group>
-          <attribute name="ref">
-            <data type="QName"/>
-          </attribute>
-          <optional>
-            <ref name="annotation"/>
-          </optional>
-          <ref name="fixedOrDefault"/>
-        </group>
-        <group>
-          <ref name="element"/>
-          <attribute name="name">
-            <data type="NCName"/>
-          </attribute>
-          <optional>
-            <attribute name="form">
-              <ref name="formChoice"/>
-            </attribute>
-          </optional>
-        </group>
-      </choice>
+      <ref name="narrowMaxMin"/>
     </element>
   </zeroOrMore>
 </define>
 
-<define name="all">
-  <element name="xs:all"
-        doc:href="http://www.w3.org/TR/xmlschema-1/#element-all">
-    <ref name="allModel"/>
-    <zeroOrMore>
-      <choice>
-        <attribute name="minOccurs">
-          <choice>
-            <value type="nonNegativeInteger">0</value>
-            <value type="nonNegativeInteger">1</value>
-          </choice>
-        </attribute>
-        <attribute name="maxOccurs">
+<define name="narrowMaxMin" cm:type="complexType" cm:restricts="xs:localElement" cm:refines="localElement">
+  <cm:doc>
+    Same as the localElement pattern except for a restriction on the
+    occurs pattern.
+  </cm:doc>
+  <ref name="element"/>
+  <zeroOrMore cm:refines="occurs">
+    <choice>
+      <attribute name="minOccurs">
+        <choice>
+          <value type="nonNegativeInteger">0</value>
           <value type="nonNegativeInteger">1</value>
+        </choice>
+      </attribute>
+      <attribute name="maxOccurs" cm:refines="allNNI">
+        <choice>
+          <value type="nonNegativeInteger">0</value>
+          <value type="nonNegativeInteger">1</value>
+        </choice>
+      </attribute>
+    </choice>
+  </zeroOrMore>
+  <choice cm:refines="defRef">
+    <group>
+      <attribute name="ref">
+        <data type="QName"/>
+      </attribute>
+    </group>
+    <group>
+      <attribute name="name">
+        <data type="NCName"/>
+      </attribute>
+      <optional>
+        <attribute name="form">
+          <ref name="formChoice"/>
         </attribute>
-      </choice>
-    </zeroOrMore>
+      </optional>
+    </group>
+  </choice>
+</define>
+
+<define name="all" cm:type="xs:complexType" cm:restricts="xs:explicitGroup" cm:refines="explicitGroup">
+  <cm:doc>
+    Match explicitGroup but refine both the occurs pattern and the
+    nestedParticle.
+  </cm:doc>
+  <ref name="group"/>
+  <zeroOrMore cm:refines="occurs">
+    <choice>
+      <attribute name="minOccurs">
+        <choice>
+          <value type="nonNegativeInteger">0</value>
+          <value type="nonNegativeInteger">1</value>
+        </choice>
+      </attribute>
+      <attribute name="maxOccurs" cm:refines="allNNI">
+        <choice>
+          <value type="nonNegativeInteger">0</value>
+          <value type="nonNegativeInteger">1</value>
+        </choice>
+      </attribute>
+    </choice>
+  </zeroOrMore>
+  <ref name="allModel"/>
+  <empty cm:refines="defRef"/>
+</define>
+
+<define name="all.elt" cm:type="xs:element">
+  <element name="xs:all"
+           cm:href="http://www.w3.org/TR/xmlschema-1/#element-all">
+    <ref name="all"/>
   </element>
 </define>
 
-<define name="choice">
+<define name="choice.elt" cm:type="xs:element">
   <element name="xs:choice"
-        doc:href="http://www.w3.org/TR/xmlschema-1/#element-choice">
+           cm:href="http://www.w3.org/TR/xmlschema-1/#element-choice">
     <ref name="explicitGroup"/>
   </element>
 </define>
 
-<define name="sequence">
+<define name="sequence.elt" cm:type="xs:element">
   <element name="xs:sequence"
-        doc:href="http://www.w3.org/TR/xmlschema-1/#element-sequence">
+           cm:href="http://www.w3.org/TR/xmlschema-1/#element-sequence">
     <ref name="explicitGroup"/>
   </element>
 </define>
 
-<define name="anyAttrGroup">
+<define name="group.elt" cm:type="xs:element">
+  <element name="xs:group"
+           cm:href="http://www.w3.org/TR/xmlschema-1/#element-group">
+    <ref name="namedGroup"/>
+  </element>
+</define>
+
+<define name="namespaceList" cm:type="xs:simpleType">
+  <choice>
+    <value type="token">##any</value>
+    <value type="token">##other</value>
+    <list>
+      <zeroOrMore>
+        <choice>
+          <data type="anyURI"/>
+          <value type="token">##targetNamespace</value>
+          <value type="token">##local</value>
+        </choice>
+      </zeroOrMore>
+    </list>
+  </choice>
+</define>
+
+<define name="wildcard" cm:type="xs:complexType" cm:extends="xs:annotated">
+  <ref name="annotated"/>
   <zeroOrMore>
     <choice>
       <attribute name="namespace">
-        <choice>
-          <value type="token">##any</value>
-          <value type="token">##other</value>
-          <list>
-            <zeroOrMore>
-              <choice>
-                <data type="anyURI"/>
-                <value type="token">##targetNamespace</value>
-                <value type="token">##local</value>
-              </choice>
-            </zeroOrMore>
-          </list>
-        </choice>
+        <ref name="namespaceList"/>
       </attribute>
       <attribute name="processContents">
         <choice>
@@ -720,43 +884,65 @@
   </zeroOrMore>
 </define>
 
-<define name="wildcard">
-  <ref name="annotated"/>
-  <ref name="anyAttrGroup"/>
-</define>
-
-<define name="any">
+<define name="any.elt" cm:type="xs:element">
+  <cm:doc>
+    This is a rare case of an element with complex content using a
+    local complexType instead of referring to a type with the same
+    name as the element.  This local type extends the wildcard
+    pattern.
+  </cm:doc>
   <element name="xs:any"
-        doc:href="http://www.w3.org/TR/xmlschema-1/#element-any">
+           cm:href="http://www.w3.org/TR/xmlschema-1/#element-any">
     <ref name="wildcard"/>
     <ref name="occurs"/>
   </element>
 </define>
 
-<define name="namedAttributeGroup">
-  <element name="xs:attributeGroup"
-        doc:href="http://www.w3.org/TR/xmlschema-1/#element-attributeGroup">
-    <ref name="annotated"/>
-    <attribute name="name">
-      <data type="NCName"/>
-    </attribute>
-    <ref name="attrDecls"/>
+<define name="attribute.elt" cm:type="xs:element">
+  <element name="xs:attribute"
+           cm:href="http://www.w3.org/TR/xmlschema-1/#element-attribute">
+    <ref name="topLevelAttribute"/>
   </element>
 </define>
 
-<define name="attributeGroupRef">
+<define name="attributeGroup" cm:type="xs:complexType" cm:extends="xs:annotated">
+  <cm:doc>
+    This is an abstract class in XSD, restricted by
+    xs:namedAttributeGroup and xs:attributeGroupRef.
+
+    xs:attrDecls is permitted only in namedAttributeGroup and are
+    added only in that restriction.
+
+    defRef is provided separately in each restriction.
+  </cm:doc>
+  <ref name="annotated"/>
+</define>
+
+<define name="namedAttributeGroup" cm:type="xs:complexType" cm:restricts="xs:attributeGroup">
+  <ref name="attributeGroup"/>
+  <attribute name="name" cm:refines="defRef">
+    <data type="NCName"/>
+  </attribute>
+  <ref name="attrDecls"/>
+</define>
+
+<define name="attributeGroupRef" cm:type="xs:complexType" cm:restricts="xs:attributeGroup">
+  <ref name="attributeGroup"/>
+  <attribute name="ref" cm:refines="defRef">
+    <data type="QName"/>
+  </attribute>
+</define>
+
+<define name="attributeGroup.elt" cm:type="xs:element">
   <element name="xs:attributeGroup"
-        doc:href="http://www.w3.org/TR/xmlschema-1/#element-attributeGroup">
-    <ref name="annotated"/>
-    <attribute name="ref">
-      <data type="QName"/>
-    </attribute>
+           cm:href="http://www.w3.org/TR/xmlschema-1/#element-attributeGroup">
+    <ref name="namedAttributeGroup"/>
   </element>
 </define>
 
-<define name="include">
+<define name="include.elt" cm:type="xs:element">
   <element name="xs:include"
-        doc:href="http://www.w3.org/TR/xmlschema-1/#element-include">
+           cm:href="http://www.w3.org/TR/xmlschema-1/#element-include">
     <ref name="annotated"/>
     <attribute name="schemaLocation">
       <data type="anyURI"/>
@@ -764,18 +950,18 @@
   </element>
 </define>
 
-<define name="redefine">
+<define name="redefine.elt" cm:type="xs:element">
   <element name="xs:redefine"
-        doc:href="http://www.w3.org/TR/xmlschema-1/#element-redefine">
+           cm:href="http://www.w3.org/TR/xmlschema-1/#element-redefine">
     <ref name="openAttrs"/>
+    <attribute name="schemaLocation">
+      <data type="anyURI"/>
+    </attribute>
     <optional>
       <attribute name="id">
         <data type="ID"/>
       </attribute>
     </optional>
-    <attribute name="schemaLocation">
-      <data type="anyURI"/>
-    </attribute>
     <zeroOrMore>
       <choice>
         <ref name="annotation"/>
@@ -785,7 +971,13 @@
   </element>
 </define>
 
-<define name="import">
+<define name="import_ext">
+  <cm:doc>
+    Common content for the local complexType used in an xs:import
+    element.  RELAX NG expresses the validation requirement dependency
+    on the containing schema targetNamespace attribute, which XSD does
+    not.
+  </cm:doc>
   <ref name="annotated"/>
   <optional>
     <attribute name="schemaLocation">
@@ -794,20 +986,28 @@
   </optional>
 </define>
 
-<define name="importRequiredNamespace">
+<define name="import_rns_elt">
+  <cm:doc>
+    Provide an element that extends the import_ext base pattern to
+    require a namespace attribute.
+  </cm:doc>
   <element name="xs:import"
-        doc:href="http://www.w3.org/TR/xmlschema-1/#element-import">
-    <ref name="import"/>
+           cm:href="http://www.w3.org/TR/xmlschema-1/#element-import">
+    <ref name="import_ext"/>
     <attribute name="namespace">
       <data type="anyURI"/>
     </attribute>
   </element>
 </define>
 
-<define name="importOptionalNamespace">
+<define name="import_ons_elt">
+  <cm:doc>
+    Provide an element that extends the import_ext base pattern to
+    optionally use a namespace attribute.
+  </cm:doc>
   <element name="xs:import"
-        doc:href="http://www.w3.org/TR/xmlschema-1/#element-import">
-    <ref name="import"/>
+           cm:href="http://www.w3.org/TR/xmlschema-1/#element-import">
+    <ref name="import_ext"/>
     <optional>
       <attribute name="namespace">
         <data type="anyURI"/>
@@ -816,9 +1016,9 @@
   </element>
 </define>
 
-<define name="selector">
+<define name="selector.elt" cm:type="xs:element">
   <element name="xs:selector"
-        doc:href="http://www.w3.org/TR/xmlschema-1/#element-selector">
+           cm:href="http://www.w3.org/TR/xmlschema-1/#element-selector">
     <ref name="annotated"/>
     <attribute name="xpath">
       <data type="token">
@@ -828,9 +1028,9 @@
   </element>
 </define>
 
-<define name="field">
+<define name="field.elt" cm:type="xs:element">
   <element name="xs:field"
-        doc:href="http://www.w3.org/TR/xmlschema-1/#element-field">
+           cm:href="http://www.w3.org/TR/xmlschema-1/#element-field">
     <ref name="annotated"/>
     <attribute name="xpath">
       <data type="token">
@@ -840,42 +1040,46 @@
   </element>
 </define>
 
-<define name="keybase">
+<define name="keybase" cm:type="xs:complexType" cm:extends="xs:annotated">
+  <cm:doc>
+    The XSD keybase type is used directly and is extended as a local
+    complexType in the keyRef element.
+  </cm:doc>
   <ref name="annotated"/>
   <attribute name="name">
     <data type="NCName"/>
   </attribute>
-  <ref name="selector"/>
+  <ref name="selector.elt"/>
   <oneOrMore>
-    <ref name="field"/>
+    <ref name="field.elt"/>
   </oneOrMore>
 </define>
 
-<define name="identityConstraint">
+<define name="identityConstraint" cm:type="xs:group">
   <choice>
-    <ref name="unique"/>
-    <ref name="key"/>
-    <ref name="keyref"/>
+    <ref name="unique.elt"/>
+    <ref name="key.elt"/>
+    <ref name="keyref.elt"/>
   </choice>
 </define>
 
-<define name="unique">
+<define name="unique.elt" cm:type="xs:element">
   <element name="xs:unique"
-        doc:href="http://www.w3.org/TR/xmlschema-1/#element-unique">
+           cm:href="http://www.w3.org/TR/xmlschema-1/#element-unique">
     <ref name="keybase"/>
   </element>
 </define>
 
-<define name="key">
+<define name="key.elt" cm:type="xs:element">
   <element name="xs:key"
-        doc:href="http://www.w3.org/TR/xmlschema-1/#element-key">
+           cm:href="http://www.w3.org/TR/xmlschema-1/#element-key">
     <ref name="keybase"/>
   </element>
 </define>
 
-<define name="keyref">
+<define name="keyref.elt" cm:type="xs:element">
   <element name="xs:keyref"
-        doc:href="http://www.w3.org/TR/xmlschema-1/#element-keyref">
+           cm:href="http://www.w3.org/TR/xmlschema-1/#element-keyref">
     <ref name="keybase"/>
     <attribute name="refer">
       <data type="QName"/>
@@ -883,25 +1087,35 @@
   </element>
 </define>
 
-<define name="notation">
+<define name="notation.elt" cm:type="xs:element">
   <element name="xs:notation"
-        doc:href="http://www.w3.org/TR/xmlschema-1/#element-notation">
+           cm:href="http://www.w3.org/TR/xmlschema-1/#element-notation">
     <ref name="annotated"/>
     <attribute name="name">
       <data type="NCName"/>
     </attribute>
-    <attribute name="public">
-      <data type="token"/>
-    </attribute>
-    <optional>
-      <attribute name="system">
-        <data type="anyURI"/>
-      </attribute>
-    </optional>
+    <zeroOrMore>
+      <choice>
+        <attribute name="public">
+          <ref name="public"/>
+        </attribute>
+        <attribute name="system">
+          <data type="anyURI"/>
+        </attribute>
+      </choice>
+    </zeroOrMore>
   </element>
 </define>
 
-<define name="anyContent">
+<define name="public" cm:type="xs:simpleType">
+  <data type="token"/>
+</define>
+
+<define name="annotation_ext">
+  <cm:doc>
+    A helper pattern describing the mixed content of annotation
+    sub-elements.
+  </cm:doc>
   <mixed>
     <zeroOrMore>
       <element>
@@ -911,29 +1125,29 @@
             <anyName/>
           </attribute>
         </zeroOrMore>
-        <ref name="anyContent"/>
+        <ref name="annotation_ext"/>
         <empty/>
       </element>
     </zeroOrMore>
   </mixed>
 </define>
 
-<define name="appinfo">
+<define name="appinfo.elt" cm:type="xs:element">
   <element name="xs:appinfo"
-        doc:href="http://www.w3.org/TR/xmlschema-1/#element-appinfo">
+           cm:href="http://www.w3.org/TR/xmlschema-1/#element-appinfo">
     <ref name="openAttrs"/>
     <optional>
       <attribute name="source">
         <data type="anyURI"/>
       </attribute>
     </optional>
-    <ref name="anyContent"/>
+    <ref name="annotation_ext"/>
   </element>
 </define>
 
-<define name="documentation">
+<define name="documentation.elt" cm:type="xs:element">
   <element name="xs:documentation"
-        doc:href="http://www.w3.org/TR/xmlschema-1/#element-documentation">
+           cm:href="http://www.w3.org/TR/xmlschema-1/#element-documentation">
     <zeroOrMore>
       <choice>
         <attribute name="source">
@@ -942,24 +1156,24 @@
         <attribute name="xml:lang">
           <data type="language"/>
         </attribute>
-        <attribute> <!-- simulate openAttrs but excluding xml:lang -->
+        <attribute cm:refines="openAttrs">
           <anyName>
             <except>
               <nsName ns=""/>
               <nsName ns="http://www.w3.org/2001/XMLSchema"/>
               <name>xml:lang</name>
-          </except>
+            </except>
           </anyName>
         </attribute>
       </choice>
     </zeroOrMore>
-    <ref name="anyContent"/>
+    <ref name="annotation_ext"/>
   </element>
 </define>
 
-<define name="annotation">
+<define name="annotation" cm:type="xs:element" cm:extends="xs:openAttrs">
   <element name="xs:annotation"
-        doc:href="http://www.w3.org/TR/xmlschema-1/#element-annotation">
+           cm:href="http://www.w3.org/TR/xmlschema-1/#element-annotation">
     <ref name="openAttrs"/>
     <optional>
       <attribute name="id">
@@ -968,64 +1182,106 @@
     </optional>
     <zeroOrMore>
       <choice>
-        <ref name="documentation"/>
-        <ref name="appinfo"/>
+        <ref name="documentation.elt"/>
+        <ref name="appinfo.elt"/>
       </choice>
     </zeroOrMore>
   </element>
 </define>
 
-<define name="simpleDerivation">
+<define name="anyType" cm:type="xs:complexType">
+  <cm:doc>
+    This approximation matches the intent of the XSD type, but is not
+    actually referenced except theoretically by openAttrs which throws
+    out all content and attributes in the XSD or absent namespaces.
+  </cm:doc>
+  <zeroOrMore>
+    <choice>
+      <attribute>
+        <anyName/>
+        <text/>
+      </attribute>
+      <text/>
+      <element>
+        <anyName/>
+        <ref name="anyType"/>
+      </element>
+    </choice>
+  </zeroOrMore>
+</define>
+
+<define name="derivationControl" cm:type="xs:simpleType" cm:restricts="xs:NMTOKEN">
   <choice>
-    <ref name="simpleRestriction"/>
-    <ref name="list"/>
-    <ref name="union"/>
+    <value type="NMTOKEN">substitution</value>
+    <value type="NMTOKEN">extension</value>
+    <value type="NMTOKEN">restriction</value>
+    <value type="NMTOKEN">list</value>
+    <value type="NMTOKEN">union</value>
   </choice>
 </define>
 
-<define name="simpleDerivationSet">
+<define name="simpleDerivation" cm:type="xs:group">
+  <choice>
+    <ref name="restriction.elt"/>
+    <ref name="list.elt"/>
+    <ref name="union.elt"/>
+  </choice>
+</define>
+
+<define name="simpleDerivationSet" cm:type="simpleType">
   <choice>
     <value type="token">#all</value>
     <list>
       <zeroOrMore>
-        <choice>
-          <value>list</value>
-          <value>union</value>
-          <value>restriction</value>
+        <choice cm:restricts="xs:derivationControl">
+          <value type="NMTOKEN">list</value>
+          <value type="NMTOKEN">union</value>
+          <value type="NMTOKEN">restriction</value>
         </choice>
       </zeroOrMore>
     </list>
   </choice>
 </define>
 
-<define name="simpleType">
+<define name="simpleType" cm:type="xs:complexType" cm:extends="xs:annotated">
+  <cm:doc>
+    This is an abstract class in XSD, restricted by
+    xs:topLevelSimpleType and xs:localSimpleType.
+
+    Attributes name and final are permitted only for
+    xs:topLevelSimpleType and are added only in that restriction.
+  </cm:doc>
   <ref name="annotated"/>
   <ref name="simpleDerivation"/>
 </define>
 
-<define name="topLevelSimpleType">
-  <element name="xs:simpleType"
-        doc:href="http://www.w3.org/TR/xmlschema-1/#element-simpleType">
-    <ref name="simpleType"/>
-    <attribute name="name">
-      <data type="NCName"/>
+<define name="topLevelSimpleType" cm:type="xs:complexType" cm:restricts="xs:simpleType">
+  <ref name="simpleType"/>
+  <attribute name="name">
+    <data type="NCName"/>
+  </attribute>
+  <optional>
+    <attribute name="final">
+      <ref name="simpleDerivationSet"/>
     </attribute>
-    <optional>
-      <attribute name="final">
-        <ref name="simpleDerivationSet"/>
-      </attribute>
-    </optional>
-  </element>
+  </optional>
 </define>
 
-<define name="localSimpleType">
+<define name="localSimpleType" cm:type="xs:complexType" cm:restricts="xs:simpleType">
+  <ref name="simpleType"/>
+</define>
+
+<define name="simpleType.elt" cm:type="xs:element">
   <element name="xs:simpleType"
-        doc:href="http://www.w3.org/TR/xmlschema-1/#element-simpleType">
-    <ref name="simpleType"/>
+           cm:href="http://www.w3.org/TR/xmlschema-1/#element-simpleType">
+    <ref name="topLevelSimpleType"/>
   </element>
 </define>
 
-<define name="rangeFacets">
+<define name="rangeFacets_ext">
+  <cm:doc>
+    Implement the co-occurrence restrictions for range facets.
+  </cm:doc>
   <interleave>
     <optional>
       <choice>
@@ -1042,7 +1298,10 @@
   </interleave>
 </define>
 
-<define name="digitFacets">
+<define name="digitFacets_ext">
+  <cm:doc>
+    Collect digit-related facets.
+  </cm:doc>
   <optional>
     <ref name="totalDigits"/>
   </optional>
@@ -1051,7 +1310,10 @@
   </optional>
 </define>
 
-<define name="lengthFacets">
+<define name="lengthFacets_ext">
+  <cm:doc>
+    Implement the co-occurrence restrictions for length facets.
+  </cm:doc>
   <choice>
     <ref name="length"/>
     <interleave>
@@ -1065,191 +1327,64 @@
   </choice>
 </define>
 
-<define name="commonFacets">
+<define name="commonFacets_ext">
+  <cm:doc>
+    The remaining facets.
+  </cm:doc>
   <zeroOrMore>
     <ref name="enumeration"/>
   </zeroOrMore>
   <optional>
-    <ref name="whiteSpaceCollapse"/>
+    <element name="xs:whiteSpace"
+             cm:href="http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/datatypes.html#element-whiteSpace">
+      <ref name="facet"/>
+      <attribute name="value">
+        <choice>
+          <value type="NMTOKEN">collapse</value>
+        </choice>
+      </attribute>
+    </element>
   </optional>
   <zeroOrMore>
     <ref name="pattern"/>
   </zeroOrMore>
 </define>
 
-<define name="simpleRestrictionFacets">
+<define name="facets" cm:type="xs:group">
   <interleave>
-    <ref name="rangeFacets"/>
-    <ref name="digitFacets"/>
-    <ref name="lengthFacets"/>
-    <ref name="commonFacets"/>
+    <ref name="rangeFacets_ext"/>
+    <ref name="digitFacets_ext"/>
+    <ref name="lengthFacets_ext"/>
+    <ref name="commonFacets_ext"/>
   </interleave>
 </define>
 
-<define name="simpleRestrictionModel">
-  <choice>
-    <group>
-      <attribute name="base">
-        <value type="QName">xs:anySimpleType</value>
-      </attribute>
-      <interleave>
-        <ref name="rangeFacets"/>
-        <ref name="digitFacets"/>
-        <ref name="lengthFacets"/>
-        <optional>
-          <ref name="whiteSpace"/>
-        </optional>
-        <zeroOrMore>
-          <ref name="enumeration"/>
-        </zeroOrMore>
-        <zeroOrMore>
-          <ref name="pattern"/>
-        </zeroOrMore>
-      </interleave>
-    </group>
-    <group>
-      <attribute name="base">
-        <value type="QName">xs:string</value>
-      </attribute>
-      <interleave>
-        <ref name="lengthFacets"/>
-        <optional>
-          <ref name="whiteSpace"/>
-        </optional>
-        <zeroOrMore>
-          <ref name="enumeration"/>
-        </zeroOrMore>
-        <zeroOrMore>
-          <ref name="pattern"/>
-        </zeroOrMore>
-      </interleave>
-    </group>
-    <group>
-      <attribute name="base">
-        <choice>
-          <value type="QName">xs:normalizedString</value>
-        </choice>
-      </attribute>
-      <interleave>
-        <ref name="lengthFacets"/>
-        <optional>
-          <ref name="whiteSpaceReplaceOrCollapse"/>
-        </optional>
-        <zeroOrMore>
-          <ref name="enumeration"/>
-        </zeroOrMore>
-        <zeroOrMore>
-          <ref name="pattern"/>
-        </zeroOrMore>
-      </interleave>
-    </group>
-    <group>
-      <attribute name="base">
-        <choice>
-          <value type="QName">xs:token</value>
-          <value type="QName">xs:language</value>
-          <value type="QName">xs:Name</value>
-          <value type="QName">xs:NCName</value>
-          <value type="QName">xs:ID</value>
-          <value type="QName">xs:IDREF</value>
-          <value type="QName">xs:IDREFS</value>
-          <value type="QName">xs:NMTOKEN</value>
-          <value type="QName">xs:NMTOKENS</value>
-          <value type="QName">xs:ENTITY</value>
-          <value type="QName">xs:ENTITIES</value>
-          <value type="QName">xs:hexBinary</value>
-          <value type="QName">xs:base64Binary</value>
-          <value type="QName">xs:anyURI</value>
-          <value type="QName">xs:QName</value>
-          <value type="QName">xs:NOTATION</value>
-        </choice>
-      </attribute>
-      <interleave>
-        <ref name="lengthFacets"/>
-        <ref name="commonFacets"/>
-      </interleave>
-    </group>
-    <group>
-      <attribute name="base">
-        <value type="QName">xs:boolean</value>
-      </attribute>
-      <interleave>
-        <optional>
-          <ref name="whiteSpaceCollapse"/>
-        </optional>
-        <zeroOrMore>
-          <ref name="pattern"/>
-        </zeroOrMore>
-      </interleave>
-    </group>
-    <group>
-      <attribute name="base">
-        <choice>
-          <value type="QName">xs:decimal</value>
-          <value type="QName">xs:integer</value>
-          <value type="QName">xs:nonPositiveInteger</value>
-          <value type="QName">xs:nonNegativeInteger</value>
-          <value type="QName">xs:positiveInteger</value>
-          <value type="QName">xs:negativeInteger</value>
-          <value type="QName">xs:unsignedLong</value>
-          <value type="QName">xs:unsignedInt</value>
-          <value type="QName">xs:unsignedShort</value>
-          <value type="QName">xs:unsignedByte</value>
-          <value type="QName">xs:long</value>
-          <value type="QName">xs:int</value>
-          <value type="QName">xs:short</value>
-          <value type="QName">xs:byte</value>
-        </choice>
-      </attribute>
-      <interleave>
-        <ref name="digitFacets"/>
-        <ref name="rangeFacets"/>
-        <ref name="commonFacets"/>
-      </interleave>
-    </group>
-    <group>
-      <attribute name="base">
-        <choice>
-          <value type="QName">xs:float</value>
-          <value type="QName">xs:double</value>
-          <value type="QName">xs:duration</value>
-          <value type="QName">xs:dateTime</value>
-          <value type="QName">xs:time</value>
-          <value type="QName">xs:date</value>
-          <value type="QName">xs:gYearMonth</value>
-          <value type="QName">xs:gYear</value>
-          <value type="QName">xs:gMonthDay</value>
-          <value type="QName">xs:gMonth</value>
-          <value type="QName">xs:gDay</value>
-        </choice>
-      </attribute>
-      <interleave>
-        <ref name="rangeFacets"/>
-        <ref name="commonFacets"/>
-      </interleave>
-    </group>
-    <!-- the detailed checking above is superfluous
-        until there's a way to do 'difference'
-        within attribute values, because it will
-        always match the following -->
-    <group>
-      <choice>
-        <attribute name="base">
-          <data type="QName"/>
-        </attribute>
-        <ref name="localSimpleType"/>
-      </choice>
-      <ref name="simpleRestrictionFacets"/>
-    </group>
-  </choice>
+<define name="simpleRestrictionModel" cm:type="xs:group">
+  <optional>
+    <ref name="localSimpleType_elt"/>
+  </optional>
+  <ref name="facets"/>
 </define>
 
-<define name="list">
+<define name="restriction.elt" cm:type="xs:element" cm:extends="xs:annotated">
+  <element name="xs:restriction"
+           cm:href="http://www.w3.org/TR/xmlschema-2/#element-restriction">
+    <ref name="annotated"/>
+    <optional>
+      <attribute name="base">
+        <data type="QName"/>
+      </attribute>
+    </optional>
+    <ref name="simpleRestrictionModel"/>
+  </element>
+</define>
+
+<define name="list.elt" cm:type="xs:element" cm:extends="xs:annotated">
   <element name="xs:list"
-        doc:href="http://www.w3.org/TR/xmlschema-1/#element-list">
+           cm:href="http://www.w3.org/TR/xmlschema-1/#element-list">
     <ref name="annotated"/>
     <choice>
-      <ref name="localSimpleType"/>
+      <ref name="localSimpleType_elt"/>
       <attribute name="itemType">
         <data type="QName"/>
       </attribute>
@@ -1257,9 +1392,9 @@
   </element>
 </define>
 
-<define name="union">
+<define name="union.elt" cm:type="xs:element" cm:extends="xs:annotated">
   <element name="xs:union"
-        doc:href="http://www.w3.org/TR/xmlschema-1/#element-union">
+           cm:href="http://www.w3.org/TR/xmlschema-1/#element-union">
     <ref name="annotated"/>
     <choice>
       <group>
@@ -1271,7 +1406,7 @@
           </list>
         </attribute>
         <zeroOrMore>
-          <ref name="localSimpleType"/>
+          <ref name="localSimpleType_elt"/>
         </zeroOrMore>
       </group>
       <group>
@@ -1281,14 +1416,23 @@
           </attribute>
         </optional>
         <oneOrMore>
-          <ref name="localSimpleType"/>
+          <ref name="localSimpleType_elt"/>
         </oneOrMore>
       </group>
     </choice>
   </element>
 </define>
 
-<define name="facet">
+<define name="facet" cm:type="xs:complexType" cm:extends="xs:annotated">
+  <cm:doc>
+    This is a base type for each facet.
+
+    The type is restricted with a value attribute, the type of which
+    is specific to the facet.
+
+    For some facets, the fixed attribute is prohibited.  Those facets
+    cm:refine this pattern.
+  </cm:doc>
   <ref name="annotated"/>
   <optional>
     <attribute name="fixed">
@@ -1297,12 +1441,14 @@
   </optional>
 </define>
 
-<define name="noFixedFacet">
+<define name="noFixedFacet" cm:type="xs:complexType" cm:restricts="xs:facet" cm:refines="facet">
   <ref name="annotated"/>
-  <attribute name="value"/>
 </define>
 
-<define name="rangeFacet">
+<define name="rangeFacet_ext">
+  <cm:doc>
+    Shared requirements for range facets.
+  </cm:doc>
   <ref name="facet"/>
   <attribute name="value">
     <choice>
@@ -1322,44 +1468,44 @@
   </attribute>
 </define>
 
-<define name="minExclusive">
+<define name="minExclusive" cm:type="xs:element">
   <element name="xs:minExclusive"
-        doc:href="http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/datatypes.html#element-minExclusive">
-    <ref name="rangeFacet"/>
+           cm:href="http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/datatypes.html#element-minExclusive">
+    <ref name="rangeFacet_ext"/>
   </element>
 </define>
 
-<define name="minInclusive">
+<define name="minInclusive" cm:type="xs:element">
   <element name="xs:minInclusive"
-        doc:href="http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/datatypes.html#element-minInclusive">
-    <ref name="rangeFacet"/>
+           cm:href="http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/datatypes.html#element-minInclusive">
+    <ref name="rangeFacet_ext"/>
   </element>
 </define>
 
-<define name="maxExclusive">
+<define name="maxExclusive" cm:type="xs:element">
   <element name="xs:maxExclusive"
-        doc:href="http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/datatypes.html#element-maxExclusive">
-    <ref name="rangeFacet"/>
+           cm:href="http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/datatypes.html#element-maxExclusive">
+    <ref name="rangeFacet_ext"/>
   </element>
 </define>
 
-<define name="maxInclusive">
+<define name="maxInclusive" cm:type="xs:element">
   <element name="xs:maxInclusive"
-        doc:href="http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/datatypes.html#element-maxInclusive">
-    <ref name="rangeFacet"/>
+           cm:href="http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/datatypes.html#element-maxInclusive">
+    <ref name="rangeFacet_ext"/>
   </element>
 </define>
 
-<define name="numFacet">
+<define name="numFacet" cm:type="xs:complexType">
   <ref name="facet"/>
   <attribute name="value">
     <data type="nonNegativeInteger"/>
   </attribute>
 </define>
 
-<define name="totalDigits">
+<define name="totalDigits" cm:type="xs:element">
   <element name="xs:totalDigits"
-        doc:href="http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/datatypes.html#element-totalDigits">
+           cm:href="http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/datatypes.html#element-totalDigits">
     <ref name="facet"/>
     <attribute name="value">
       <data type="positiveInteger"/>
@@ -1367,82 +1513,129 @@
   </element>
 </define>
 
-<define name="fractionDigits">
+<define name="fractionDigits" cm:type="xs:element">
   <element name="xs:fractionDigits"
-        doc:href="http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/datatypes.html#element-fractionDigits">
+           cm:href="http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/datatypes.html#element-fractionDigits">
     <ref name="numFacet"/>
   </element>
 </define>
 
-<define name="length">
+<define name="length" cm:type="xs:element">
   <element name="xs:length"
-        doc:href="http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/datatypes.html#element-length">
+           cm:href="http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/datatypes.html#element-length">
     <ref name="numFacet"/>
   </element>
 </define>
 
-<define name="minLength">
+<define name="minLength" cm:type="xs:element">
   <element name="xs:minLength"
-        doc:href="http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/datatypes.html#element-minLength">
+           cm:href="http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/datatypes.html#element-minLength">
     <ref name="numFacet"/>
   </element>
 </define>
 
-<define name="maxLength">
+<define name="maxLength" cm:type="xs:element">
   <element name="xs:maxLength"
-        doc:href="http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/datatypes.html#element-maxLength">
+           cm:href="http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/datatypes.html#element-maxLength">
     <ref name="numFacet"/>
   </element>
 </define>
 
-<define name="enumeration">
+<define name="enumeration" cm:type="xs:element">
   <element name="xs:enumeration"
-        doc:href="http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/datatypes.html#element-enumeration">
+           cm:href="http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/datatypes.html#element-enumeration">
     <ref name="noFixedFacet"/>
+    <attribute name="value"/>
   </element>
 </define>
 
-<define name="whiteSpace">
+<define name="whiteSpace" cm:type="xs:element" xs:restricts="xs:facet">
   <element name="xs:whiteSpace"
-        doc:href="http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/datatypes.html#element-whiteSpace">
+           cm:href="http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/datatypes.html#element-whiteSpace">
     <ref name="facet"/>
     <attribute name="value">
       <choice>
-        <value type="token">preserve</value>
-        <value type="token">replace</value>
-        <value type="token">collapse</value>
+        <value type="NMTOKEN">preserve</value>
+        <value type="NMTOKEN">replace</value>
+        <value type="NMTOKEN">collapse</value>
       </choice>
     </attribute>
   </element>
 </define>
 
-<define name="whiteSpaceReplaceOrCollapse">
-  <element name="xs:whiteSpace"
-        doc:href="http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/datatypes.html#element-whiteSpace">
-    <ref name="facet"/>
-    <attribute name="value">
-      <choice>
-        <value type="token">replace</value>
-        <value type="token">collapse</value>
-      </choice>
-    </attribute>
-  </element>
-</define>
-
-<define name="whiteSpaceCollapse">
-  <element name="xs:whiteSpace"
-        doc:href="http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/datatypes.html#element-whiteSpace">
-    <ref name="facet"/>
-    <attribute name="value">
-      <value type="token">collapse</value>
-    </attribute>
-  </element>
-</define>
-
-<define name="pattern">
+<define name="pattern" cm:type="xs:element" xs:restricts="xs:noFixedFacet">
   <element name="xs:pattern"
-        doc:href="http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/datatypes.html#element-pattern">
+           cm:href="http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/datatypes.html#element-pattern">
     <ref name="noFixedFacet"/>
+    <attribute name="value">
+      <data type="string"/>
+    </attribute>
+  </element>
+</define>
+
+<define name="fixedOrDefault_ext">
+  <cm:doc>
+    A RELAX NG supporting pattern to enforce the requirement that the
+    fixed and default attributes are never co-present.
+  </cm:doc>
+  <choice>
+    <empty/>
+    <attribute name="fixed"/>
+    <attribute name="default"/>
+  </choice>
+</define>
+
+<define name="attributeType_ext">
+  <cm:doc>
+    A RELAX NG supporting pattern to enforce the requirement that an
+    attribute be defaulted, have a type attribute, or include a
+    simpleType definition as a member element.
+  </cm:doc>
+  <choice>
+    <empty/>
+    <attribute name="type">
+      <data type="QName"/>
+    </attribute>
+    <ref name="localSimpleType_elt"/>
+  </choice>
+</define>
+
+<define name="groupRef_elt">
+  <element name="xs:group"
+           cm:href="http://www.w3.org/TR/xmlschema-1/#element-group">
+    <ref name="groupRef"/>
+  </element>
+</define>
+
+<define name="localElement_elt">
+  <element name="xs:element"
+           cm:href="http://www.w3.org/TR/xmlschema-1/#element-element">
+    <ref name="localElement"/>
+  </element>
+</define>
+
+<define name="attribute_elt" cm:type="xs:element">
+  <cm:doc>
+    Do not confuse this with attribute.elt which is the pattern for a
+    top-level attribute.
+  </cm:doc>
+  <element name="xs:attribute"
+           cm:href="http://www.w3.org/TR/xmlschema-1/#element-attribute">
+    <ref name="attribute"/>
+  </element>
+</define>
+
+<define name="localComplexType_elt">
+  <element name="xs:complexType"
+           cm:href="http://www.w3.org/TR/xmlschema-1/#element-complexType">
+    <ref name="localComplexType"/>
+  </element>
+</define>
+
+<define name="localSimpleType_elt">
+  <element name="xs:simpleType"
+           cm:href="http://www.w3.org/TR/xmlschema-1/#element-simpleType">
+    <ref name="localSimpleType"/>
   </element>
 </define>
 
