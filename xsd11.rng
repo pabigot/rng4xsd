@@ -733,7 +733,11 @@
   <zeroOrMore>
     <choice>
       <attribute name="substitutionGroup">
-        <data type="QName"/>
+        <list>
+          <zeroOrMore>
+            <data type="QName" />
+          </zeroOrMore>
+        </list>
       </attribute>
       <attribute name="abstract">
         <data type="boolean"/>

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="sgDate" abstract="true"/>
+  <xs:element name="sgTime" abstract="true"/>
+  <xs:element name="ISO8601" substitutionGroup="sgTime sgDate" type="xs:dateTime"/>
+</xs:schema>
