@@ -1,0 +1,158 @@
+<?xml version="1.0"?>
+<grammar xmlns="http://relaxng.org/ns/structure/1.0"
+         xmlns:rng="http://relaxng.org/ns/structure/1.0"
+         xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"
+         xmlns:tns="http://github.com/pabigot/rng4xsd"
+         xmlns:xhtml="http://www.w3.org/1999/xhtml"
+         xmlns:xs="http://www.w3.org/2001/XMLSchema"
+         datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes">
+
+<tns:doc xmlns="http://www.w3.org/1999/xhtml">
+  <p>This schema provides attributes and elements supporting the
+  expression of XML Schema Definition Language as a RELAX NG
+  schema.</p>
+
+  <p>The main purpose here it is to support a documentation element
+  that can include internal markup, unlike the standard RELAX NG
+  documentation annotation which only processes normal text.  It is
+  replace references to the http://www.jenitennison.com/doc namespace
+  that were used in the original version.</p>
+
+  <p>This schema can also be used to validate the RELAX NG schema for XSD
+  to ensure the annotations are used properly:
+  <pre>
+    java -jar jing.jar rng4xsd.rng xsd10.rng
+  </pre>
+  </p>
+</tns:doc>
+
+<define name="doc.elt">
+  <element name="tns:doc">
+    <tns:doc xmlns="http://www.w3.org/1999/xhtml">
+      This element provides documentation about how a RELAX NG
+      construct represents the XSD construct.  Unlike the basic RELAX
+      NG documentation element it is intended to support XHTML
+      elements for internal markup.
+    </tns:doc>
+    <ref name="normalContent"/>
+  </element>
+</define>
+
+<define name="href.attr">
+  <attribute name="tns:href">
+    <tns:doc xmlns="http://www.w3.org/1999/xhtml">
+      This attribute provides a link to additional information about
+      whatever it's attached to.
+
+      Often this would be to the public documentation for the XSD
+      component that is being defined.
+    </tns:doc>
+    <data type="anyURI"/>
+  </attribute>
+</define>
+
+<define name="type.attr">
+  <attribute name="tns:type" a:defaultValue="xs:complexType">
+    <tns:doc xmlns="http://www.w3.org/1999/xhtml">
+      This attribute specifies the XSD type that is encapsulated in
+      the rng:define element to which it is attached.
+
+      XSD uses distinct namespaces for element, type, and group
+      components: e.g., "xs:all" may refer to the complexType "all" or
+      the element "all" depending on use.  This attribute may provide
+      useful information as to which of those the particular pattern
+      is intended to substitute for.
+    </tns:doc>
+    <data type="QName"/>
+  </attribute>
+</define>
+
+<define name="refines.attr">
+  <attribute name="tns:refines">
+    <tns:doc xmlns="http://www.w3.org/1999/xhtml">
+      This attribute indicates that the element it is attached to
+      substitutes for a reference to the pattern named as the
+      attribute value.  It is used when the original pattern does not
+      correctly represent the constraints for use in a different
+      context.
+
+      Generally the pattern should include documentation describing
+      how the refinement differs from the original, so the maintainer
+      can examine both patterns for consistency.
+    </tns:doc>
+    <data type="NCName"/>
+  </attribute>
+</define>
+
+<define name="restricts.attr">
+  <attribute name="tns:restricts">
+    <tns:doc xmlns="http://www.w3.org/1999/xhtml">
+      This attribute indicates that the pattern it is attached to
+      represents a restriction derivation from the named XSD
+      complexType.
+
+      Generally the pattern should include documentation describing
+      how the restriction differs from the original, so the maintainer
+      can examine both patterns for consistency.
+    </tns:doc>
+    <data type="QName"/>
+  </attribute>
+</define>
+
+<define name="extends.attr">
+  <attribute name="tns:extends">
+    <tns:doc xmlns="http://www.w3.org/1999/xhtml">
+      This attribute indicates that the pattern it is attached to
+      represents an extension derivation from the named XSD
+      complexType.
+
+      Generally the pattern should begin with a reference to the
+      pattern corresponding to the base type.
+    </tns:doc>
+    <data type="QName"/>
+  </attribute>
+</define>
+
+<!-- Provide an entry-point so this can be used to validate documents
+     referencing this namespace -->
+
+<start>
+  <ref name="anyElement"/>
+</start>
+
+<define name="anyElement">
+  <choice>
+    <ref name="doc.elt"/>
+    <element>
+      <anyName>
+        <except>
+          <name>tns:doc</name>
+        </except>
+      </anyName>
+      <ref name="normalContent"/>
+    </element>
+  </choice>
+</define>
+
+<define name="normalContent">
+  <zeroOrMore>
+    <choice>
+      <attribute>
+        <anyName>
+          <except>
+            <nsName ns="http://github.com/pabigot/rng4xsd"/>
+          </except>
+        </anyName>
+      </attribute>
+      <ref name="href.attr"/>
+      <ref name="type.attr"/>
+      <ref name="refines.attr"/>
+      <ref name="restricts.attr"/>
+      <ref name="extends.attr"/>
+      <ref name="anyElement"/>
+      <text/>
+    </choice>
+  </zeroOrMore>
+</define>
+
+</grammar>
