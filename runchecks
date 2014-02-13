@@ -1,15 +1,26 @@
 #!/bin/sh
 
-echo "Running pass tests with xmllint..."
-xmllint --noout --relaxng xsd10.rng pass10/*.xsd
-echo "Running fail tests with xmllint..."
-xmllint --noout --relaxng xsd10.rng fail10/*.xsd
+XSD_RNG=${1:-xsd10.rng}
+
+fail () {
+    echo "${@}" 1>&2
+    exit 1
+}
+
+echo "Running ${XSD_RNG} pass tests with xmllint..."
+(xmllint --noout --relaxng ${XSD_RNG} pass10/*.xsd > xmllint.log 2>&1 ) \
+   || (cat xmllint.log ; fail basic test failed )
+echo "Running ${XSD_RNG} fail tests with xmllint..."
+for f in fail10/*.xsd ; do
+  ( xmllint --noout --relaxng xsd10.rng ${f} > xmllint.log 2>&1 ) \
+      && ( cat xmllint.log ; fail "incorrect validation of ${f}" )
+done
 
 if [ -f jing.jar ] ; then
-  echo "Running pass tests with (modified) jing"
-  java -jar jing.jar xsd10.rng pass10/*.xsd
-  echo "Running fail tests with (modified) jing"
-  java -jar jing.jar xsd10.rng fail10/*.xsd
+  echo "Running ${XSD_RNG} pass tests with (modified) jing"
+  java -jar jing.jar ${XSD_RNG} pass10/*.xsd
+  echo "Running ${XSD_RNG} fail tests with (modified) jing"
+  java -jar jing.jar ${XSD_RNG} fail10/*.xsd
 fi
 
 genpyxb () {
@@ -24,13 +35,13 @@ genpyxb () {
 }
 
 if [ -d /opt/pyxb ] ; then
-  echo "Running xmllint on PyXB source schemas..."
+  echo "Running ${XSD_RNG} xmllint on PyXB source schemas..."
   genpyxb \
-  | xargs xmllint --noout --relaxng xsd10.rng \
+  | xargs xmllint --noout --relaxng ${XSD_RNG} \
   2>&1 | grep validity
   if [ -f jing.jar ] ; then
-    echo "Running xmllint on PyXB source schemas..."
+    echo "Running ${XSD_RNG} jing on PyXB source schemas..."
     genpyxb \
-    | xargs java -jar jing.jar xsd10.rng
+    | xargs java -jar jing.jar ${XSD_RNG}
   fi
 fi
