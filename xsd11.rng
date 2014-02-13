@@ -93,6 +93,20 @@
   </optional>
 </define>
 
+<define name="composition" cm:type="xs:group">
+  <cm:doc>
+    xs:include should be part of this group, but it is excluded since
+    the start pattern handles that component separately to enforce a
+    validation constraint.
+  </cm:doc>
+  <choice>
+    <ref name="include.elt"/>
+    <ref name="redefine.elt"/>
+    <ref name="override.elt"/>
+    <ref name="annotation"/>
+  </choice>
+</define>
+
 <define name="schemaTop" cm:type="xs:group">
   <choice>
     <ref name="redefinable"/>
@@ -203,11 +217,7 @@
     </zeroOrMore>
     <interleave>
       <zeroOrMore>
-        <choice>
-          <ref name="include.elt"/>
-          <ref name="redefine.elt"/>
-          <ref name="annotation"/>
-        </choice>
+        <ref name="composition"/>
       </zeroOrMore>
       <choice>
         <cm:doc>
@@ -966,6 +976,27 @@
       <choice>
         <ref name="annotation"/>
         <ref name="redefinable"/>
+      </choice>
+    </zeroOrMore>
+  </element>
+</define>
+
+<define name="override.elt" cm:type="xs:element">
+  <element name="xs:override"
+           cm:href="http://www.w3.org/TR/xmlschema11-1/#override-schema">
+    <ref name="openAttrs"/>
+    <optional>
+      <attribute name="id">
+        <data type="ID"/>
+      </attribute>
+    </optional>
+    <attribute name="schemaLocation">
+      <data type="anyURI"/>
+    </attribute>
+    <zeroOrMore>
+      <choice>
+        <ref name="annotation"/>
+        <ref name="schemaTop"/>
       </choice>
     </zeroOrMore>
   </element>
