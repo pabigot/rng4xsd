@@ -7,15 +7,16 @@
 
 <cm:doc xmlns="http://www.w3.org/1999/xhtml">
   Original RELAX NG schema for XML Schema by <a
-  href="mailto:mail@jenitennison.com">Jeni Tennison</a>.  Based on <a
-  href="http://www.w3.org/TR/xmlschema-1/">XML Schema Part I: Structures
-  Recommendation</a> and <a href="http://www.w3.org/TR/xmlschema-2/">XML
-  Schema Part II: Datatypes</a>.
+  href="http://www.jenitennison.com/">Jeni Tennison</a>.
 
-  Additional modifications post 2004-10-12 by <a
-  href="http://www.pabigot.com/">Peter A. Bigot</a> are recorded at
-  the <a href="https://github.com/pabigot/rng4xsd">rng4xsd project
-  page</a>.
+  Based on <a href="http://www.w3.org/TR/xmlschema11-1/">W3C XML
+  Schema Definition Language (XSD) 1.1 Part I: Structures
+  Recommendation</a> and <a
+  href="http://www.w3.org/TR/xmlschema11-2/">W3C XML Schema
+  Definitional Language (XSD) 1.1 Part 2: Datatypes</a>.
+
+  This schema is available from the <a
+  href="https://github.com/pabigot/rng4xsd">rng4xsd project page</a>.
 
   Pattern names correspond to definitions in <a
   href="http://www.w3.org/2001/XMLSchema.xsd">XMLSchema.xsd</a> and
@@ -157,7 +158,7 @@
 
 <start>
   <element name="xs:schema" cm:type="xs:simpleType" cm:extends="xs:openAttrs"
-           cm:href="http://www.w3.org/TR/xmlschema-1/#element-schema">
+           cm:href="http://www.w3.org/TR/xmlschema11-1/#element-schema">
     <cm:doc>
       The presence of xml:lang as a specified attribute requires a
       variant openAttrs be used.
@@ -212,7 +213,7 @@
         <cm:doc>
           Partially enforce Schema Representation Constraint: Import
           Constraints and Semantics clauses 1.2 and 3.2 at
-          http://www.w3.org/TR/xmlschema-1/#composition-schemaImport
+          http://www.w3.org/TR/xmlschema11-1/#composition-schemaImport
 
           Specifically, import elements may elide the namespace
           attribute if and only if the containing schema has a
@@ -363,7 +364,7 @@
     <choice>
       <ref name="attribute_elt"/>
       <element name="xs:attributeGroup"
-               cm:href="http://www.w3.org/TR/xmlschema-1/#element-attributeGroup">
+               cm:href="http://www.w3.org/TR/xmlschema11-1/#element-attributeGroup">
         <ref name="attributeGroupRef"/>
       </element>
     </choice>
@@ -375,7 +376,7 @@
 
 <define name="anyAttribute.elt" cm:type="xs:element">
   <element name="xs:anyAttribute"
-           cm:href="http://www.w3.org/TR/xmlschema-1/#element-anyAttribute">
+           cm:href="http://www.w3.org/TR/xmlschema11-1/#element-anyAttribute">
     <ref name="wildcard"/>
   </element>
 </define>
@@ -502,7 +503,7 @@
 
 <define name="complexContent.elt" cm:type="xs:element">
   <element name="xs:complexContent"
-           cm:href="http://www.w3.org/TR/xmlschema-1/#element-complexContent">
+           cm:href="http://www.w3.org/TR/xmlschema11-1/#element-complexContent">
     <ref name="annotated"/>
     <optional>
       <attribute name="mixed">
@@ -535,7 +536,7 @@
 
 <define name="simpleContent" cm:type="xs:element">
   <element name="xs:simpleContent"
-           cm:href="http://www.w3.org/TR/xmlschema-1/#element-simpleContent">
+           cm:href="http://www.w3.org/TR/xmlschema11-1/#element-simpleContent">
     <ref name="annotated"/>
     <choice>
       <element name="xs:restriction">
@@ -550,7 +551,7 @@
 
 <define name="complexType.elt" cm:type="xs:element">
   <element name="xs:complexType"
-           cm:href="http://www.w3.org/TR/xmlschema-1/#element-complexType">
+           cm:href="http://www.w3.org/TR/xmlschema11-1/#element-complexType">
     <ref name="topLevelComplexType"/>
   </element>
 </define>
@@ -655,7 +656,7 @@
 
 <define name="element.elt" cm:type="xs:element">
   <element name="xs:element"
-           cm:href="http://www.w3.org/TR/xmlschema-1/#element-element">
+           cm:href="http://www.w3.org/TR/xmlschema11-1/#element-element">
     <ref name="topLevelElement"/>
   </element>
 </define>
@@ -823,28 +824,28 @@
 
 <define name="all.elt" cm:type="xs:element">
   <element name="xs:all"
-           cm:href="http://www.w3.org/TR/xmlschema-1/#element-all">
+           cm:href="http://www.w3.org/TR/xmlschema11-1/#element-all">
     <ref name="all"/>
   </element>
 </define>
 
 <define name="choice.elt" cm:type="xs:element">
   <element name="xs:choice"
-           cm:href="http://www.w3.org/TR/xmlschema-1/#element-choice">
+           cm:href="http://www.w3.org/TR/xmlschema11-1/#element-choice">
     <ref name="explicitGroup"/>
   </element>
 </define>
 
 <define name="sequence.elt" cm:type="xs:element">
   <element name="xs:sequence"
-           cm:href="http://www.w3.org/TR/xmlschema-1/#element-sequence">
+           cm:href="http://www.w3.org/TR/xmlschema11-1/#element-sequence">
     <ref name="explicitGroup"/>
   </element>
 </define>
 
 <define name="group.elt" cm:type="xs:element">
   <element name="xs:group"
-           cm:href="http://www.w3.org/TR/xmlschema-1/#element-group">
+           cm:href="http://www.w3.org/TR/xmlschema11-1/#element-group">
     <ref name="namedGroup"/>
   </element>
 </define>
@@ -891,7 +892,7 @@
     pattern.
   </cm:doc>
   <element name="xs:any"
-           cm:href="http://www.w3.org/TR/xmlschema-1/#element-any">
+           cm:href="http://www.w3.org/TR/xmlschema11-1/#element-any">
     <ref name="wildcard"/>
     <ref name="occurs"/>
   </element>
@@ -899,7 +900,7 @@
 
 <define name="attribute.elt" cm:type="xs:element">
   <element name="xs:attribute"
-           cm:href="http://www.w3.org/TR/xmlschema-1/#element-attribute">
+           cm:href="http://www.w3.org/TR/xmlschema11-1/#element-attribute">
     <ref name="topLevelAttribute"/>
   </element>
 </define>
@@ -934,14 +935,14 @@
 
 <define name="attributeGroup.elt" cm:type="xs:element">
   <element name="xs:attributeGroup"
-           cm:href="http://www.w3.org/TR/xmlschema-1/#element-attributeGroup">
+           cm:href="http://www.w3.org/TR/xmlschema11-1/#element-attributeGroup">
     <ref name="namedAttributeGroup"/>
   </element>
 </define>
 
 <define name="include.elt" cm:type="xs:element">
   <element name="xs:include"
-           cm:href="http://www.w3.org/TR/xmlschema-1/#element-include">
+           cm:href="http://www.w3.org/TR/xmlschema11-1/#element-include">
     <ref name="annotated"/>
     <attribute name="schemaLocation">
       <data type="anyURI"/>
@@ -951,7 +952,7 @@
 
 <define name="redefine.elt" cm:type="xs:element">
   <element name="xs:redefine"
-           cm:href="http://www.w3.org/TR/xmlschema-1/#element-redefine">
+           cm:href="http://www.w3.org/TR/xmlschema11-1/#element-redefine">
     <ref name="openAttrs"/>
     <attribute name="schemaLocation">
       <data type="anyURI"/>
@@ -991,7 +992,7 @@
     require a namespace attribute.
   </cm:doc>
   <element name="xs:import"
-           cm:href="http://www.w3.org/TR/xmlschema-1/#element-import">
+           cm:href="http://www.w3.org/TR/xmlschema11-1/#element-import">
     <ref name="import_ext"/>
     <attribute name="namespace">
       <data type="anyURI"/>
@@ -1005,7 +1006,7 @@
     optionally use a namespace attribute.
   </cm:doc>
   <element name="xs:import"
-           cm:href="http://www.w3.org/TR/xmlschema-1/#element-import">
+           cm:href="http://www.w3.org/TR/xmlschema11-1/#element-import">
     <ref name="import_ext"/>
     <optional>
       <attribute name="namespace">
@@ -1017,7 +1018,7 @@
 
 <define name="selector.elt" cm:type="xs:element">
   <element name="xs:selector"
-           cm:href="http://www.w3.org/TR/xmlschema-1/#element-selector">
+           cm:href="http://www.w3.org/TR/xmlschema11-1/#element-selector">
     <ref name="annotated"/>
     <attribute name="xpath">
       <data type="token">
@@ -1029,7 +1030,7 @@
 
 <define name="field.elt" cm:type="xs:element">
   <element name="xs:field"
-           cm:href="http://www.w3.org/TR/xmlschema-1/#element-field">
+           cm:href="http://www.w3.org/TR/xmlschema11-1/#element-field">
     <ref name="annotated"/>
     <attribute name="xpath">
       <data type="token">
@@ -1064,21 +1065,21 @@
 
 <define name="unique.elt" cm:type="xs:element">
   <element name="xs:unique"
-           cm:href="http://www.w3.org/TR/xmlschema-1/#element-unique">
+           cm:href="http://www.w3.org/TR/xmlschema11-1/#element-unique">
     <ref name="keybase"/>
   </element>
 </define>
 
 <define name="key.elt" cm:type="xs:element">
   <element name="xs:key"
-           cm:href="http://www.w3.org/TR/xmlschema-1/#element-key">
+           cm:href="http://www.w3.org/TR/xmlschema11-1/#element-key">
     <ref name="keybase"/>
   </element>
 </define>
 
 <define name="keyref.elt" cm:type="xs:element">
   <element name="xs:keyref"
-           cm:href="http://www.w3.org/TR/xmlschema-1/#element-keyref">
+           cm:href="http://www.w3.org/TR/xmlschema11-1/#element-keyref">
     <ref name="keybase"/>
     <attribute name="refer">
       <data type="QName"/>
@@ -1088,7 +1089,7 @@
 
 <define name="notation.elt" cm:type="xs:element">
   <element name="xs:notation"
-           cm:href="http://www.w3.org/TR/xmlschema-1/#element-notation">
+           cm:href="http://www.w3.org/TR/xmlschema11-1/#element-notation">
     <ref name="annotated"/>
     <attribute name="name">
       <data type="NCName"/>
@@ -1133,7 +1134,7 @@
 
 <define name="appinfo.elt" cm:type="xs:element">
   <element name="xs:appinfo"
-           cm:href="http://www.w3.org/TR/xmlschema-1/#element-appinfo">
+           cm:href="http://www.w3.org/TR/xmlschema11-1/#element-appinfo">
     <ref name="openAttrs"/>
     <optional>
       <attribute name="source">
@@ -1146,7 +1147,7 @@
 
 <define name="documentation.elt" cm:type="xs:element">
   <element name="xs:documentation"
-           cm:href="http://www.w3.org/TR/xmlschema-1/#element-documentation">
+           cm:href="http://www.w3.org/TR/xmlschema11-1/#element-documentation">
     <zeroOrMore>
       <choice>
         <attribute name="source">
@@ -1172,7 +1173,7 @@
 
 <define name="annotation" cm:type="xs:element" cm:extends="xs:openAttrs">
   <element name="xs:annotation"
-           cm:href="http://www.w3.org/TR/xmlschema-1/#element-annotation">
+           cm:href="http://www.w3.org/TR/xmlschema11-1/#element-annotation">
     <ref name="openAttrs"/>
     <optional>
       <attribute name="id">
@@ -1272,7 +1273,7 @@
 
 <define name="simpleType.elt" cm:type="xs:element">
   <element name="xs:simpleType"
-           cm:href="http://www.w3.org/TR/xmlschema-1/#element-simpleType">
+           cm:href="http://www.w3.org/TR/xmlschema11-1/#element-simpleType">
     <ref name="topLevelSimpleType"/>
   </element>
 </define>
@@ -1335,7 +1336,7 @@
   </zeroOrMore>
   <optional>
     <element name="xs:whiteSpace"
-             cm:href="http://www.w3.org/TR/xmlschema-2/#element-whiteSpace">
+             cm:href="http://www.w3.org/TR/xmlschema11-2/#element-whiteSpace">
       <ref name="facet"/>
       <attribute name="value">
         <choice>
@@ -1367,7 +1368,7 @@
 
 <define name="restriction.elt" cm:type="xs:element" cm:extends="xs:annotated">
   <element name="xs:restriction"
-           cm:href="http://www.w3.org/TR/xmlschema-2/#element-restriction">
+           cm:href="http://www.w3.org/TR/xmlschema11-2/#element-restriction">
     <ref name="annotated"/>
     <optional>
       <attribute name="base">
@@ -1380,7 +1381,7 @@
 
 <define name="list.elt" cm:type="xs:element" cm:extends="xs:annotated">
   <element name="xs:list"
-           cm:href="http://www.w3.org/TR/xmlschema-1/#element-list">
+           cm:href="http://www.w3.org/TR/xmlschema11-1/#element-list">
     <ref name="annotated"/>
     <choice>
       <ref name="localSimpleType_elt"/>
@@ -1393,7 +1394,7 @@
 
 <define name="union.elt" cm:type="xs:element" cm:extends="xs:annotated">
   <element name="xs:union"
-           cm:href="http://www.w3.org/TR/xmlschema-1/#element-union">
+           cm:href="http://www.w3.org/TR/xmlschema11-1/#element-union">
     <ref name="annotated"/>
     <choice>
       <group>
@@ -1469,28 +1470,28 @@
 
 <define name="minExclusive" cm:type="xs:element">
   <element name="xs:minExclusive"
-           cm:href="http://www.w3.org/TR/xmlschema-2/#element-minExclusive">
+           cm:href="http://www.w3.org/TR/xmlschema11-2/#element-minExclusive">
     <ref name="rangeFacet_ext"/>
   </element>
 </define>
 
 <define name="minInclusive" cm:type="xs:element">
   <element name="xs:minInclusive"
-           cm:href="http://www.w3.org/TR/xmlschema-2/#element-minInclusive">
+           cm:href="http://www.w3.org/TR/xmlschema11-2/#element-minInclusive">
     <ref name="rangeFacet_ext"/>
   </element>
 </define>
 
 <define name="maxExclusive" cm:type="xs:element">
   <element name="xs:maxExclusive"
-           cm:href="http://www.w3.org/TR/xmlschema-2/#element-maxExclusive">
+           cm:href="http://www.w3.org/TR/xmlschema11-2/#element-maxExclusive">
     <ref name="rangeFacet_ext"/>
   </element>
 </define>
 
 <define name="maxInclusive" cm:type="xs:element">
   <element name="xs:maxInclusive"
-           cm:href="http://www.w3.org/TR/xmlschema-2/#element-maxInclusive">
+           cm:href="http://www.w3.org/TR/xmlschema11-2/#element-maxInclusive">
     <ref name="rangeFacet_ext"/>
   </element>
 </define>
@@ -1504,7 +1505,7 @@
 
 <define name="totalDigits" cm:type="xs:element">
   <element name="xs:totalDigits"
-           cm:href="http://www.w3.org/TR/xmlschema-2/#element-totalDigits">
+           cm:href="http://www.w3.org/TR/xmlschema11-2/#element-totalDigits">
     <ref name="facet"/>
     <attribute name="value">
       <data type="positiveInteger"/>
@@ -1514,35 +1515,35 @@
 
 <define name="fractionDigits" cm:type="xs:element">
   <element name="xs:fractionDigits"
-           cm:href="http://www.w3.org/TR/xmlschema-2/#element-fractionDigits">
+           cm:href="http://www.w3.org/TR/xmlschema11-2/#element-fractionDigits">
     <ref name="numFacet"/>
   </element>
 </define>
 
 <define name="length" cm:type="xs:element">
   <element name="xs:length"
-           cm:href="http://www.w3.org/TR/xmlschema-2/#element-length">
+           cm:href="http://www.w3.org/TR/xmlschema11-2/#element-length">
     <ref name="numFacet"/>
   </element>
 </define>
 
 <define name="minLength" cm:type="xs:element">
   <element name="xs:minLength"
-           cm:href="http://www.w3.org/TR/xmlschema-2/#element-minLength">
+           cm:href="http://www.w3.org/TR/xmlschema11-2/#element-minLength">
     <ref name="numFacet"/>
   </element>
 </define>
 
 <define name="maxLength" cm:type="xs:element">
   <element name="xs:maxLength"
-           cm:href="http://www.w3.org/TR/xmlschema-2/#element-maxLength">
+           cm:href="http://www.w3.org/TR/xmlschema11-2/#element-maxLength">
     <ref name="numFacet"/>
   </element>
 </define>
 
 <define name="enumeration" cm:type="xs:element">
   <element name="xs:enumeration"
-           cm:href="http://www.w3.org/TR/xmlschema-2/#element-enumeration">
+           cm:href="http://www.w3.org/TR/xmlschema11-2/#element-enumeration">
     <ref name="noFixedFacet"/>
     <attribute name="value"/>
   </element>
@@ -1550,7 +1551,7 @@
 
 <define name="whiteSpace" cm:type="xs:element" xs:restricts="xs:facet">
   <element name="xs:whiteSpace"
-           cm:href="http://www.w3.org/TR/xmlschema-2/#element-whiteSpace">
+           cm:href="http://www.w3.org/TR/xmlschema11-2/#element-whiteSpace">
     <ref name="facet"/>
     <attribute name="value">
       <choice>
@@ -1564,7 +1565,7 @@
 
 <define name="pattern" cm:type="xs:element" xs:restricts="xs:noFixedFacet">
   <element name="xs:pattern"
-           cm:href="http://www.w3.org/TR/xmlschema-2/#element-pattern">
+           cm:href="http://www.w3.org/TR/xmlschema11-2/#element-pattern">
     <ref name="noFixedFacet"/>
     <attribute name="value">
       <data type="string"/>
@@ -1601,14 +1602,14 @@
 
 <define name="groupRef_elt">
   <element name="xs:group"
-           cm:href="http://www.w3.org/TR/xmlschema-1/#element-group">
+           cm:href="http://www.w3.org/TR/xmlschema11-1/#element-group">
     <ref name="groupRef"/>
   </element>
 </define>
 
 <define name="localElement_elt">
   <element name="xs:element"
-           cm:href="http://www.w3.org/TR/xmlschema-1/#element-element">
+           cm:href="http://www.w3.org/TR/xmlschema11-1/#element-element">
     <ref name="localElement"/>
   </element>
 </define>
@@ -1619,21 +1620,21 @@
     top-level attribute.
   </cm:doc>
   <element name="xs:attribute"
-           cm:href="http://www.w3.org/TR/xmlschema-1/#element-attribute">
+           cm:href="http://www.w3.org/TR/xmlschema11-1/#element-attribute">
     <ref name="attribute"/>
   </element>
 </define>
 
 <define name="localComplexType_elt">
   <element name="xs:complexType"
-           cm:href="http://www.w3.org/TR/xmlschema-1/#element-complexType">
+           cm:href="http://www.w3.org/TR/xmlschema11-1/#element-complexType">
     <ref name="localComplexType"/>
   </element>
 </define>
 
 <define name="localSimpleType_elt">
   <element name="xs:simpleType"
-           cm:href="http://www.w3.org/TR/xmlschema-1/#element-simpleType">
+           cm:href="http://www.w3.org/TR/xmlschema11-1/#element-simpleType">
     <ref name="localSimpleType"/>
   </element>
 </define>
