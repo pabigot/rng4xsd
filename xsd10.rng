@@ -8,9 +8,8 @@
 <cm:doc xmlns="http://www.w3.org/1999/xhtml">
   Original RELAX NG schema for XML Schema by <a
   href="mailto:mail@jenitennison.com">Jeni Tennison</a>.  Based on <a
-  href="http://www.w3.org/TR/2001/REC-xmlschema-1-20010502/">XML
-  Schema Part I: Structures Recommendation</a> and <a
-  href="http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/">XML
+  href="http://www.w3.org/TR/xmlschema-1/">XML Schema Part I: Structures
+  Recommendation</a> and <a href="http://www.w3.org/TR/xmlschema-2/">XML
   Schema Part II: Datatypes</a>.
 
   Additional modifications post 2004-10-12 by <a
@@ -18,9 +17,9 @@
   the <a href="https://github.com/pabigot/rng4xsd">rng4xsd project
   page</a>.
 
-  Pattern names correspond to definitions in
-  http://www.w3.org/2001/XMLSchema.xsd and should be in the same
-  order.
+  Pattern names correspond to definitions in <a
+  href="http://www.w3.org/2001/XMLSchema.xsd">XMLSchema.xsd</a> and
+  should be in the same order.
 
   Where XSD uses a name T for an element, the corresponding pattern
   appends ".elt" to the name.  This is done both to make clear that
@@ -1336,7 +1335,7 @@
   </zeroOrMore>
   <optional>
     <element name="xs:whiteSpace"
-             cm:href="http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/datatypes.html#element-whiteSpace">
+             cm:href="http://www.w3.org/TR/xmlschema-2/#element-whiteSpace">
       <ref name="facet"/>
       <attribute name="value">
         <choice>
@@ -1470,28 +1469,28 @@
 
 <define name="minExclusive" cm:type="xs:element">
   <element name="xs:minExclusive"
-           cm:href="http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/datatypes.html#element-minExclusive">
+           cm:href="http://www.w3.org/TR/xmlschema-2/#element-minExclusive">
     <ref name="rangeFacet_ext"/>
   </element>
 </define>
 
 <define name="minInclusive" cm:type="xs:element">
   <element name="xs:minInclusive"
-           cm:href="http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/datatypes.html#element-minInclusive">
+           cm:href="http://www.w3.org/TR/xmlschema-2/#element-minInclusive">
     <ref name="rangeFacet_ext"/>
   </element>
 </define>
 
 <define name="maxExclusive" cm:type="xs:element">
   <element name="xs:maxExclusive"
-           cm:href="http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/datatypes.html#element-maxExclusive">
+           cm:href="http://www.w3.org/TR/xmlschema-2/#element-maxExclusive">
     <ref name="rangeFacet_ext"/>
   </element>
 </define>
 
 <define name="maxInclusive" cm:type="xs:element">
   <element name="xs:maxInclusive"
-           cm:href="http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/datatypes.html#element-maxInclusive">
+           cm:href="http://www.w3.org/TR/xmlschema-2/#element-maxInclusive">
     <ref name="rangeFacet_ext"/>
   </element>
 </define>
@@ -1505,7 +1504,7 @@
 
 <define name="totalDigits" cm:type="xs:element">
   <element name="xs:totalDigits"
-           cm:href="http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/datatypes.html#element-totalDigits">
+           cm:href="http://www.w3.org/TR/xmlschema-2/#element-totalDigits">
     <ref name="facet"/>
     <attribute name="value">
       <data type="positiveInteger"/>
@@ -1515,35 +1514,35 @@
 
 <define name="fractionDigits" cm:type="xs:element">
   <element name="xs:fractionDigits"
-           cm:href="http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/datatypes.html#element-fractionDigits">
+           cm:href="http://www.w3.org/TR/xmlschema-2/#element-fractionDigits">
     <ref name="numFacet"/>
   </element>
 </define>
 
 <define name="length" cm:type="xs:element">
   <element name="xs:length"
-           cm:href="http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/datatypes.html#element-length">
+           cm:href="http://www.w3.org/TR/xmlschema-2/#element-length">
     <ref name="numFacet"/>
   </element>
 </define>
 
 <define name="minLength" cm:type="xs:element">
   <element name="xs:minLength"
-           cm:href="http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/datatypes.html#element-minLength">
+           cm:href="http://www.w3.org/TR/xmlschema-2/#element-minLength">
     <ref name="numFacet"/>
   </element>
 </define>
 
 <define name="maxLength" cm:type="xs:element">
   <element name="xs:maxLength"
-           cm:href="http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/datatypes.html#element-maxLength">
+           cm:href="http://www.w3.org/TR/xmlschema-2/#element-maxLength">
     <ref name="numFacet"/>
   </element>
 </define>
 
 <define name="enumeration" cm:type="xs:element">
   <element name="xs:enumeration"
-           cm:href="http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/datatypes.html#element-enumeration">
+           cm:href="http://www.w3.org/TR/xmlschema-2/#element-enumeration">
     <ref name="noFixedFacet"/>
     <attribute name="value"/>
   </element>
@@ -1551,7 +1550,7 @@
 
 <define name="whiteSpace" cm:type="xs:element" xs:restricts="xs:facet">
   <element name="xs:whiteSpace"
-           cm:href="http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/datatypes.html#element-whiteSpace">
+           cm:href="http://www.w3.org/TR/xmlschema-2/#element-whiteSpace">
     <ref name="facet"/>
     <attribute name="value">
       <choice>
@@ -1565,7 +1564,7 @@
 
 <define name="pattern" cm:type="xs:element" xs:restricts="xs:noFixedFacet">
   <element name="xs:pattern"
-           cm:href="http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/datatypes.html#element-pattern">
+           cm:href="http://www.w3.org/TR/xmlschema-2/#element-pattern">
     <ref name="noFixedFacet"/>
     <attribute name="value">
       <data type="string"/>
