@@ -43,6 +43,10 @@
   to notes specific to the RELAX NG implementation.
 </cm:doc>
 
+<start>
+  <ref name="schema.elt"/>
+</start>
+
 <define name="openAttrs" cm:type="xs:complexType" cm:restricts="xs:anyType" cm:refines="anyType">
   <cm:doc>
     We want to emulate: &lt;xs:anyAttribute namespace="##other" process="lax"/&gt;
@@ -155,7 +159,7 @@
   </choice>
 </define>
 
-<start>
+<define name="schema.elt" cm:type="xs:element">
   <element name="xs:schema" cm:type="xs:simpleType" cm:extends="xs:openAttrs"
            cm:href="http://www.w3.org/TR/xmlschema-1/#element-schema">
     <cm:doc>
@@ -241,7 +245,7 @@
       </choice>
     </zeroOrMore>
   </element>
-</start>
+</define>
 
 <define name="allNNI" cm:type="xs:simpleType">
   <choice>
