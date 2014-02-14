@@ -83,7 +83,7 @@ be customized for XSD by these steps:
     <locatingRules xmlns="http://thaiopensource.com/ns/locating-rules/1.0">
       <!-- Extend to support W3C XML Schema Definition Language, which as
            of 1.1 are known as "XSD" rather than "XML Schema" to avoid
-           confusion with other XML schema languages such as RelaxNG. -->
+           confusion with other XML schema languages such as RELAX NG. -->
       <uri pattern="*.xsd" typeId="XSD"/>
       <namespace ns="http://www.w3.org/2001/XMLSchema" typeId="XSD"/>
       <documentElement localName="schema" typeId="XSD"/>
