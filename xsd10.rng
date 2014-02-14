@@ -527,6 +527,9 @@
 <define name="simpleRestrictionType" cm:type="xs:complexType" cm:restricts="xs:restrictionType" cm:refines="restrictionType">
   <ref name="reducedDerivation_prolog"/>
   <optional>
+    <optional>
+      <ref name="localSimpleType_elt"/>
+    </optional>
     <ref name="simpleRestrictionModel"/>
   </optional>
   <ref name="reducedDerivation_epilog"/>
@@ -1363,9 +1366,14 @@
 </define>
 
 <define name="simpleRestrictionModel" cm:type="xs:group">
-  <optional>
-    <ref name="localSimpleType_elt"/>
-  </optional>
+  <cm:doc>
+    The XSD group includes an optional localSimpleType_elt pattern,
+    but that is disallowed for complex restrictions that have a base
+    attribute.  To enforce this, localSimpleType_elt is added
+    conditionally against base in restriction.elt, and optionally in
+    simpleRestrictionType (which requires a base attribute but does
+    not disallow the co-occurrence).
+  </cm:doc>
   <ref name="facets"/>
 </define>
 
@@ -1373,11 +1381,12 @@
   <element name="xs:restriction"
            cm:href="http://www.w3.org/TR/xmlschema-2/#element-restriction">
     <ref name="annotated"/>
-    <optional>
+    <choice>
       <attribute name="base">
         <data type="QName"/>
       </attribute>
-    </optional>
+      <ref name="localSimpleType_elt"/>
+    </choice>
     <ref name="simpleRestrictionModel"/>
   </element>
 </define>
