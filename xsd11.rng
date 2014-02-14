@@ -6,17 +6,19 @@
          datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes">
 
 <cm:doc xmlns="http://www.w3.org/1999/xhtml">
-  Original RELAX NG schema for XML Schema by <a
-  href="http://www.jenitennison.com/">Jeni Tennison</a>.
-
-  Based on <a href="http://www.w3.org/TR/xmlschema11-1/">W3C XML
+  This RELAX NG schema for W3C XML Schema Definition Language is based
+  on the original <a
+  href="http://www.jenitennison.com/schema/xmlschema.rng">xmlschema.rng</a>
+  by <a href="http://www.jenitennison.com/">Jeni Tennison</a>, and
+  conforms to <a href="http://www.w3.org/TR/xmlschema11-1/">W3C XML
   Schema Definition Language (XSD) 1.1 Part I: Structures
   Recommendation</a> and <a
   href="http://www.w3.org/TR/xmlschema11-2/">W3C XML Schema
   Definitional Language (XSD) 1.1 Part 2: Datatypes</a>.
 
-  This schema is available from the <a
+  The project home for this version is the <a
   href="https://github.com/pabigot/rng4xsd">rng4xsd project page</a>.
+  Obtain updates and report issues on the project page.
 
   Pattern names correspond to definitions in <a
   href="http://www.w3.org/2001/XMLSchema.xsd">XMLSchema.xsd</a> and

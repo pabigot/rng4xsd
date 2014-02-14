@@ -1,17 +1,33 @@
 This repository contains [RELAX NG](http://relaxng.org/) schema for the
 [W3C XML Schema Definition Language](http://www.w3.org/TR/xmlschema-1).
 
+The project home for this material is the <a
+href="https://github.com/pabigot/rng4xsd">rng4xsd project page</a> on
+github.  Obtain updates and report issues on the project page.
+
+History
+=======
+
 The work is based on
 [xmlschema.rng](http://www.jenitennison.com/schema/xmlschema.rng)
-created by [Jeni Tennison](http://www.jenitennison.com/index.xml).  See
-the [original
+created by [Jeni Tennison](http://www.jenitennison.com/index.xml) to
+support [XSD 1.0](http://www.w3.org/TR/xmlschema-1/).  See the [original
 notice](https://lists.oasis-open.org/archives/relax-ng/200106/msg00228.html)
 for some background.
 
-Changes in this repository reflect modifications required to fix false
+The `xsd10.rng` file is a refactored version that more closely follows
+the [XSD 1.0 Schema for Schemas](http://www.w3.org/2001/XMLSchema.xsd).
+It incorporates about a dozen substantive changes to fix false
 diagnostics on a subset of the [Open Geospatial Consortium,
 Inc.](http://www.opengeospatial.org/) schemas and other schemas
 supported by [PyXB](http://pyxb.sourceforge.net/).
+
+The `xsd11.rng` file derives from that to support [XSD
+1.1](http://www.w3.org/TR/xmlschema11-1/), following its [Schema for
+Schemas]( http://www.w3.org/TR/xmlschema11-2/XMLSchema.xsd).
+
+`rng4xsd.rng` is a support schema defining documentation elements and
+annotations that relate the RELAX NG patterns to XSD components.
 
 Testing
 =======
