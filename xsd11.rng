@@ -632,8 +632,6 @@
   </element>
 </define>
 
-
-
 <define name="simpleRestrictionType" cm:type="xs:complexType" cm:restricts="xs:restrictionType" cm:refines="restrictionType">
   <ref name="reducedDerivation_prolog"/>
   <optional>
@@ -971,38 +969,36 @@
   </element>
 </define>
 
-<define name="namespaceList" cm:type="xs:simpleType">
-  <choice>
-    <value type="token">##any</value>
-    <value type="token">##other</value>
-    <list>
-      <zeroOrMore>
-        <choice>
-          <data type="anyURI"/>
-          <value type="token">##targetNamespace</value>
-          <value type="token">##local</value>
-        </choice>
-      </zeroOrMore>
-    </list>
-  </choice>
-</define>
-
-<define name="wildcard" cm:type="xs:complexType" cm:extends="xs:annotated">
-  <ref name="annotated"/>
+<define name="anyAttrGroup" cm:type="xs:attributeGroup">
   <zeroOrMore>
     <choice>
       <attribute name="namespace">
         <ref name="namespaceList"/>
       </attribute>
+      <attribute name="notNamespace">
+        <cm:doc>
+          Implement a minLength=1 constraint.
+        </cm:doc>
+        <list cm:refines="basicNamespaceList">
+          <oneOrMore>
+            <ref name="basicNamespaceList_item"/>
+          </oneOrMore>
+        </list>
+      </attribute>
       <attribute name="processContents">
         <choice>
-          <value type="NMTOKEN">lax</value>
           <value type="NMTOKEN">skip</value>
+          <value type="NMTOKEN">lax</value>
           <value type="NMTOKEN">strict</value>
         </choice>
       </attribute>
     </choice>
   </zeroOrMore>
+</define>
+
+<define name="wildcard" cm:type="xs:complexType" cm:extends="xs:annotated">
+  <ref name="annotated"/>
+  <ref name="anyAttrGroup"/>
 </define>
 
 <define name="any.elt" cm:type="xs:element">
@@ -1022,6 +1018,28 @@
     </optional>
     <ref name="occurs"/>
   </element>
+</define>
+
+<define name="namespaceList" cm:type="xs:simpleType">
+  <choice>
+    <ref name="specialNamespaceList"/>
+    <ref name="basicNamespaceList"/>
+  </choice>
+</define>
+
+<define name="basicNamespaceList" cm:type="xs:simpleType">
+  <list>
+    <zeroOrMore>
+      <ref name="basicNamespaceList_item"/>
+    </zeroOrMore>
+  </list>
+</define>
+
+<define name="specialNamespaceList" cm:type="xs:simpleType">
+  <choice>
+    <value type="token">##any</value>
+    <value type="token">##other</value>
+  </choice>
 </define>
 
 <define name="qnameList" cm:type="xs:simpleType">
@@ -1829,6 +1847,14 @@
            cm:href="http://www.w3.org/TR/xmlschema11-1/#tac">
     <ref name="altType"/>
   </element>
+</define>
+
+<define name="basicNamespaceList_item">
+  <choice>
+    <data type="anyURI"/>
+    <value type="token">##targetNamespace</value>
+    <value type="token">##local</value>
+  </choice>
 </define>
 
 </grammar>

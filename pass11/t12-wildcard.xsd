@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:o="urn:other">
+  <xs:complexType name="ct">
+    <xs:sequence>
+      <xs:any namespace="##local" notNamespace="##targetNamespace"/>
+      <xs:any namespace="##local" notNamespace="##local"/>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>
