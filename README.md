@@ -59,3 +59,78 @@ validation.  A patch to [jing-trang issue
 178](https://code.google.com/p/jing-trang/issues/detail?id=178) which
 converts the diagnostic to a warning is available in the `patches`
 subdirectory.
+
+Emacs Support
+=============
+
+As of version 23, emacs integrates support for [nXML
+mode](http://www.thaiopensource.com/nxml-mode/).  The installation can
+be customized for XSD by these steps:
+
+(1) Add the following to your `.emacs` file:
+
+    ;; nXML mode customization
+    (add-to-list 'auto-mode-alist '("\\.xsd\\'" . xml-mode))
+    (add-hook 'nxml-mode-hook
+        '(lambda ()
+           (make-local-variable 'indent-tabs-mode)
+           (setq indent-tabs-mode nil)
+           (add-to-list 'rng-schema-locating-files
+            "~/.emacs.d/nxml-schemas/schemas.xml")))
+
+(2) Install the following as `~/.emacs.d/nxml-schemas/schemas.xml`:
+
+    <locatingRules xmlns="http://thaiopensource.com/ns/locating-rules/1.0">
+      <!-- Extend to support W3C XML Schema Definition Language, which as
+           of 1.1 are known as "XSD" rather than "XML Schema" to avoid
+           confusion with other XML schema languages such as RelaxNG. -->
+      <uri pattern="*.xsd" typeId="XSD"/>
+      <namespace ns="http://www.w3.org/2001/XMLSchema" typeId="XSD"/>
+      <documentElement localName="schema" typeId="XSD"/>
+      <typeId id="XSD 1.0" uri="xsd10.rnc"/>
+      <typeId id="XSD 1.1" uri="xsd11.rnc"/>
+      <typeId id="XSD" uri="xsd.rnc"/>
+    </locatingRules>
+
+(3) Edit the `xsd10.rng` file to eliminate the `pattern` parameter,
+    which causes parsing errors in emacs when editing files that include
+    [xs:field](http://www.w3.org/TR/xmlschema-1/#element-field) or
+    [xs:selector](http://www.w3.org/TR/xmlschema-1/#element-selector)
+    elements:
+
+    diff --git a/xsd10.rng b/xsd10.rng
+    index 32002b6..b202bfe 100644
+    --- a/xsd10.rng
+    +++ b/xsd10.rng
+    @@ -1029,7 +1029,9 @@
+         <ref name="annotated"/>
+         <attribute name="xpath">
+           <data type="token">
+    +<!-- Causes problems in emacs
+             <param name="pattern">(\.//)?(((child::)?((\i\c*:)?(\i\c*|\*)))|\.)(/(((child::)?((\i\c*:)?(\i\c*|\*)))|\.))*(\|(\.//)?(((child::)?((\i\c*:)?(\i\c*|\*)))|\.)(/(((child::)?((\i\c*:)?(\i\c*|\*)))|\.))*)*</param>
+    +-->
+           </data>
+         </attribute>
+       </element>
+    @@ -1041,7 +1043,9 @@
+         <ref name="annotated"/>
+         <attribute name="xpath">
+           <data type="token">
+    +<!-- Causes problems in emacs
+             <param name="pattern">(\.//)?((((child::)?((\i\c*:)?(\i\c*|\*)))|\.)/)*((((child::)?((\i\c*:)?(\i\c*|\*)))|\.)|((attribute::|@)((\i\c*:)?(\i\c*|\*))))(\|(\.//)?((((child::)?((\i\c*:)?(\i\c*|\*)))|\.)/)*((((child::)?((\i\c*:)?(\i\c*|\*)))|\.)|((attribute::|@)((\i\c*:)?(\i\c*|\*)))))*</param>
+    +-->
+           </data>
+         </attribute>
+       </element>
+
+(4) Convert the XML-format schemas to compact syntax with
+    [trang](http://code.google.com/p/jing-trang):
+
+    trang xsd10.rng xsd10.rnc
+    trang xsd11.rng xsd11.rnc
+
+(5) Install the following as `xsd.rnc`:
+
+    xsd10 = external "xsd10.rnc"
+    xsd11 = external "xsd11.rnc"
+    start = xsd10 | xsd11
