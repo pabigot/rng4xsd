@@ -1442,6 +1442,7 @@
           <value type="NMTOKEN">list</value>
           <value type="NMTOKEN">union</value>
           <value type="NMTOKEN">restriction</value>
+          <value type="NMTOKEN">extension</value>
         </choice>
       </zeroOrMore>
     </list>
