@@ -7,21 +7,16 @@ fail () {
     exit 1
 }
 
-echo "Running ${XSD_RNG} pass tests with xmllint..."
-(xmllint --noout --relaxng ${XSD_RNG} pass10/*.xsd > xmllint.log 2>&1 ) \
-   || (cat xmllint.log ; fail basic test failed )
-echo "Running ${XSD_RNG} fail tests with xmllint..."
-for f in fail10/*.xsd ; do
-  ( xmllint --noout --relaxng xsd10.rng ${f} > xmllint.log 2>&1 ) \
-      && ( cat xmllint.log ; fail "incorrect validation of ${f}" )
-done
-
-if [ -f jing.jar ] ; then
-  echo "Running ${XSD_RNG} pass tests with (modified) jing"
-  java -jar jing.jar ${XSD_RNG} pass10/*.xsd
-  echo "Running ${XSD_RNG} fail tests with (modified) jing"
-  java -jar jing.jar ${XSD_RNG} fail10/*.xsd
-fi
+case "${XSD_RNG}" in
+    *xsd10.rng)
+    PASS_GLOB="test1x/t*.xsd test10/t*.xsd test11/f*.xsd"
+    FAIL_GLOB="test1x/f*.xsd test10/f*.xsd test11/t*.xsd"
+    ;;
+    *xsd11.rng)
+    PASS_GLOB="test1x/t*.xsd test11/t*.xsd test10/f*.xsd"
+    FAIL_GLOB="test1x/f*.xsd test11/f*.xsd test10/t*.xsd"
+    ;;
+esac
 
 genpyxb () {
   # Exclude files that load local DTDs or have DTD syntax errors
@@ -33,6 +28,37 @@ genpyxb () {
     -e '\!common/schemas/xsd_hfp.xsd!d' \
     -e '\!common/schemas/datatypes.xsd!d'
 }
+
+genpass () {
+  ls ${PASS_GLOB} 2>/dev/null | sed -e '/\*/d'
+}
+
+genfail () {
+  ls ${FAIL_GLOB} 2>/dev/null | sed -e '/\*/d'
+}
+
+echo "Running ${XSD_RNG} pass tests with xmllint..."
+( ( genpass \
+    | xargs xmllint --noout --relaxng ${XSD_RNG} \
+  ) > xmlpass.log 2>&1 \
+) || (cat xmlpass.log ; fail xmllint valid tests failed )
+echo "Running ${XSD_RNG} fail tests with xmllint..."
+for f in $(genfail) ; do
+  ( xmllint --noout --relaxng xsd10.rng ${f} > xmlfail.log 2>&1 ) \
+      && ( cat xmlfail.log ; fail "incorrect validation of ${f}" )
+done
+
+if [ -f jing.jar ] ; then
+  echo "Running ${XSD_RNG} pass tests with (modified) jing"
+  ( genpass \
+    | xargs java -jar jing.jar ${XSD_RNG} ) \
+  || fail "jing valid tests failed"
+  echo "Running ${XSD_RNG} fail tests with (modified) jing"
+  for f in $(genfail) ; do
+    ( java -jar jing.jar ${XSD_RNG} ${f} > jing.log 2>&1 ) \
+    && ( cat jing.log ; fail "incorrect validation of ${f}" )
+  done
+fi
 
 if [ -d /opt/pyxb ] ; then
   echo "Running ${XSD_RNG} xmllint on PyXB source schemas..."
