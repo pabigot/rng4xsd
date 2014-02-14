@@ -1330,6 +1330,9 @@
   </cm:doc>
   <mixed>
     <zeroOrMore>
+      <cm:doc>
+        Emulate &lt;any processContents="lax"&gt;
+      </cm:doc>
       <element>
         <anyName/>
         <zeroOrMore>
@@ -1491,85 +1494,45 @@
   </element>
 </define>
 
-<define name="rangeFacets_ext">
+<define name="facet.elt" combine="interleave" cm:type="xs:element">
   <cm:doc>
-    Implement the co-occurrence restrictions for range facets.
-  </cm:doc>
-  <interleave>
-    <optional>
-      <choice>
-        <ref name="minExclusive"/>
-        <ref name="minInclusive"/>
-      </choice>
-    </optional>
-    <optional>
-      <choice>
-        <ref name="maxExclusive"/>
-        <ref name="maxInclusive"/>
-      </choice>
-    </optional>
-  </interleave>
-</define>
+    RELAX NG implementation for the xs:facet abstract element.
 
-<define name="digitFacets_ext">
-  <cm:doc>
-    Collect digit-related facets.
-  </cm:doc>
-  <optional>
-    <ref name="totalDigits"/>
-  </optional>
-  <optional>
-    <ref name="fractionDigits"/>
-  </optional>
-</define>
+    In XSD 1.1 this element is abstract and serves as the name of a
+    substitutionGroup.  The set of facets defined for the XSD
+    namespace are members of that group, and implement (co-)occurrence
+    constraints internally.
 
-<define name="lengthFacets_ext">
-  <cm:doc>
-    Implement the co-occurrence restrictions for length facets.
-  </cm:doc>
-  <choice>
-    <ref name="length"/>
-    <interleave>
-      <optional>
-        <ref name="minLength"/>
-      </optional>
-      <optional>
-        <ref name="maxLength"/>
-      </optional>
-    </interleave>
-  </choice>
-</define>
+    In theory additional elements may be added to this group, in XSD
+    by declaring them with substitutionGroup="xs:facet", and in RELAX
+    NG by defining them with combine="interleave".
 
-<define name="commonFacets_ext">
-  <cm:doc>
-    The remaining facets.
+    To support this, the pattern expresses the occurrence cardinality
+    constraints for each constituent facet element.  Further, the
+    wildcard adjacent to the use of the substitution group head is
+    placed in this pattern since RELAX NG does not permit an empty
+    definition.
   </cm:doc>
   <zeroOrMore>
-    <ref name="enumeration"/>
-  </zeroOrMore>
-  <optional>
-    <element name="xs:whiteSpace"
-             cm:href="http://www.w3.org/TR/xmlschema11-2/#element-whiteSpace">
-      <ref name="facet"/>
-      <attribute name="value">
-        <choice>
-          <value type="NMTOKEN">collapse</value>
-        </choice>
-      </attribute>
+    <cm:doc> Emulate &lt;any processContents="lax"
+    namespace="##other" &gt;
+    </cm:doc>
+    <element>
+      <anyName>
+        <except>
+          <nsName ns=""/>
+          <nsName ns="http://www.w3.org/2001/XMLSchema"/>
+        </except>
+      </anyName>
+      <zeroOrMore>
+        <attribute>
+          <anyName/>
+        </attribute>
+      </zeroOrMore>
+      <ref name="annotation_ext"/>
+      <empty/>
     </element>
-  </optional>
-  <zeroOrMore>
-    <ref name="pattern"/>
   </zeroOrMore>
-</define>
-
-<define name="facets" cm:type="xs:group">
-  <interleave>
-    <ref name="rangeFacets_ext"/>
-    <ref name="digitFacets_ext"/>
-    <ref name="lengthFacets_ext"/>
-    <ref name="commonFacets_ext"/>
-  </interleave>
 </define>
 
 <define name="simpleRestrictionModel" cm:type="xs:group">
@@ -1580,8 +1543,14 @@
     conditionally against base in restriction.elt, and optionally in
     simpleRestrictionType (which requires a base attribute but does
     not disallow the co-occurrence).
+
+    Note that the wildcard element added in XSD 1.1 is encoded as the
+    base of the facet.elt pattern.
+
+    Also note that occurrence constraints on individual facets are
+    delegated to the interleaved facet.elt pattern.
   </cm:doc>
-  <ref name="facets"/>
+  <ref name="facet.elt"/>
 </define>
 
 <define name="restriction.elt" cm:type="xs:element" cm:extends="xs:annotated">
@@ -1651,6 +1620,10 @@
 
     For some facets, the fixed attribute is prohibited.  Those facets
     cm:refine this pattern.
+
+    Elements corresponding to each facet are combined using interleave
+    into the facet.elt element, including their occurrence
+    constraints.
   </cm:doc>
   <ref name="annotated"/>
   <optional>
@@ -1666,7 +1639,8 @@
 
 <define name="rangeFacet_ext">
   <cm:doc>
-    Shared requirements for range facets.
+    Shared requirements for range facets.  The type of the value
+    attribute must be consistent with the simpleType it constrains.
   </cm:doc>
   <ref name="facet"/>
   <attribute name="value">
@@ -1715,6 +1689,26 @@
   </element>
 </define>
 
+<define name="facet.elt" combine="interleave" cm:type="xs:element">
+  <cm:doc>
+    Implement the co-occurrence restrictions for range facets.
+  </cm:doc>
+  <interleave>
+    <optional>
+      <choice>
+        <ref name="minExclusive"/>
+        <ref name="minInclusive"/>
+      </choice>
+    </optional>
+    <optional>
+      <choice>
+        <ref name="maxExclusive"/>
+        <ref name="maxInclusive"/>
+      </choice>
+    </optional>
+  </interleave>
+</define>
+
 <define name="numFacet" cm:type="xs:complexType">
   <ref name="facet"/>
   <attribute name="value">
@@ -1739,6 +1733,18 @@
   </element>
 </define>
 
+<define name="facet.elt" combine="interleave" cm:type="xs:element">
+  <cm:doc>
+    Collect digit-related facets.
+  </cm:doc>
+  <optional>
+    <ref name="totalDigits"/>
+  </optional>
+  <optional>
+    <ref name="fractionDigits"/>
+  </optional>
+</define>
+
 <define name="length" cm:type="xs:element">
   <element name="xs:length"
            cm:href="http://www.w3.org/TR/xmlschema11-2/#element-length">
@@ -1758,6 +1764,23 @@
            cm:href="http://www.w3.org/TR/xmlschema11-2/#element-maxLength">
     <ref name="numFacet"/>
   </element>
+</define>
+
+<define name="facet.elt" combine="interleave" cm:type="xs:element">
+  <cm:doc>
+    Implement the co-occurrence restrictions for length facets.
+  </cm:doc>
+  <choice>
+    <ref name="length"/>
+    <interleave>
+      <optional>
+        <ref name="minLength"/>
+      </optional>
+      <optional>
+        <ref name="maxLength"/>
+      </optional>
+    </interleave>
+  </choice>
 </define>
 
 <define name="enumeration" cm:type="xs:element">
@@ -1790,6 +1813,68 @@
       <data type="string"/>
     </attribute>
   </element>
+</define>
+
+<define name="facet.elt" combine="interleave" cm:type="xs:element">
+  <cm:doc>
+    The remaining facets.
+  </cm:doc>
+  <interleave>
+    <zeroOrMore>
+      <ref name="enumeration"/>
+    </zeroOrMore>
+    <optional>
+      <element name="xs:whiteSpace"
+               cm:href="http://www.w3.org/TR/xmlschema11-2/#element-whiteSpace">
+        <ref name="facet"/>
+        <attribute name="value">
+          <choice>
+            <value type="NMTOKEN">collapse</value>
+          </choice>
+        </attribute>
+      </element>
+    </optional>
+    <zeroOrMore>
+      <ref name="pattern"/>
+    </zeroOrMore>
+  </interleave>
+</define>
+
+<define name="assertion_elt" cm:type="xs:element">
+  <element name="xs:assertion">
+    <ref name="assertion"/>
+  </element>
+</define>
+
+<define name="facet.elt" combine="interleave" cm:type="xs:element">
+  <cm:doc>
+    Assume multiple instances are valid.
+  </cm:doc>
+  <zeroOrMore>
+    <ref name="assertion_elt"/>
+  </zeroOrMore>
+</define>
+
+<define name="explicitTimezone_elt" cm:type="xs:element">
+  <element name="xs:explicitTimezone">
+    <ref name="facet"/>
+    <attribute name="value">
+      <choice>
+        <value type="NMTOKEN">optional</value>
+        <value type="NMTOKEN">required</value>
+        <value type="NMTOKEN">prohibited</value>
+      </choice>
+    </attribute>
+  </element>
+</define>
+
+<define name="facet.elt" combine="interleave" cm:type="xs:element">
+  <cm:doc>
+    Assume multiple instances are not valid.
+  </cm:doc>
+  <optional>
+    <ref name="explicitTimezone_elt"/>
+  </optional>
 </define>
 
 <define name="fixedOrDefault_ext">

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <!-- http://www.informit.com/articles/article.aspx?p=1946864&seqNum=4 -->
+  <xs:simpleType name="SpecificTimeType">
+    <xs:restriction base="xs:time">
+      <xs:explicitTimezone value="required"/>
+    </xs:restriction>
+  </xs:simpleType>
+</xs:schema>
