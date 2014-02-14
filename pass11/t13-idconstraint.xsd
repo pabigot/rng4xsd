@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:o="urn:other">
+  <xs:element name="e">
+    <xs:key name="element">
+      <xs:selector xpath="xs:element" xpathDefaultNamespace="##targetNamespace"/>
+      <xs:field xpath="@name"/>
+    </xs:key>
+    <xs:key ref="element"/>
+  </xs:element>
+</xs:schema>

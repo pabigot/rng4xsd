@@ -1218,10 +1218,11 @@
            cm:href="http://www.w3.org/TR/xmlschema11-1/#element-selector">
     <ref name="annotated"/>
     <attribute name="xpath">
-      <data type="token">
-        <param name="pattern">(\.//)?(((child::)?((\i\c*:)?(\i\c*|\*)))|\.)(/(((child::)?((\i\c*:)?(\i\c*|\*)))|\.))*(\|(\.//)?(((child::)?((\i\c*:)?(\i\c*|\*)))|\.)(/(((child::)?((\i\c*:)?(\i\c*|\*)))|\.))*)*</param>
-      </data>
+      <data type="token"/>
     </attribute>
+    <optional>
+      <ref name="xpathDefaultNamespace_attr"/>
+    </optional>
   </element>
 </define>
 
@@ -1230,9 +1231,7 @@
            cm:href="http://www.w3.org/TR/xmlschema11-1/#element-field">
     <ref name="annotated"/>
     <attribute name="xpath">
-      <data type="token">
-        <param name="pattern">(\.//)?((((child::)?((\i\c*:)?(\i\c*|\*)))|\.)/)*((((child::)?((\i\c*:)?(\i\c*|\*)))|\.)|((attribute::|@)((\i\c*:)?(\i\c*|\*))))(\|(\.//)?((((child::)?((\i\c*:)?(\i\c*|\*)))|\.)/)*((((child::)?((\i\c*:)?(\i\c*|\*)))|\.)|((attribute::|@)((\i\c*:)?(\i\c*|\*)))))*</param>
-      </data>
+      <data type="token"/>
     </attribute>
   </element>
 </define>
@@ -1243,13 +1242,20 @@
     complexType in the keyRef element.
   </cm:doc>
   <ref name="annotated"/>
-  <attribute name="name">
-    <data type="NCName"/>
-  </attribute>
-  <ref name="selector.elt"/>
-  <oneOrMore>
-    <ref name="field.elt"/>
-  </oneOrMore>
+  <choice>
+    <attribute name="name">
+      <data type="NCName"/>
+    </attribute>
+    <attribute name="ref">
+      <data type="QName"/>
+    </attribute>
+  </choice>
+  <optional>
+    <ref name="selector.elt"/>
+    <oneOrMore>
+      <ref name="field.elt"/>
+    </oneOrMore>
+  </optional>
 </define>
 
 <define name="identityConstraint" cm:type="xs:group">
@@ -1278,9 +1284,11 @@
   <element name="xs:keyref"
            cm:href="http://www.w3.org/TR/xmlschema11-1/#element-keyref">
     <ref name="keybase"/>
-    <attribute name="refer">
-      <data type="QName"/>
-    </attribute>
+    <optional>
+      <attribute name="refer">
+        <data type="QName"/>
+      </attribute>
+    </optional>
   </element>
 </define>
 
