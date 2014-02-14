@@ -78,7 +78,7 @@ be customized for XSD by these steps:
            (add-to-list 'rng-schema-locating-files
             "~/.emacs.d/nxml-schemas/schemas.xml")))
 
-(2) Install the following as `~/.emacs.d/nxml-schemas/schemas.xml`:
+(2) Install the following as `schemas.xml` in `~/.emacs.d/nxml-schemas/`:
 
     <locatingRules xmlns="http://thaiopensource.com/ns/locating-rules/1.0">
       <!-- Extend to support W3C XML Schema Definition Language, which as
@@ -92,8 +92,18 @@ be customized for XSD by these steps:
       <typeId id="XSD" uri="xsd.rnc"/>
     </locatingRules>
 
-(3) Edit the `xsd10.rng` file to eliminate the `pattern` parameter,
-    which causes parsing errors in emacs when editing files that include
+(3) Install the following as `xsd.rnc` in `~/.emacs.d/nxml-schemas/`:
+
+    xsd10 = external "xsd10.rnc"
+    xsd11 = external "xsd11.rnc"
+    start = xsd10 | xsd11
+
+(4) Copy the `xsd10.rng` and `xsd11.rng` schemas to
+    `~/.emacs.d/nxml-schemas/`
+
+(5) Edit the copied `xsd10.rng` file to eliminate the `pattern`
+    parameter, which causes parsing errors in emacs when editing files
+    that include
     [xs:field](http://www.w3.org/TR/xmlschema-1/#element-field) or
     [xs:selector](http://www.w3.org/TR/xmlschema-1/#element-selector)
     elements:
@@ -123,14 +133,8 @@ be customized for XSD by these steps:
          </attribute>
        </element>
 
-(4) Convert the XML-format schemas to compact syntax with
+(6) Convert the XML-format schemas to compact syntax with
     [trang](http://code.google.com/p/jing-trang):
 
     trang xsd10.rng xsd10.rnc
     trang xsd11.rng xsd11.rnc
-
-(5) Install the following as `xsd.rnc`:
-
-    xsd10 = external "xsd10.rnc"
-    xsd11 = external "xsd11.rnc"
-    start = xsd10 | xsd11
